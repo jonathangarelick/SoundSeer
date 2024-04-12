@@ -2,7 +2,7 @@ import SwiftUI
 
 @main
 struct SoundSeerApp: App {
-    @StateObject private var spotifyModel = SpotifyModel()
+    @StateObject private var spotifyManager = SpotifyManager()
 
     var body: some Scene {
         MenuBarExtra {
@@ -10,10 +10,7 @@ struct SoundSeerApp: App {
                 NSApplication.shared.terminate(nil)
             }
         } label: {
-            Text(spotifyModel.currentSongDisplay)
-                .onAppear {
-                    spotifyModel.startUpdating()
-                }
+            Text(spotifyManager.currentSong)
         }
     }
 }
