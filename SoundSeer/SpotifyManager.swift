@@ -24,15 +24,20 @@ class SpotifyManager: ObservableObject {
         end tell
         """
 
-        let appleScript = NSAppleScript(source: script)
-        var error: NSDictionary?
-        let output = appleScript?.executeAndReturnError(&error).stringValue
 
-        if let error = error {
-            print("AppleScript error: \(error)")
-            currentSong = "Error retrieving song"
-        } else {
-            currentSong = String(output?.prefix(25) ?? "NIL")
+        DispatchQueue.global().async {
+            let appleScript = NSAppleScript(source: script)
+            var error: NSDictionary?
+            let output = appleScript?.executeAndReturnError(&error).stringValue
+
+            DispatchQueue.main.async { [self] in
+                if let error = error {
+                    print("AppleScript error: \(error)")
+                    currentSong = "Error retrieving song"
+                } else {
+                    currentSong = String(output?.prefix(25) ?? "NIL")
+                }
+            }
         }
     }
 }
