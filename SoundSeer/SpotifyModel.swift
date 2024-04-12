@@ -9,7 +9,7 @@ import Foundation
 
 class SpotifyModel: ObservableObject {
     @Published var currentSong: String = ""
-    var currentSongRaw: String = "aaa"
+    var currentSongRaw: String = "Lorem ipsum dolor sit amet, consectetur adipiscing"
 
     var spotifyTimer: Timer?
     var marqueeTimer: Timer?
@@ -27,10 +27,12 @@ class SpotifyModel: ObservableObject {
 //            self.updateCurrentSong()
 //        }
 
-        let endIndex = currentSongRaw.index(currentSongRaw.startIndex, offsetBy: min(currentSongRaw.count, marqueeLen)) // Index 5 (after "Hello")
-        let substring = currentSongRaw[currentSongRaw.startIndex..<endIndex] // "Hello"
+        currentSong = String(currentSongRaw.prefix(marqueeLen))
+
+//        let endIndex = currentSongRaw.index(currentSongRaw.startIndex, offsetBy: min(currentSongRaw.count, marqueeLen)) // Index 5 (after "Hello")
+//        let substring = currentSongRaw[currentSongRaw.startIndex..<endIndex] // "Hello"
 //        currentSong = currentSongRaw[String.before(String.index(min(endIdx, currentSongRaw.count)))]
-        print(currentSong)
+//        print(currentSong)
 
         spotifyTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
             self.updateMarquee()
@@ -43,13 +45,13 @@ class SpotifyModel: ObservableObject {
     }
 
     func updateMarquee() {
-        startIdx = (startIdx + 1) % min(marqueeLen, currentSongRaw.count)
-        endIdx = (endIdx + 1) % min(marqueeLen, currentSongRaw.count)
+        startIdx = (startIdx + 1) % currentSongRaw.count
+        endIdx = (endIdx + 1) % currentSongRaw.count
 
         if !currentSong.isEmpty {
             currentSong.removeFirst()
-            currentSong.append(currentSongRaw[endIdx])
         }
+        currentSong.append(currentSongRaw[endIdx])
     }
 
     func updateCurrentSong() {
