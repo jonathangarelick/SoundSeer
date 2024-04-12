@@ -1,40 +1,29 @@
-//
-//  SpotifyModel.swift
-//  SoundSeer
-//
-//  Created by Jonathan Garelick on 4/12/24.
-//
-
 import Foundation
 
 class SpotifyModel: ObservableObject {
-    @Published var currentSong: String = ""
-    var currentSongRaw: String = "Lorem ipsum dolor sit amet, consectetur adipiscing"
+    @Published var currentSongDisplay: String = "🤫"
+    var currentSong: String = ""
 
     var spotifyTimer: Timer?
     var marqueeTimer: Timer?
 
     var marqueeLen = 30
 
-
-    var startIdx = -1
-    var endIdx = 9
+    var endIdx = 30
 
     func startUpdating() {
-        print("Hello")
+        spotifyTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
+            self.getCurrentSong()
 
-//        spotifyTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
-//            self.updateCurrentSong()
-//        }
+            if !self.currentSong.isEmpty && self.marqueeTimer == nil {
+                print("currentSongRaw is", self.currentSong)
+                self.startMarqueeTimer()
+            }
+        }
+    }
 
-        currentSong = String(currentSongRaw.prefix(marqueeLen))
-
-//        let endIndex = currentSongRaw.index(currentSongRaw.startIndex, offsetBy: min(currentSongRaw.count, marqueeLen)) // Index 5 (after "Hello")
-//        let substring = currentSongRaw[currentSongRaw.startIndex..<endIndex] // "Hello"
-//        currentSong = currentSongRaw[String.before(String.index(min(endIdx, currentSongRaw.count)))]
-//        print(currentSong)
-
-        spotifyTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+    func startMarqueeTimer() {
+        marqueeTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { _ in
             self.updateMarquee()
         }
     }
@@ -45,16 +34,16 @@ class SpotifyModel: ObservableObject {
     }
 
     func updateMarquee() {
-        startIdx = (startIdx + 1) % currentSongRaw.count
-        endIdx = (endIdx + 1) % currentSongRaw.count
-
-        if !currentSong.isEmpty {
-            currentSong.removeFirst()
+        if currentSongDisplay == "🤫" {
+            return
+        } else {
+            currentSongDisplay.removeFirst()
+            currentSongDisplay.append(currentSong[endIdx % currentSong.count])
+            endIdx += 1
         }
-        currentSong.append(currentSongRaw[endIdx])
     }
 
-    func updateCurrentSong() {
+    func getCurrentSong() {
         let script = """
         tell application "Spotify"
             if it is running then
@@ -71,20 +60,13 @@ class SpotifyModel: ObservableObject {
         var error: NSDictionary?
         var output = appleScript?.executeAndReturnError(&error).stringValue
 
-        if var output = output {
-            output = String(output.prefix(10))
-        }
-
-        print(output)
-
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [self] in
             if let error = error {
                 print("AppleScript error: \(error)")
-                self.currentSongRaw = "Error retrieving song"
-            } else {
-                self.currentSongRaw = output ?? "Not playing"
+                self.currentSong = "Error retrieving song"
+            } else if let output = output {
+
             }
-        }
     }
 }
 

@@ -1,10 +1,3 @@
-//
-//  SoundSeerApp.swift
-//  SoundSeer
-//
-//  Created by Jonathan Garelick on 4/12/24.
-//
-
 import SwiftUI
 
 @main
@@ -13,11 +6,11 @@ struct SoundSeerApp: App {
 
     var body: some Scene {
         MenuBarExtra {
-            MenuBarView(spotifyModel: spotifyModel)
-
+            Button("Quit") {
+                NSApplication.shared.terminate(nil)
+            }
         } label: {
-            Text(spotifyModel.currentSong)
-//                .transition(.push(from: .leading))
+            Text(spotifyModel.currentSongDisplay)
                 .onAppear {
                     spotifyModel.startUpdating()
                 }
