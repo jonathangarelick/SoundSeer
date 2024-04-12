@@ -16,28 +16,11 @@ struct SoundSeerApp: App {
             MenuBarView(spotifyModel: spotifyModel)
 
         } label: {
-
-
-
-//            Text("Everyday (feat. Rod Stewart, Mig")
-            GeometryReader{g in
-                ZStack {
-                    Circle().strokeBorder(Color.red, lineWidth: 30)
-                    Text("Everyday (feat. Rod Stewart, Migsdafadfadfdsfsdfadfs")
-                        .font(.system(size: g.size.height > g.size.width ? g.size.width * 0.4: g.size.height * 0.4))
+            Text(spotifyModel.currentSong)
+//                .transition(.push(from: .leading))
+                .onAppear {
+                    spotifyModel.startUpdating()
                 }
-            }
-
-
-//            Text(String("Everyday (feat. Rod Stewart, Miguel & Mark Ronso".prefix(20)))
-//                .lineLimit(1)
-//                .truncationMode(.middle)
-//                .fixedSize(horizontal: true, vertical: false)
-//                .frame(width: 150)
-//            //            Text(spotifyModel.currentSong)
-//                .onAppear {
-//                    spotifyModel.startUpdating()
-//                }
         }
     }
 }

@@ -9,22 +9,47 @@ import Foundation
 
 class SpotifyModel: ObservableObject {
     @Published var currentSong: String = ""
-    var timer: Timer?
+    var currentSongRaw: String = "aaa"
 
-    init() {
-        print("in init")
-    }
+    var spotifyTimer: Timer?
+    var marqueeTimer: Timer?
+
+    var marqueeLen = 30
+
+
+    var startIdx = -1
+    var endIdx = 9
 
     func startUpdating() {
-        print("hello update")
-        timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
-            self.updateCurrentSong()
+        print("Hello")
+
+//        spotifyTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
+//            self.updateCurrentSong()
+//        }
+
+        let endIndex = currentSongRaw.index(currentSongRaw.startIndex, offsetBy: min(currentSongRaw.count, marqueeLen)) // Index 5 (after "Hello")
+        let substring = currentSongRaw[currentSongRaw.startIndex..<endIndex] // "Hello"
+//        currentSong = currentSongRaw[String.before(String.index(min(endIdx, currentSongRaw.count)))]
+        print(currentSong)
+
+        spotifyTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+            self.updateMarquee()
         }
     }
 
     func stopUpdating() {
-        timer?.invalidate()
-        timer = nil
+        spotifyTimer?.invalidate()
+        spotifyTimer = nil
+    }
+
+    func updateMarquee() {
+        startIdx = (startIdx + 1) % min(marqueeLen, currentSongRaw.count)
+        endIdx = (endIdx + 1) % min(marqueeLen, currentSongRaw.count)
+
+        if !currentSong.isEmpty {
+            currentSong.removeFirst()
+            currentSong.append(currentSongRaw[endIdx])
+        }
     }
 
     func updateCurrentSong() {
@@ -53,10 +78,19 @@ class SpotifyModel: ObservableObject {
         DispatchQueue.main.async {
             if let error = error {
                 print("AppleScript error: \(error)")
-                self.currentSong = "Error retrieving song"
+                self.currentSongRaw = "Error retrieving song"
             } else {
-                self.currentSong = output ?? "Not playing"
+                self.currentSongRaw = output ?? "Not playing"
             }
         }
     }
+}
+
+extension StringProtocol {
+    subscript(_ offset: Int)                     -> Element     { self[index(startIndex, offsetBy: offset)] }
+    subscript(_ range: Range<Int>)               -> SubSequence { prefix(range.lowerBound+range.count).suffix(range.count) }
+    subscript(_ range: ClosedRange<Int>)         -> SubSequence { prefix(range.lowerBound+range.count).suffix(range.count) }
+    subscript(_ range: PartialRangeThrough<Int>) -> SubSequence { prefix(range.upperBound.advanced(by: 1)) }
+    subscript(_ range: PartialRangeUpTo<Int>)    -> SubSequence { prefix(range.upperBound) }
+    subscript(_ range: PartialRangeFrom<Int>)    -> SubSequence { suffix(Swift.max(0, count-range.lowerBound)) }
 }
