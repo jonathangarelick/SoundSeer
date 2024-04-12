@@ -11,6 +11,9 @@
 		9BE2FA1E2BC97CCC00A7124B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA1D2BC97CCC00A7124B /* ContentView.swift */; };
 		9BE2FA202BC97CCD00A7124B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */; };
 		9BE2FA232BC97CCD00A7124B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE2FA222BC97CCD00A7124B /* Preview Assets.xcassets */; };
+		9BE2FA2B2BC9870C00A7124B /* SpotifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA2A2BC9870C00A7124B /* SpotifyController.swift */; };
+		9BE2FA2D2BC9871E00A7124B /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA2C2BC9871E00A7124B /* MenuBarView.swift */; };
+		9BE2FA2F2BC987D700A7124B /* TimerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA2E2BC987D700A7124B /* TimerModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +23,9 @@
 		9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9BE2FA222BC97CCD00A7124B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9BE2FA242BC97CCD00A7124B /* SoundSeer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SoundSeer.entitlements; sourceTree = "<group>"; };
+		9BE2FA2A2BC9870C00A7124B /* SpotifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyController.swift; sourceTree = "<group>"; };
+		9BE2FA2C2BC9871E00A7124B /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		9BE2FA2E2BC987D700A7124B /* TimerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +63,9 @@
 				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
 				9BE2FA242BC97CCD00A7124B /* SoundSeer.entitlements */,
 				9BE2FA212BC97CCD00A7124B /* Preview Content */,
+				9BE2FA2A2BC9870C00A7124B /* SpotifyController.swift */,
+				9BE2FA2C2BC9871E00A7124B /* MenuBarView.swift */,
+				9BE2FA2E2BC987D700A7124B /* TimerModel.swift */,
 			);
 			path = SoundSeer;
 			sourceTree = "<group>";
@@ -140,6 +149,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BE2FA1E2BC97CCC00A7124B /* ContentView.swift in Sources */,
+				9BE2FA2D2BC9871E00A7124B /* MenuBarView.swift in Sources */,
+				9BE2FA2F2BC987D700A7124B /* TimerModel.swift in Sources */,
+				9BE2FA2B2BC9870C00A7124B /* SpotifyController.swift in Sources */,
 				9BE2FA1C2BC97CCC00A7124B /* SoundSeerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
