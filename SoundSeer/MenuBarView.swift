@@ -8,26 +8,15 @@
 import SwiftUI
 
 struct MenuBarView: View {
+    @ObservedObject var spotifyModel: SpotifyModel
 
-    @ObservedObject var timerModel: TimerModel
-
-        var body: some View {
-            VStack {
-                Button("Start") {
-                    timerModel.startTimer()
-                }
-
-                Button("Stop") {
-                    timerModel.stopTimer()
-                }
-
-                Divider()
-
-                Button("Quit") {
-                    NSApplication.shared.terminate(nil)
-                }
-                .foregroundColor(.red)
+    var body: some View {
+        VStack {
+            Button("Quit") {
+                NSApplication.shared.terminate(nil)
             }
-            .padding(4)
+            .foregroundColor(.red)
         }
+        .padding(4)
+    }
 }

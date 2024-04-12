@@ -8,24 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		9BE2FA1C2BC97CCC00A7124B /* SoundSeerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */; };
-		9BE2FA1E2BC97CCC00A7124B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA1D2BC97CCC00A7124B /* ContentView.swift */; };
 		9BE2FA202BC97CCD00A7124B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */; };
 		9BE2FA232BC97CCD00A7124B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE2FA222BC97CCD00A7124B /* Preview Assets.xcassets */; };
-		9BE2FA2B2BC9870C00A7124B /* SpotifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA2A2BC9870C00A7124B /* SpotifyController.swift */; };
 		9BE2FA2D2BC9871E00A7124B /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA2C2BC9871E00A7124B /* MenuBarView.swift */; };
-		9BE2FA2F2BC987D700A7124B /* TimerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA2E2BC987D700A7124B /* TimerModel.swift */; };
+		9BE2FA312BC989E400A7124B /* SpotifyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA302BC989E400A7124B /* SpotifyModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9BE2FA182BC97CCC00A7124B /* SoundSeer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundSeer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSeerApp.swift; sourceTree = "<group>"; };
-		9BE2FA1D2BC97CCC00A7124B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9BE2FA222BC97CCD00A7124B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9BE2FA242BC97CCD00A7124B /* SoundSeer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SoundSeer.entitlements; sourceTree = "<group>"; };
-		9BE2FA2A2BC9870C00A7124B /* SpotifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyController.swift; sourceTree = "<group>"; };
 		9BE2FA2C2BC9871E00A7124B /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
-		9BE2FA2E2BC987D700A7124B /* TimerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerModel.swift; sourceTree = "<group>"; };
+		9BE2FA302BC989E400A7124B /* SpotifyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,13 +55,11 @@
 			isa = PBXGroup;
 			children = (
 				9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */,
-				9BE2FA1D2BC97CCC00A7124B /* ContentView.swift */,
 				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
 				9BE2FA242BC97CCD00A7124B /* SoundSeer.entitlements */,
 				9BE2FA212BC97CCD00A7124B /* Preview Content */,
-				9BE2FA2A2BC9870C00A7124B /* SpotifyController.swift */,
 				9BE2FA2C2BC9871E00A7124B /* MenuBarView.swift */,
-				9BE2FA2E2BC987D700A7124B /* TimerModel.swift */,
+				9BE2FA302BC989E400A7124B /* SpotifyModel.swift */,
 			);
 			path = SoundSeer;
 			sourceTree = "<group>";
@@ -94,6 +88,8 @@
 			dependencies = (
 			);
 			name = SoundSeer;
+			packageProductDependencies = (
+			);
 			productName = SoundSeer;
 			productReference = 9BE2FA182BC97CCC00A7124B /* SoundSeer.app */;
 			productType = "com.apple.product-type.application";
@@ -122,6 +118,8 @@
 				Base,
 			);
 			mainGroup = 9BE2FA0F2BC97CCC00A7124B;
+			packageReferences = (
+			);
 			productRefGroup = 9BE2FA192BC97CCC00A7124B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -148,10 +146,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BE2FA1E2BC97CCC00A7124B /* ContentView.swift in Sources */,
 				9BE2FA2D2BC9871E00A7124B /* MenuBarView.swift in Sources */,
-				9BE2FA2F2BC987D700A7124B /* TimerModel.swift in Sources */,
-				9BE2FA2B2BC9870C00A7124B /* SpotifyController.swift in Sources */,
+				9BE2FA312BC989E400A7124B /* SpotifyModel.swift in Sources */,
 				9BE2FA1C2BC97CCC00A7124B /* SoundSeerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,14 +279,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SoundSeer/SoundSeer.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoundSeer/Preview Content\"";
-				DEVELOPMENT_TEAM = 5DR54W29BC;
-				ENABLE_HARDENED_RUNTIME = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = abcdef;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -299,6 +297,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.garelick.SoundSeer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -310,14 +309,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SoundSeer/SoundSeer.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoundSeer/Preview Content\"";
-				DEVELOPMENT_TEAM = 5DR54W29BC;
-				ENABLE_HARDENED_RUNTIME = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = abcdef;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -326,6 +327,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.garelick.SoundSeer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
