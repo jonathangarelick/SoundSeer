@@ -10,6 +10,7 @@ struct SoundSeerApp: App {
                 NSApplication.shared.terminate(nil)
             }
         } label: {
+            Image(systemName: "ear.badge.waveform")
             Text(spotifyManager.currentSong)
         }
     }
@@ -22,3 +23,5 @@ struct SoundSeerApp: App {
 // https://joshspicer.com/applescript
 // https://stackoverflow.com/questions/77131963/how-to-identify-if-the-menubarextra-in-macos-is-hidden-by-the-system
 // https://github.com/kmikiy/SpotMenu/issues/141
+// Concurrency: https://developer.apple.com/library/archive/documentation/General/Conceptual/ConcurrencyProgrammingGuide/OperationQueues/OperationQueues.html#//apple_ref/doc/uid/TP40008091-CH102-SW1
+
