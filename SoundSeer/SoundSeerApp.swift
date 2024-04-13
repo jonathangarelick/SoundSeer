@@ -2,19 +2,49 @@ import SwiftUI
 
 @main
 struct SoundSeerApp: App {
-    @StateObject private var spotifyManager = SpotifyManager()
+    @StateObject private var spotifyViewModel = SpotifyViewModel()
 
     var body: some Scene {
         MenuBarExtra {
+            Button(spotifyViewModel.currentArtist, systemImage: "person") {}
+                .labelStyle(.titleAndIcon)
+            Button(spotifyViewModel.currentAlbum, systemImage: "opticaldisc") {}
+                .labelStyle(.titleAndIcon)
+
+            Divider()
+            
             Button("Quit") {
                 NSApplication.shared.terminate(nil)
             }
         } label: {
             Image(systemName: "ear.badge.waveform")
-            Text(spotifyManager.currentSong)
+            Text(spotifyViewModel.currentSong)
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // text stop display at "Everyday (feat. Rod Stewart, Miguel & Mark Ronso" (that's 48 chars)
 // https://sarunw.com/posts/swiftui-menu-bar-app
