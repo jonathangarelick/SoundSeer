@@ -6,7 +6,7 @@ import Alamofire
 class SpotifyAPI {
     static let baseURL = "https://api.spotify.com/v1"
     static let clientID = "d5efe83ecf0043388152717eb2463a1e"
-    static let clientSecret = "your-client-secret"
+    static let clientSecret = ProcessInfo.processInfo.environment["CLIENT_SECRET"]
 
     static var accessToken: String?
     static var expirationTime: Date?
@@ -24,7 +24,7 @@ class SpotifyAPI {
             let parameters: Parameters = [
                 "grant_type": "client_credentials",
                 "client_id": clientID,
-                "client_secret": clientSecret
+                "client_secret": clientSecret!
             ]
 
             AF.request(url, method: .post, parameters: parameters, headers: headers)
@@ -43,35 +43,119 @@ class SpotifyAPI {
         }
     }
 
-    static func searchTracks(query: String, completion: @escaping ([Track]?) -> Void) {
-            getAccessToken { token in
-                guard let accessToken = token else {
-                    completion(nil)
-                    return
-                }
-
-                let url = "\(baseURL)/search"
-                let headers: HTTPHeaders = [
-                    "Authorization": "Bearer \(accessToken)"
-                ]
-                let parameters: Parameters = [
-                    "q": query,
-                    "type": "track",
-                    "limit": 10
-                ]
-
-                AF.request(url, method: .get, parameters: parameters, headers: headers)
-                    .validate()
-                    .responseDecodable(of: SearchResponse.self) { response in
-                        switch response.result {
-                        case .success(let searchResponse):
-                            completion(searchResponse.tracks.items)
-                        case .failure(let error):
-                            print("Error searching tracks: \(error.localizedDescription)")
-                            completion(nil)
-                        }
-                    }
+    static func getSpotifyURI(from id: String, type: URIType, completion: @escaping (String?) -> Void) {
+        getAccessToken { token in
+            guard let accessToken = token else {
+                completion(nil)
+                return
             }
+
+            var url: String
+            switch type {
+            case .song:
+                url = "\(baseURL)/tracks/\(id)"
+            case .artist:
+                url = "\(baseURL)/artists/\(id)"
+            case .album:
+                url = "\(baseURL)/albums/\(id)"
+            }
+
+            let headers: HTTPHeaders = [
+                "Authorization": "Bearer \(accessToken)"
+            ]
+
+            AF.request(url, method: .get, headers: headers)
+                .validate()
+                .responseDecodable(of: URIResponse.self) { response in
+                    switch response.result {
+                    case .success(let uriResponse):
+                        completion(uriResponse.uri)
+                    case .failure(let error):
+                        print("Error getting URI: \(error.localizedDescription)")
+                        completion(nil)
+                    }
+                }
+        }
+    }
+
+    static func getArtistOrAlbumID(from songID: String, type: IDType, completion: @escaping (String?) -> Void) {
+        getAccessToken { token in
+            guard let accessToken = token else {
+                completion(nil)
+                return
+            }
+
+            let url = "\(baseURL)/tracks/\(songID)"
+            let headers: HTTPHeaders = [
+                "Authorization": "Bearer \(accessToken)"
+            ]
+
+            AF.request(url, method: .get, headers: headers)
+                .validate()
+                .responseDecodable(of: TrackResponse.self) { response in
+                    switch response.result {
+                    case .success(let trackResponse):
+                        switch type {
+                        case .artist:
+                            if let artistID = trackResponse.artists?.first?.id {
+                                completion(artistID)
+                            } else {
+                                completion(nil)
+                            }
+                        case .album:
+                            if let albumID = trackResponse.album?.id {
+                                completion(albumID)
+                            } else {
+                                completion(nil)
+                            }
+                        }
+                    case .failure(let error):
+                        print("Error getting \(type) ID: \(error.localizedDescription)")
+                        completion(nil)
+                    }
+                }
+        }
+    }
+
+
+
+}
+
+enum IDType {
+    case artist, album
+}
+
+struct TrackResponse: Decodable {
+    let artists: [Artist]?
+    let album: Album?
+
+    enum CodingKeys: String, CodingKey {
+        case artists
+        case album
+    }
+}
+
+struct Artist: Decodable {
+    let id: String
+    let name: String
+}
+
+struct Album: Decodable {
+    let id: String
+    let name: String
+    let artists: [Artist]?
+}
+
+enum URIType {
+    case song, artist, album
+}
+
+struct URIResponse: Decodable {
+    let uri: String
+
+    enum CodingKeys: String, CodingKey {
+        case uri
+    }
 }
 
 struct AccessTokenResponse: Decodable {
@@ -82,14 +166,6 @@ struct AccessTokenResponse: Decodable {
         case accessToken = "access_token"
         case expiresIn = "expires_in"
     }
-}
-
-struct SearchResponse: Decodable {
-    let tracks: TrackResponse
-}
-
-struct TrackResponse: Decodable {
-    let items: [Track]
 }
 
 struct Track: Decodable {
@@ -104,8 +180,4 @@ struct Track: Decodable {
         case artists
         case previewURL = "preview_url"
     }
-}
-
-struct Artist: Decodable {
-    let name: String
 }

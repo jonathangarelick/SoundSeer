@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 @main
 struct SoundSeerApp: App {
@@ -6,11 +7,29 @@ struct SoundSeerApp: App {
 
     var body: some Scene {
         MenuBarExtra {
-            Button(!spotifyViewModel.currentSong.isEmpty ? spotifyViewModel.currentSong : "Song unknown", systemImage: "music.note") {}
+            Button(!spotifyViewModel.currentSong.isEmpty ? spotifyViewModel.currentSong : "Song unknown", systemImage: "music.note") {
+                SpotifyAPI.getSpotifyURI(from: spotifyViewModel.currentSongId, type: .song) { uri in
+                    if let uriString = uri, let url = URL(string: uriString) {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+            }
                 .labelStyle(.titleAndIcon)
-            Button(!spotifyViewModel.currentArtist.isEmpty ? spotifyViewModel.currentArtist : "Artist unknown", systemImage: "person") {}
+            Button(!spotifyViewModel.currentArtist.isEmpty ? spotifyViewModel.currentArtist : "Artist unknown", systemImage: "person") {
+                SpotifyAPI.getSpotifyURI(from: spotifyViewModel.currentSongId, type: .artist) { uri in
+                    if let uriString = uri, let url = URL(string: uriString) {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+            }
                 .labelStyle(.titleAndIcon)
-            Button(!spotifyViewModel.currentAlbum.isEmpty ? spotifyViewModel.currentAlbum : "Album unknown", systemImage: "opticaldisc") {}
+            Button(!spotifyViewModel.currentAlbum.isEmpty ? spotifyViewModel.currentAlbum : "Album unknown", systemImage: "opticaldisc") {
+                SpotifyAPI.getSpotifyURI(from: spotifyViewModel.currentSongId, type: .album) { uri in
+                    if let uriString = uri, let url = URL(string: uriString) {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+            }
                 .labelStyle(.titleAndIcon)
 
             Divider()

@@ -6,6 +6,7 @@ class SpotifyViewModel: ObservableObject {
     @Published var currentSong: String = ""
     @Published var currentArtist: String = ""
     @Published var currentAlbum: String = ""
+    @Published var currentSongId: String = ""
 
     var currentSongTrunc: String {
         getStringBeforeCharacter(currentSong, character: "(")
@@ -26,6 +27,8 @@ class SpotifyViewModel: ObservableObject {
     private var spotifyModel: SpotifyModel
     private var timer: Timer?
     private var cancellables = Set<AnyCancellable>()
+
+    var spotifyAPI = SpotifyAPI()
 
     init() {
         self.spotifyModel = SpotifyModel()
@@ -55,6 +58,10 @@ class SpotifyViewModel: ObservableObject {
 
         spotifyModel.$currentAlbum
             .assign(to: \.currentAlbum, on: self)
+            .store(in: &cancellables)
+
+        spotifyModel.$currentSongId
+            .assign(to: \.currentSongId, on: self)
             .store(in: &cancellables)
     }
 
