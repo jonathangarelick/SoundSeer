@@ -5,7 +5,7 @@ class SpotifyModel {
     @Published var currentArtist: String = ""
     @Published var currentAlbum: String = ""
 
-    func getCurrentSong() {
+    func update() {
         let script = NSAppleScript(source: """
             tell application "Spotify"
                 if it is running then

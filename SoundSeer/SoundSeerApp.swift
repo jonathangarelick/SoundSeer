@@ -6,19 +6,24 @@ struct SoundSeerApp: App {
 
     var body: some Scene {
         MenuBarExtra {
-            Button(spotifyViewModel.currentArtist, systemImage: "person") {}
+            Button(!spotifyViewModel.currentSong.isEmpty ? spotifyViewModel.currentSong : "Song unknown", systemImage: "music.note") {}
                 .labelStyle(.titleAndIcon)
-            Button(spotifyViewModel.currentAlbum, systemImage: "opticaldisc") {}
+            Button(!spotifyViewModel.currentArtist.isEmpty ? spotifyViewModel.currentArtist : "Artist unknown", systemImage: "person") {}
+                .labelStyle(.titleAndIcon)
+            Button(!spotifyViewModel.currentAlbum.isEmpty ? spotifyViewModel.currentAlbum : "Album unknown", systemImage: "opticaldisc") {}
                 .labelStyle(.titleAndIcon)
 
             Divider()
-            
+
             Button("Quit") {
                 NSApplication.shared.terminate(nil)
             }
         } label: {
-            Image(systemName: "ear.badge.waveform")
-            Text(spotifyViewModel.currentSong)
+            if spotifyViewModel.nowPlaying.isEmpty {
+                Image(systemName: "ear.badge.waveform")
+            } else {
+                Text(spotifyViewModel.nowPlaying)
+            }
         }
     }
 }

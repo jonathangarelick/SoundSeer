@@ -1,10 +1,27 @@
 import Foundation
+import AppKit
 import Combine
 
 class SpotifyViewModel: ObservableObject {
     @Published var currentSong: String = ""
     @Published var currentArtist: String = ""
     @Published var currentAlbum: String = ""
+
+    var currentSongTrunc: String {
+        getStringBeforeCharacter(currentSong, character: "(")
+    }
+
+    var currentArtistTrunc: String {
+        getStringBeforeCharacter(currentArtist, character: ",")
+    }
+
+    var nowPlaying: String {
+        if currentSong.isEmpty || currentArtist.isEmpty {
+            return ""
+        } else {
+            return truncateText("\(currentSongTrunc) - \(currentArtistTrunc)", length: 30)
+        }
+    }
 
     private var spotifyModel: SpotifyModel
     private var timer: Timer?
@@ -18,7 +35,7 @@ class SpotifyViewModel: ObservableObject {
 
     private func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] _ in
-            self?.spotifyModel.getCurrentSong()
+            self?.spotifyModel.update()
         }
     }
 
@@ -44,4 +61,29 @@ class SpotifyViewModel: ObservableObject {
     deinit {
         stopTimer()
     }
+
+
+    private func truncateText(_ text: String, length: Int) -> String {
+        if text.count > length {
+            return String(text.prefix(length - 3)) + "..."
+        } else {
+            return text
+        }
+    }
+
+    func getStringBeforeCharacter(_ text: String, character: String) -> String {
+        let components = text.components(separatedBy: character)
+        if components.count > 1 {
+            return components[0].trimmingCharacters(in: .whitespaces)
+        } else {
+            return text
+        }
+    }
 }
+
+
+
+
+
+
+

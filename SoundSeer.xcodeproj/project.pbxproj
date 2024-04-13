@@ -12,7 +12,6 @@
 		9BE2FA1C2BC97CCC00A7124B /* SoundSeerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */; };
 		9BE2FA202BC97CCD00A7124B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */; };
 		9BE2FA232BC97CCD00A7124B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE2FA222BC97CCD00A7124B /* Preview Assets.xcassets */; };
-		9BE2FA3A2BC9CAD900A7124B /* SpotifyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA392BC9CAD900A7124B /* SpotifyManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +22,6 @@
 		9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9BE2FA222BC97CCD00A7124B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9BE2FA242BC97CCD00A7124B /* SoundSeer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SoundSeer.entitlements; sourceTree = "<group>"; };
-		9BE2FA392BC9CAD900A7124B /* SpotifyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +58,6 @@
 				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
 				9BE2FA242BC97CCD00A7124B /* SoundSeer.entitlements */,
 				9BE2FA212BC97CCD00A7124B /* Preview Content */,
-				9BE2FA392BC9CAD900A7124B /* SpotifyManager.swift */,
 				9BD4DCE12BC9E9D4001572F7 /* SpotifyModel.swift */,
 				9BD4DCE32BC9EC8B001572F7 /* SpotifyViewModel.swift */,
 			);
@@ -149,7 +146,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BE2FA3A2BC9CAD900A7124B /* SpotifyManager.swift in Sources */,
 				9BE2FA1C2BC97CCC00A7124B /* SoundSeerApp.swift in Sources */,
 				9BD4DCE22BC9E9D4001572F7 /* SpotifyModel.swift in Sources */,
 				9BD4DCE42BC9EC8B001572F7 /* SpotifyViewModel.swift in Sources */,
