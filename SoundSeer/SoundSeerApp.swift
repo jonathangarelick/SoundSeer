@@ -7,6 +7,12 @@ struct SoundSeerApp: App {
 
     var body: some Scene {
         MenuBarExtra {
+            Button("Next track", systemImage: "forward.end") {
+                SpotifyAPI.skipToNextTrack()
+            }.labelStyle(.titleAndIcon)
+
+            Divider()
+
             Button(!spotifyViewModel.currentSong.isEmpty ? spotifyViewModel.currentSong : "Song unknown", systemImage: "music.note") {
                 SpotifyAPI.getSpotifyURI(from: spotifyViewModel.currentSongId, type: .song) { uri in
                     if let uriString = uri, let url = URL(string: uriString) {
@@ -14,7 +20,9 @@ struct SoundSeerApp: App {
                     }
                 }
             }
-                .labelStyle(.titleAndIcon)
+            .labelStyle(.titleAndIcon)
+
+
             Button(!spotifyViewModel.currentArtist.isEmpty ? spotifyViewModel.currentArtist : "Artist unknown", systemImage: "person") {
                 SpotifyAPI.getSpotifyURI(from: spotifyViewModel.currentSongId, type: .artist) { uri in
                     if let uriString = uri, let url = URL(string: uriString) {
@@ -22,7 +30,7 @@ struct SoundSeerApp: App {
                     }
                 }
             }
-                .labelStyle(.titleAndIcon)
+            .labelStyle(.titleAndIcon)
             Button(!spotifyViewModel.currentAlbum.isEmpty ? spotifyViewModel.currentAlbum : "Album unknown", systemImage: "opticaldisc") {
                 SpotifyAPI.getSpotifyURI(from: spotifyViewModel.currentSongId, type: .album) { uri in
                     if let uriString = uri, let url = URL(string: uriString) {
@@ -30,7 +38,15 @@ struct SoundSeerApp: App {
                     }
                 }
             }
-                .labelStyle(.titleAndIcon)
+            .labelStyle(.titleAndIcon)
+
+            Divider()
+
+            Button("Copy Spotify URL", systemImage: "doc.on.doc") {
+                let pasteboard = NSPasteboard.general
+                pasteboard.declareTypes([.string], owner: nil)
+                pasteboard.setString("https://open.spotify.com/track/\(spotifyViewModel.currentSongId)", forType: .string)
+            }.labelStyle(.titleAndIcon)
 
             Divider()
 
@@ -44,6 +60,7 @@ struct SoundSeerApp: App {
                 Text(spotifyViewModel.nowPlaying)
             }
         }
+
     }
 }
 
