@@ -43,38 +43,73 @@ class SpotifyAPI {
         }
     }
 
-    static func getSpotifyURI(from id: String, type: URIType, completion: @escaping (String?) -> Void) {
-        getAccessToken { token in
-            guard let accessToken = token else {
-                completion(nil)
-                return
-            }
-
-            var url: String
-            switch type {
-            case .song:
-                url = "\(baseURL)/tracks/\(id)"
-            case .artist:
-                url = "\(baseURL)/artists/\(id)"
-            case .album:
-                url = "\(baseURL)/albums/\(id)"
-            }
-
-            let headers: HTTPHeaders = [
-                "Authorization": "Bearer \(accessToken)"
-            ]
-
-            AF.request(url, method: .get, headers: headers)
-                .validate()
-                .responseDecodable(of: URIResponse.self) { response in
-                    switch response.result {
-                    case .success(let uriResponse):
-                        completion(uriResponse.uri)
-                    case .failure(let error):
-                        print("Error getting URI: \(error.localizedDescription)")
-                        completion(nil)
-                    }
+    static func getSpotifyURI(from songID: String, type: URIType, completion: @escaping (String?) -> Void) {
+        switch type {
+        case .song:
+            getAccessToken { token in
+                guard let accessToken = token else {
+                    completion(nil)
+                    return
                 }
+
+                let url = "\(baseURL)/tracks/\(songID)"
+                let headers: HTTPHeaders = [
+                    "Authorization": "Bearer \(accessToken)"
+                ]
+
+                AF.request(url, method: .get, headers: headers)
+                    .validate()
+                    .responseDecodable(of: URIResponse.self) { response in
+                        switch response.result {
+                        case .success(let uriResponse):
+                            completion(uriResponse.uri)
+                        case .failure(let error):
+                            print("Error getting song URI: \(error.localizedDescription)")
+                            completion(nil)
+                        }
+                    }
+            }
+        case .artist, .album:
+            getArtistOrAlbumID(from: songID, type: type == .artist ? IDType.artist : IDType.album) { id in
+                guard let id = id else {
+                    completion(nil)
+                    return
+                }
+
+                getAccessToken { token in
+                    guard let accessToken = token else {
+                        completion(nil)
+                        return
+                    }
+
+                    let url: String
+                    switch type {
+                    case .artist:
+                        url = "\(baseURL)/artists/\(id)"
+                    case .album:
+                        url = "\(baseURL)/albums/\(id)"
+                    case .song:
+                        // This case is handled separately
+                        return
+                    }
+
+                    let headers: HTTPHeaders = [
+                        "Authorization": "Bearer \(accessToken)"
+                    ]
+
+                    AF.request(url, method: .get, headers: headers)
+                        .validate()
+                        .responseDecodable(of: URIResponse.self) { response in
+                            switch response.result {
+                            case .success(let uriResponse):
+                                completion(uriResponse.uri)
+                            case .failure(let error):
+                                print("Error getting URI: \(error.localizedDescription)")
+                                completion(nil)
+                            }
+                        }
+                }
+            }
         }
     }
 
