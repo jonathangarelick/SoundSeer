@@ -5,7 +5,7 @@ class SpotifyModel {
     @Published var currentArtist: String = ""
     @Published var currentAlbum: String = ""
     @Published var currentSongId: String = ""
-
+    
     func update() {
         let script = NSAppleScript(source: """
             tell application "Spotify"
@@ -20,10 +20,10 @@ class SpotifyModel {
             end tell
         """)
         var error: NSDictionary?
-
+        
         DispatchQueue.global().async {
             let result = script?.executeAndReturnError(&error)
-
+            
             DispatchQueue.main.async { [self] in
                 if let result = result {
                     currentSong = result.atIndex(1)?.stringValue ?? ""

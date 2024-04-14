@@ -7,7 +7,7 @@ struct SoundSeerApp: App {
 
     var body: some Scene {
         MenuBarExtra {
-            Button("Next track", systemImage: "forward.end") {
+            Button("Next Track", systemImage: "forward.end") {
                 SpotifyAPI.skipToNextTrack()
             }.labelStyle(.titleAndIcon)
 
@@ -49,7 +49,7 @@ struct SoundSeerApp: App {
             }.labelStyle(.titleAndIcon)
 
             Divider()
-
+            
             Button("Quit") {
                 NSApplication.shared.terminate(nil)
             }
@@ -60,6 +60,5 @@ struct SoundSeerApp: App {
                 Text(spotifyViewModel.nowPlaying)
             }
         }
-
     }
 }
