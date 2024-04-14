@@ -86,6 +86,8 @@ struct SoundSeerApp: App {
 
 
 
+// https://stackoverflow.com/questions/60707286/how-to-add-click-event-to-whole-view-in-swiftui
+
 
 // text stop display at "Everyday (feat. Rod Stewart, Miguel & Mark Ronso" (that's 48 chars)
 // https://sarunw.com/posts/swiftui-menu-bar-app
