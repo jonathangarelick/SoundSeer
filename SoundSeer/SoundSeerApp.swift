@@ -9,7 +9,9 @@ struct SoundSeerApp: App {
         MenuBarExtra {
             Button("Next Track", systemImage: "forward.end") {
                 SpotifyAPI.skipToNextTrack()
-            }.labelStyle(.titleAndIcon)
+            }
+            .labelStyle(.titleAndIcon)
+            .disabled(!spotifyViewModel.isApplicationRunning)
 
             Divider()
 
@@ -21,7 +23,7 @@ struct SoundSeerApp: App {
                 }
             }
             .labelStyle(.titleAndIcon)
-
+            .disabled(spotifyViewModel.currentSongId.isEmpty)
 
             Button(!spotifyViewModel.currentArtist.isEmpty ? spotifyViewModel.currentArtist : "Artist unknown", systemImage: "person") {
                 SpotifyAPI.getSpotifyURI(from: spotifyViewModel.currentSongId, type: .artist) { uri in
@@ -31,6 +33,8 @@ struct SoundSeerApp: App {
                 }
             }
             .labelStyle(.titleAndIcon)
+            .disabled(spotifyViewModel.currentSongId.isEmpty)
+
             Button(!spotifyViewModel.currentAlbum.isEmpty ? spotifyViewModel.currentAlbum : "Album unknown", systemImage: "opticaldisc") {
                 SpotifyAPI.getSpotifyURI(from: spotifyViewModel.currentSongId, type: .album) { uri in
                     if let uriString = uri, let url = URL(string: uriString) {
@@ -39,6 +43,7 @@ struct SoundSeerApp: App {
                 }
             }
             .labelStyle(.titleAndIcon)
+            .disabled(spotifyViewModel.currentSongId.isEmpty)
 
             Divider()
 
@@ -46,15 +51,17 @@ struct SoundSeerApp: App {
                 let pasteboard = NSPasteboard.general
                 pasteboard.declareTypes([.string], owner: nil)
                 pasteboard.setString("https://open.spotify.com/track/\(spotifyViewModel.currentSongId)", forType: .string)
-            }.labelStyle(.titleAndIcon)
+            }
+            .labelStyle(.titleAndIcon)
+            .disabled(spotifyViewModel.currentSongId.isEmpty)
 
             Divider()
-            
+
             Button("Quit") {
                 NSApplication.shared.terminate(nil)
             }
         } label: {
-            if spotifyViewModel.nowPlaying.isEmpty {
+            if !spotifyViewModel.isPlaying || spotifyViewModel.nowPlaying.isEmpty {
                 Image(systemName: "ear.badge.waveform")
             } else {
                 Text(spotifyViewModel.nowPlaying)

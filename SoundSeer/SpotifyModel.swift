@@ -5,9 +5,9 @@ class SpotifyModel {
     @Published var isPlaying: Bool = false
 
     @Published var currentSong: String = ""
+    @Published var currentSongId: String = ""
     @Published var currentArtist: String = ""
     @Published var currentAlbum: String = ""
-    @Published var currentSongId: String = ""
 
     let script = NSAppleScript(source: """
         (*

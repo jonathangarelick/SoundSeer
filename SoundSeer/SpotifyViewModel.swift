@@ -3,11 +3,14 @@ import AppKit
 import Combine
 
 class SpotifyViewModel: ObservableObject {
+    @Published var isApplicationRunning: Bool = false
+    @Published var isPlaying: Bool = false
+
     @Published var currentSong: String = ""
+    @Published var currentSongId: String = ""
     @Published var currentArtist: String = ""
     @Published var currentAlbum: String = ""
-    @Published var currentSongId: String = ""
-    
+
     var currentSongTrunc: String {
         getStringBeforeCharacter(currentSong, character: "(")
     }
@@ -48,20 +51,28 @@ class SpotifyViewModel: ObservableObject {
     }
     
     private func observeSpotifyModel() {
+        spotifyModel.$isApplicationRunning
+            .assign(to: \.isApplicationRunning, on: self)
+            .store(in: &cancellables)
+
+        spotifyModel.$isPlaying
+            .assign(to: \.isPlaying, on: self)
+            .store(in: &cancellables)
+
         spotifyModel.$currentSong
             .assign(to: \.currentSong, on: self)
             .store(in: &cancellables)
-        
+
+        spotifyModel.$currentSongId
+            .assign(to: \.currentSongId, on: self)
+            .store(in: &cancellables)
+
         spotifyModel.$currentArtist
             .assign(to: \.currentArtist, on: self)
             .store(in: &cancellables)
         
         spotifyModel.$currentAlbum
             .assign(to: \.currentAlbum, on: self)
-            .store(in: &cancellables)
-        
-        spotifyModel.$currentSongId
-            .assign(to: \.currentSongId, on: self)
             .store(in: &cancellables)
     }
     
