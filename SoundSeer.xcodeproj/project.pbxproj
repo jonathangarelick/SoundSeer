@@ -304,7 +304,6 @@
 				INFOPLIST_KEY_CFBundleDisplayName = SoundSeer;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSAppleEventsUsageDescription = "SoundSeer communicates with Spotify to read information and change playback.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "2024 Jonathan Garelick";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -339,7 +338,6 @@
 				INFOPLIST_KEY_CFBundleDisplayName = SoundSeer;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSAppleEventsUsageDescription = "SoundSeer communicates with Spotify to read information and change playback.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "2024 Jonathan Garelick";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
