@@ -11,6 +11,7 @@
 		9BC6B6892BCA2D49005421AE /* SpotifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */; };
 		9BD4DCE22BC9E9D4001572F7 /* SpotifyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4DCE12BC9E9D4001572F7 /* SpotifyModel.swift */; };
 		9BD4DCE42BC9EC8B001572F7 /* SpotifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4DCE32BC9EC8B001572F7 /* SpotifyViewModel.swift */; };
+		9BE240A62BCDBF2A0038F693 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BE240A52BCDBF2A0038F693 /* Info.plist */; };
 		9BE2FA1C2BC97CCC00A7124B /* SoundSeerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */; };
 		9BE2FA202BC97CCD00A7124B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */; };
 		9BE2FA232BC97CCD00A7124B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE2FA222BC97CCD00A7124B /* Preview Assets.xcassets */; };
@@ -20,6 +21,7 @@
 		9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPI.swift; sourceTree = "<group>"; };
 		9BD4DCE12BC9E9D4001572F7 /* SpotifyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyModel.swift; sourceTree = "<group>"; };
 		9BD4DCE32BC9EC8B001572F7 /* SpotifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyViewModel.swift; sourceTree = "<group>"; };
+		9BE240A52BCDBF2A0038F693 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BE2FA182BC97CCC00A7124B /* SoundSeer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundSeer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSeerApp.swift; sourceTree = "<group>"; };
 		9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 				9BD4DCE12BC9E9D4001572F7 /* SpotifyModel.swift */,
 				9BD4DCE32BC9EC8B001572F7 /* SpotifyViewModel.swift */,
 				9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */,
+				9BE240A52BCDBF2A0038F693 /* Info.plist */,
 			);
 			path = SoundSeer;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 			files = (
 				9BE2FA232BC97CCD00A7124B /* Preview Assets.xcassets in Resources */,
 				9BE2FA202BC97CCD00A7124B /* Assets.xcassets in Resources */,
+				9BE240A62BCDBF2A0038F693 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
