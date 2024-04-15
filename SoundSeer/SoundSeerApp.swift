@@ -62,7 +62,7 @@ struct SoundSeerApp: App {
             }
         } label: {
             if !spotifyViewModel.isPlaying || spotifyViewModel.nowPlaying.isEmpty {
-                Image(systemName: "ear.badge.waveform")
+                Image(systemName: "ear")
             } else {
                 Text(spotifyViewModel.nowPlaying)
             }
