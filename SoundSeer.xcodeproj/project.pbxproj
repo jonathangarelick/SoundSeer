@@ -216,7 +216,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -273,7 +273,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -301,13 +301,12 @@
 				INFOPLIST_KEY_CFBundleDisplayName = SoundSeer;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSAppleEventsUsageDescription = "SoundSeer uses AppleScript technology to communicate with Spotify.";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "This permission is necessary to read Spotify data and control playback.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "2024 Jonathan Garelick";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.garelick.SoundSeer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -337,13 +336,12 @@
 				INFOPLIST_KEY_CFBundleDisplayName = SoundSeer;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSAppleEventsUsageDescription = "SoundSeer uses AppleScript technology to communicate with Spotify.";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "This permission is necessary to read Spotify data and control playback.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "2024 Jonathan Garelick";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.garelick.SoundSeer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
