@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B8DFD3B2BCF3E29003F8A3B /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 9B8DFD3A2BCF3E29003F8A3B /* LaunchAtLogin */; };
 		9BC6B6872BCA2CDF005421AE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9BC6B6862BCA2CDF005421AE /* Alamofire */; };
 		9BC6B6892BCA2D49005421AE /* SpotifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */; };
 		9BD4DCE22BC9E9D4001572F7 /* SpotifyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4DCE12BC9E9D4001572F7 /* SpotifyModel.swift */; };
@@ -33,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B8DFD3B2BCF3E29003F8A3B /* LaunchAtLogin in Frameworks */,
 				9BC6B6872BCA2CDF005421AE /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -97,6 +99,7 @@
 			name = SoundSeer;
 			packageProductDependencies = (
 				9BC6B6862BCA2CDF005421AE /* Alamofire */,
+				9B8DFD3A2BCF3E29003F8A3B /* LaunchAtLogin */,
 			);
 			productName = SoundSeer;
 			productReference = 9BE2FA182BC97CCC00A7124B /* SoundSeer.app */;
@@ -128,6 +131,7 @@
 			mainGroup = 9BE2FA0F2BC97CCC00A7124B;
 			packageReferences = (
 				9BC6B6852BCA2CDF005421AE /* XCRemoteSwiftPackageReference "Alamofire" */,
+				9B8DFD392BCF3E29003F8A3B /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
 			);
 			productRefGroup = 9BE2FA192BC97CCC00A7124B /* Products */;
 			projectDirPath = "";
@@ -377,6 +381,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9B8DFD392BCF3E29003F8A3B /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin-Modern";
+			requirement = {
+				kind = revision;
+				revision = a04ec1c363be3627734f6dad757d82f5d4fa8fcc;
+			};
+		};
 		9BC6B6852BCA2CDF005421AE /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -388,6 +400,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9B8DFD3A2BCF3E29003F8A3B /* LaunchAtLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B8DFD392BCF3E29003F8A3B /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */;
+			productName = LaunchAtLogin;
+		};
 		9BC6B6862BCA2CDF005421AE /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9BC6B6852BCA2CDF005421AE /* XCRemoteSwiftPackageReference "Alamofire" */;

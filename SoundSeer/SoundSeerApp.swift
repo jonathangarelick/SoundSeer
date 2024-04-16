@@ -1,5 +1,6 @@
 import SwiftUI
-import AppKit
+
+import LaunchAtLogin
 
 @main
 struct SoundSeerApp: App {
@@ -56,6 +57,15 @@ struct SoundSeerApp: App {
             .disabled(spotifyViewModel.currentSongId.isEmpty)
 
             Divider()
+
+            Button {
+                LaunchAtLogin.isEnabled.toggle()
+            } label: {
+                if LaunchAtLogin.isEnabled {
+                    Image(systemName: "checkmark")
+                }
+                Text("Open at Login")
+            }
 
             Button("Quit") {
                 NSApplication.shared.terminate(nil)
