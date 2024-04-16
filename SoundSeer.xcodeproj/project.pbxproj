@@ -17,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9B132ECC2BCEC94500D6237D /* ENTITLEMENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ENTITLEMENTS.md; sourceTree = "<group>"; };
 		9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPI.swift; sourceTree = "<group>"; };
 		9BD4DCE12BC9E9D4001572F7 /* SpotifyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyModel.swift; sourceTree = "<group>"; };
 		9BD4DCE32BC9EC8B001572F7 /* SpotifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyViewModel.swift; sourceTree = "<group>"; };
@@ -42,6 +43,7 @@
 		9BE2FA0F2BC97CCC00A7124B = {
 			isa = PBXGroup;
 			children = (
+				9B132ECC2BCEC94500D6237D /* ENTITLEMENTS.md */,
 				9BE2FA1A2BC97CCC00A7124B /* SoundSeer */,
 				9BE2FA192BC97CCC00A7124B /* Products */,
 			);
@@ -291,7 +293,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"SoundSeer/Preview Content\"";
 				DEVELOPMENT_TEAM = 5DR54W29BC;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -307,7 +309,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = net.garelick.SoundSeer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -326,7 +328,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"SoundSeer/Preview Content\"";
 				DEVELOPMENT_TEAM = 5DR54W29BC;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -342,7 +344,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = net.garelick.SoundSeer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
