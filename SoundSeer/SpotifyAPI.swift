@@ -1,7 +1,7 @@
 import Foundation
-import Alamofire
+import OSLog
 
-// https://nshipster.com/secrets/
+import Alamofire
 
 class SpotifyAPI {
     static let baseURL = "https://api.spotify.com/v1"
@@ -10,6 +10,8 @@ class SpotifyAPI {
 
     static var accessToken: String?
     static var expirationTime: Date?
+
+    static let log = Logger()
 
     static func getAccessToken(completion: @escaping (String?) -> Void) {
         if let token = accessToken, let expiration = expirationTime, expiration > Date() {
@@ -21,10 +23,17 @@ class SpotifyAPI {
             let headers: HTTPHeaders = [
                 "Content-Type": "application/x-www-form-urlencoded"
             ]
+
+            guard let clientSecret = clientSecret else {
+                log.error("Client secret is missing")
+                completion(nil)
+                return
+            }
+
             let parameters: Parameters = [
                 "grant_type": "client_credentials",
                 "client_id": clientID,
-                "client_secret": clientSecret!
+                "client_secret": clientSecret
             ]
 
             AF.request(url, method: .post, parameters: parameters, headers: headers)
@@ -36,7 +45,7 @@ class SpotifyAPI {
                         expirationTime = Date().addingTimeInterval(TimeInterval(tokenResponse.expiresIn))
                         completion(accessToken)
                     case .failure(let error):
-                        print("Error getting access token: \(error.localizedDescription)")
+                        log.error("Error getting access token: \(error.localizedDescription)")
                         completion(nil)
                     }
                 }
@@ -64,7 +73,7 @@ class SpotifyAPI {
                         case .success(let uriResponse):
                             completion(uriResponse.uri)
                         case .failure(let error):
-                            print("Error getting song URI: \(error.localizedDescription)")
+                            log.error("Error getting song URI: \(error.localizedDescription)")
                             completion(nil)
                         }
                     }
@@ -104,7 +113,7 @@ class SpotifyAPI {
                             case .success(let uriResponse):
                                 completion(uriResponse.uri)
                             case .failure(let error):
-                                print("Error getting URI: \(error.localizedDescription)")
+                                log.error("Error getting URI: \(error.localizedDescription)")
                                 completion(nil)
                             }
                         }
@@ -145,7 +154,7 @@ class SpotifyAPI {
                             }
                         }
                     case .failure(let error):
-                        print("Error getting \(type) ID: \(error.localizedDescription)")
+                        log.error("Error getting artist or album ID: \(error.localizedDescription)")
                         completion(nil)
                     }
                 }
@@ -164,7 +173,7 @@ class SpotifyAPI {
         script?.executeAndReturnError(&errorInfo)
 
         if let error = errorInfo {
-            print("AppleScript execution error: \(error)")
+            log.error("AppleScript execution error: \(error)")
         }
     }
 }
