@@ -4,7 +4,7 @@ import Combine
 
 class SpotifyViewModel: ObservableObject {
     @Published var isApplicationRunning: Bool = false
-    @Published var isPlaying: Bool = false
+    @Published var playerState: PlayerState = .stopped
 
     @Published var currentSong: String = ""
     @Published var currentSongId: String = ""
@@ -35,28 +35,28 @@ class SpotifyViewModel: ObservableObject {
     
     init() {
         self.spotifyModel = SpotifyModel()
-        startTimer()
+//        startTimer()
         observeSpotifyModel()
     }
     
-    private func startTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] _ in
-            self?.spotifyModel.update()
-        }
-    }
-    
-    private func stopTimer() {
-        timer?.invalidate()
-        timer = nil
-    }
+//    private func startTimer() {
+//        timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] _ in
+//            self?.spotifyModel.update()
+//        }
+//    }
+//    
+//    private func stopTimer() {
+//        timer?.invalidate()
+//        timer = nil
+//    }
     
     private func observeSpotifyModel() {
         spotifyModel.$isApplicationRunning
             .assign(to: \.isApplicationRunning, on: self)
             .store(in: &cancellables)
 
-        spotifyModel.$isPlaying
-            .assign(to: \.isPlaying, on: self)
+        spotifyModel.$playerState
+            .assign(to: \.playerState, on: self)
             .store(in: &cancellables)
 
         spotifyModel.$currentSong
@@ -76,9 +76,9 @@ class SpotifyViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    deinit {
-        stopTimer()
-    }
+//    deinit {
+//        stopTimer()
+//    }
     
     
     private func truncateText(_ text: String, length: Int) -> String {

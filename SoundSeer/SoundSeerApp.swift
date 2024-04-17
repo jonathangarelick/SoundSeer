@@ -71,7 +71,7 @@ struct SoundSeerApp: App {
                 NSApplication.shared.terminate(nil)
             }
         } label: {
-            if !spotifyViewModel.isPlaying || spotifyViewModel.nowPlaying.isEmpty {
+            if spotifyViewModel.playerState != PlayerState.playing || spotifyViewModel.nowPlaying.isEmpty {
                 Image(systemName: "ear")
             } else {
                 Text(spotifyViewModel.nowPlaying)

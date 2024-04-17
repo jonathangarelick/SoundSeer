@@ -1,8 +1,15 @@
 import Foundation
 
+// The AppleScript strings are the same, just lowercase
+enum PlayerState: String {
+    case playing = "Playing"
+    case paused = "Paused"
+    case stopped = "Stopped"
+}
+
 class SpotifyModel {
     @Published var isApplicationRunning: Bool = false
-    @Published var isPlaying: Bool = false
+    @Published var playerState: PlayerState = .stopped
 
     @Published var currentSong: String = ""
     @Published var currentSongId: String = ""
@@ -14,7 +21,7 @@ class SpotifyModel {
 
         OUTPUT FORMAT:
         [1] isApplicationRunning: Bool
-        [2] isPlaying: Bool
+        [2] playerState: String
         [3] currentSong: String
         [4] currentSongId: String
         [5] currentArtist: String
@@ -26,19 +33,15 @@ class SpotifyModel {
                 return {false}
             end if
 
-            return {true, player state is playing, name of current track, id of current track, artist of current track, album of current track}
+            return {true, player state as text, name of current track, id of current track, artist of current track, album of current track}
         end tell
     """)
 
-    init() {
-        // "Compiling scripts is relatively expensive"
-        // https://forums.developer.apple.com/forums/thread/98830
-        DispatchQueue.global().async { [self] in
-            script?.compileAndReturnError(nil)
-        }
-    }
+    init() { firstUpdate() }
 
-    func update() {
+    deinit { DistributedNotificationCenter.default().removeObserver(self) }
+
+    func firstUpdate() {
         // https://developer.apple.com/documentation/foundation/nsapplescript/error_dictionary_keys
         // https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/reference/ASLR_error_codes.html
         // Handle this later, if ever
@@ -50,13 +53,28 @@ class SpotifyModel {
             DispatchQueue.main.async { [self] in
                 if let result = result {
                     isApplicationRunning = result.atIndex(1)?.booleanValue ?? false
-                    isPlaying = result.atIndex(2)?.booleanValue ?? false
+                    playerState = PlayerState(rawValue: result.atIndex(2)?.stringValue?.capitalized ?? "Stopped") ?? .stopped
                     currentSong = result.atIndex(3)?.stringValue ?? ""
                     currentSongId = result.atIndex(4)?.stringValue?.components(separatedBy: ":").last ?? ""
                     currentArtist = result.atIndex(5)?.stringValue ?? ""
                     currentAlbum = result.atIndex(6)?.stringValue ?? ""
                 }
+
+                DistributedNotificationCenter.default().addObserver(self, selector: #selector(handlePlaybackStateChanged(_:)), name: Notification.Name("com.spotify.client.PlaybackStateChanged"), object: nil)
             }
+        }
+    }
+
+    @objc func handlePlaybackStateChanged(_ notification: Notification) {
+        if let userInfo = notification.userInfo {
+            // These are swapped around to be concise
+            playerState = PlayerState(rawValue: userInfo["Player State"] as? String ?? "") ?? .stopped
+            isApplicationRunning = playerState != .stopped
+
+            currentSong = userInfo["Name"] as? String ?? ""
+            currentSongId = (userInfo["Track ID"] as? String)?.components(separatedBy: ":").last ?? ""
+            currentArtist = userInfo["Artist"] as? String ?? ""
+            currentAlbum = userInfo["Album"] as? String ?? ""
         }
     }
 }
