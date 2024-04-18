@@ -1,4 +1,7 @@
 import Foundation
+import ScriptingBridge
+
+// https://majestysoftware.wordpress.com/2015/03/31/swift-scripting-part-1/
 
 // The AppleScript strings are the same, just lowercase
 enum PlayerState: String {
@@ -15,6 +18,8 @@ class SpotifyModel {
     @Published var currentSongId: String = ""
     @Published var currentArtist: String = ""
     @Published var currentAlbum: String = ""
+
+//    var spotifyApp: SpotifyApplication?
 
     let script = NSAppleScript(source: """
         (*
@@ -37,7 +42,10 @@ class SpotifyModel {
         end tell
     """)
 
-    init() { firstUpdate() }
+    init() {
+        let spotifyApp: AnyObject = SBApplication(bundleIdentifier: "com.spotify.client")!
+        firstUpdate()
+    }
 
     deinit { DistributedNotificationCenter.default().removeObserver(self) }
 
@@ -78,3 +86,23 @@ class SpotifyModel {
         }
     }
 }
+
+//@objc public protocol SBObjectProtocol: NSObjectProtocol {
+//    func get() -> Any!
+//}
+//@objc public protocol SBApplicationProtocol: SBObjectProtocol {
+//    func activate()
+//    var delegate: SBApplicationDelegate! { get set }
+//    @objc optional var isRunning: Bool { get }
+//}
+
+//@objc public protocol SpotifyApplication: SBApplicationProtocol {
+//    @objc optional var currentTrack: SpotifyTrack { get } // The current playing track.
+//}
+//extension SBApplication: SpotifyApplication {}
+//
+//
+//@objc public protocol SpotifyTrack: SBObjectProtocol {
+//    @objc optional var name: String { get } // The name of the track.
+//}
+//extension SBObject: SpotifyTrack {}

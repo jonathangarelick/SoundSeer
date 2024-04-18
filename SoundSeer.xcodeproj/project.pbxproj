@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B1461312BD08573009C931B /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B1461302BD08573009C931B /* ScriptingBridge.framework */; };
 		9B8DFD3B2BCF3E29003F8A3B /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 9B8DFD3A2BCF3E29003F8A3B /* LaunchAtLogin */; };
 		9BC6B6872BCA2CDF005421AE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9BC6B6862BCA2CDF005421AE /* Alamofire */; };
 		9BC6B6892BCA2D49005421AE /* SpotifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */; };
@@ -19,6 +20,9 @@
 
 /* Begin PBXFileReference section */
 		9B132ECC2BCEC94500D6237D /* ENTITLEMENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ENTITLEMENTS.md; sourceTree = "<group>"; };
+		9B14612E2BD084E3009C931B /* Spotify.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spotify.h; sourceTree = "<group>"; };
+		9B1461302BD08573009C931B /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
+		9B1461322BD086E5009C931B /* SoundSeer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundSeer-Bridging-Header.h"; sourceTree = "<group>"; };
 		9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPI.swift; sourceTree = "<group>"; };
 		9BD4DCE12BC9E9D4001572F7 /* SpotifyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyModel.swift; sourceTree = "<group>"; };
 		9BD4DCE32BC9EC8B001572F7 /* SpotifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyViewModel.swift; sourceTree = "<group>"; };
@@ -35,6 +39,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B8DFD3B2BCF3E29003F8A3B /* LaunchAtLogin in Frameworks */,
+				9B1461312BD08573009C931B /* ScriptingBridge.framework in Frameworks */,
 				9BC6B6872BCA2CDF005421AE /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -42,12 +47,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B14612F2BD08573009C931B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9B1461302BD08573009C931B /* ScriptingBridge.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9BE2FA0F2BC97CCC00A7124B = {
 			isa = PBXGroup;
 			children = (
+				9B14612E2BD084E3009C931B /* Spotify.h */,
 				9B132ECC2BCEC94500D6237D /* ENTITLEMENTS.md */,
 				9BE2FA1A2BC97CCC00A7124B /* SoundSeer */,
 				9BE2FA192BC97CCC00A7124B /* Products */,
+				9B14612F2BD08573009C931B /* Frameworks */,
+				9B1461322BD086E5009C931B /* SoundSeer-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -117,6 +133,7 @@
 				TargetAttributes = {
 					9BE2FA172BC97CCC00A7124B = {
 						CreatedOnToolsVersion = 15.3;
+						LastSwiftMigration = 1530;
 					};
 				};
 			};
@@ -292,12 +309,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SoundSeer/SoundSeer.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 3;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SoundSeer/Preview Content\"";
 				DEVELOPMENT_TEAM = 5DR54W29BC;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -318,6 +337,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "SoundSeer-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -327,12 +348,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SoundSeer/SoundSeer.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 3;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SoundSeer/Preview Content\"";
 				DEVELOPMENT_TEAM = 5DR54W29BC;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -353,6 +376,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "SoundSeer-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
