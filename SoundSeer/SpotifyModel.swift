@@ -25,6 +25,10 @@ class SpotifyModel {
 
     deinit { DistributedNotificationCenter.default().removeObserver(self) }
 
+    func nextTrack() {
+        spotifyApp.nextTrack?()
+    }
+
     private func resetData() {
         playerState = .stopped
 
