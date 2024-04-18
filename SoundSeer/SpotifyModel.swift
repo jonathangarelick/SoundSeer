@@ -43,7 +43,7 @@ class SpotifyModel {
     """)
 
     init() {
-        let spotifyApp: AnyObject = SBApplication(bundleIdentifier: "com.spotify.client")!
+        let spotifyApp: SpotifyApplication = SBApplication(bundleIdentifier: "com.spotify.client")!
         firstUpdate()
     }
 
