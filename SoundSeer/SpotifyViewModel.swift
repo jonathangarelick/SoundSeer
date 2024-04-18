@@ -17,7 +17,7 @@ class SpotifyViewModel: ObservableObject {
             if currentSong.isEmpty || currentArtist.isEmpty {
                 return ""
             } else {
-                return "\(currentSong.prefixBefore("(")) - \(currentArtist.prefixBefore(","))".truncate(length: 30)
+                return "\(currentSong.prefixBefore("(")) · \(currentArtist.prefixBefore(","))".truncate(length: 30)
             }
         }
     }
