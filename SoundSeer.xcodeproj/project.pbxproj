@@ -20,7 +20,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9B132ECC2BCEC94500D6237D /* ENTITLEMENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ENTITLEMENTS.md; sourceTree = "<group>"; };
 		9B14612E2BD084E3009C931B /* Spotify.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spotify.h; sourceTree = "<group>"; };
 		9B1461302BD08573009C931B /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		9B1461322BD086E5009C931B /* SoundSeer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundSeer-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -60,12 +59,9 @@
 		9BE2FA0F2BC97CCC00A7124B = {
 			isa = PBXGroup;
 			children = (
-				9B14612E2BD084E3009C931B /* Spotify.h */,
-				9B132ECC2BCEC94500D6237D /* ENTITLEMENTS.md */,
-				9BE2FA1A2BC97CCC00A7124B /* SoundSeer */,
-				9BE2FA192BC97CCC00A7124B /* Products */,
 				9B14612F2BD08573009C931B /* Frameworks */,
-				9B1461322BD086E5009C931B /* SoundSeer-Bridging-Header.h */,
+				9BE2FA192BC97CCC00A7124B /* Products */,
+				9BE2FA1A2BC97CCC00A7124B /* SoundSeer */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,14 +76,16 @@
 		9BE2FA1A2BC97CCC00A7124B /* SoundSeer */ = {
 			isa = PBXGroup;
 			children = (
-				9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */,
 				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
-				9BE2FA242BC97CCD00A7124B /* SoundSeer.entitlements */,
 				9BE2FA212BC97CCD00A7124B /* Preview Content */,
-				9BD4DCE12BC9E9D4001572F7 /* SpotifyModel.swift */,
-				9BD4DCE32BC9EC8B001572F7 /* SpotifyViewModel.swift */,
+				9B1461322BD086E5009C931B /* SoundSeer-Bridging-Header.h */,
+				9BE2FA242BC97CCD00A7124B /* SoundSeer.entitlements */,
+				9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */,
+				9B14612E2BD084E3009C931B /* Spotify.h */,
 				9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */,
 				9BAC6E102BD0A082004B80E1 /* SpotifyApplication.swift */,
+				9BD4DCE12BC9E9D4001572F7 /* SpotifyModel.swift */,
+				9BD4DCE32BC9EC8B001572F7 /* SpotifyViewModel.swift */,
 			);
 			path = SoundSeer;
 			sourceTree = "<group>";
@@ -341,7 +339,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "SoundSeer-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SoundSeer/SoundSeer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -380,7 +378,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "SoundSeer-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SoundSeer/SoundSeer-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
