@@ -12,7 +12,7 @@ struct SoundSeerApp: App {
                 SpotifyAPI.skipToNextTrack()
             }
             .labelStyle(.titleAndIcon)
-            .disabled(!spotifyViewModel.isApplicationRunning)
+            .disabled(spotifyViewModel.playerState != .playing)
 
             Divider()
 

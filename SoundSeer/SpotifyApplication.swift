@@ -12,7 +12,7 @@ import ScriptingBridge
 }
 
 // MARK: SpotifyEPlS
-@objc public enum SpotifyEPlS : AEKeyword {
+@objc public enum SpotifyEPlSTyped : AEKeyword {
     case stopped = 0x6b505353 /* 'kPSS' */
     case playing = 0x6b505350 /* 'kPSP' */
     case paused = 0x6b505370 /* 'kPSp' */
@@ -22,7 +22,7 @@ import ScriptingBridge
 @objc public protocol SpotifyApplication: SBApplicationProtocol {
     @objc optional var currentTrack: SpotifyTrack { get } // The current playing track.
     @objc optional var soundVolume: Int { get } // The sound output volume (0 = minimum, 100 = maximum)
-    @objc optional var playerState: SpotifyEPlS { get } // Is Spotify stopped, paused, or playing?
+    @objc optional var playerState: SpotifyEPlSTyped { get } // Is Spotify stopped, paused, or playing?
     @objc optional var playerPosition: Double { get } // The player’s position within the currently playing track in seconds.
     @objc optional var repeatingEnabled: Bool { get } // Is repeating enabled in the current playback context?
     @objc optional var repeating: Bool { get } // Is repeating on or off?

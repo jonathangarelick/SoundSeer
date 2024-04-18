@@ -3,8 +3,7 @@ import AppKit
 import Combine
 
 class SpotifyViewModel: ObservableObject {
-    @Published var isApplicationRunning: Bool = false
-    @Published var playerState: SpotifyEPlS = .stopped
+    @Published var playerState: SpotifyEPlSTyped = .stopped
 
     @Published var currentSong: String = ""
     @Published var currentSongId: String = ""
@@ -51,10 +50,6 @@ class SpotifyViewModel: ObservableObject {
 //    }
     
     private func observeSpotifyModel() {
-        spotifyModel.$isApplicationRunning
-            .assign(to: \.isApplicationRunning, on: self)
-            .store(in: &cancellables)
-
         spotifyModel.$playerState
             .assign(to: \.playerState, on: self)
             .store(in: &cancellables)
