@@ -9,28 +9,28 @@ struct SoundSeerApp: App {
     var body: some Scene {
         MenuBarExtra {
             Button("Next Track", systemImage: "forward.end", action: spotifyViewModel.nextTrack)
-            .labelStyle(.titleAndIcon)
-            .disabled(spotifyViewModel.playerState != .paused && spotifyViewModel.playerState != .playing)
+                .labelStyle(.titleAndIcon)
+                .disabled(spotifyViewModel.playerState != .paused && spotifyViewModel.playerState != .playing)
 
             Divider()
 
             Button(!spotifyViewModel.currentSong.isEmpty ? spotifyViewModel.currentSong : "Song unknown", systemImage: "music.note", action: spotifyViewModel.openCurrentSong)
-            .labelStyle(.titleAndIcon)
-            .disabled(spotifyViewModel.currentSongId.isEmpty)
+                .labelStyle(.titleAndIcon)
+                .disabled(spotifyViewModel.currentSongId.isEmpty)
 
             Button(!spotifyViewModel.currentArtist.isEmpty ? spotifyViewModel.currentArtist : "Artist unknown", systemImage: "person", action: spotifyViewModel.openCurrentArtist)
-            .labelStyle(.titleAndIcon)
-            .disabled(spotifyViewModel.currentSongId.isEmpty)
+                .labelStyle(.titleAndIcon)
+                .disabled(spotifyViewModel.currentSongId.isEmpty)
 
             Button(!spotifyViewModel.currentAlbum.isEmpty ? spotifyViewModel.currentAlbum : "Album unknown", systemImage: "opticaldisc", action: spotifyViewModel.openCurrentAlbum)
-            .labelStyle(.titleAndIcon)
-            .disabled(spotifyViewModel.currentSongId.isEmpty)
+                .labelStyle(.titleAndIcon)
+                .disabled(spotifyViewModel.currentSongId.isEmpty)
 
             Divider()
 
             Button("Copy Spotify URL", systemImage: "doc.on.doc", action: spotifyViewModel.copySpotifyExternalURL)
-            .labelStyle(.titleAndIcon)
-            .disabled(spotifyViewModel.currentSongId.isEmpty)
+                .labelStyle(.titleAndIcon)
+                .disabled(spotifyViewModel.currentSongId.isEmpty)
 
             Divider()
 
