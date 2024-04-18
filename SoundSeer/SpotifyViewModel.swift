@@ -4,7 +4,7 @@ import Combine
 
 class SpotifyViewModel: ObservableObject {
     @Published var isApplicationRunning: Bool = false
-    @Published var playerState: PlayerState = .stopped
+    @Published var playerState: SpotifyEPlS = .stopped
 
     @Published var currentSong: String = ""
     @Published var currentSongId: String = ""
