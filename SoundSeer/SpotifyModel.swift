@@ -1,62 +1,62 @@
-import Foundation
+import AppKit
+import ScriptingBridge
 
 class SpotifyModel {
-    @Published var isApplicationRunning: Bool = false
-    @Published var isPlaying: Bool = false
+    @Published var playerState: SpotifyEPlSTyped = .stopped
 
     @Published var currentSong: String = ""
     @Published var currentSongId: String = ""
     @Published var currentArtist: String = ""
     @Published var currentAlbum: String = ""
 
-    let script = NSAppleScript(source: """
-        (*
+    private let spotifyApp: SpotifyApplication = SBApplication(bundleIdentifier: "com.spotify.client")!
 
-        OUTPUT FORMAT:
-        [1] isApplicationRunning: Bool
-        [2] isPlaying: Bool
-        [3] currentSong: String
-        [4] currentSongId: String
-        [5] currentArtist: String
-        [6] currentAlbum: String
-
-        *)
-        tell application "Spotify"
-            if it is not running then
-                return {false}
-            end if
-
-            return {true, player state is playing, name of current track, id of current track, artist of current track, album of current track}
-        end tell
-    """)
+    private let notificationCenter = DistributedNotificationCenter.default()
+    private let notificationName = Notification.Name("com.spotify.client.PlaybackStateChanged")
 
     init() {
-        // "Compiling scripts is relatively expensive"
-        // https://forums.developer.apple.com/forums/thread/98830
-        DispatchQueue.global().async { [self] in
-            script?.compileAndReturnError(nil)
+        // Need to trigger a "fake" event when SoundSeer is first opened
+        update()
+
+        notificationCenter.addObserver(forName: notificationName, object: nil, queue: nil) { [weak self] _ in
+            self?.update()
         }
     }
 
-    func update() {
-        // https://developer.apple.com/documentation/foundation/nsapplescript/error_dictionary_keys
-        // https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/reference/ASLR_error_codes.html
-        // Handle this later, if ever
-        var error: NSDictionary?
+    deinit { DistributedNotificationCenter.default().removeObserver(self) }
 
-        DispatchQueue.global().async { [self] in
-            let result = script?.executeAndReturnError(&error)
+    func nextTrack() {
+        spotifyApp.nextTrack?()
+    }
 
-            DispatchQueue.main.async { [self] in
-                if let result = result {
-                    isApplicationRunning = result.atIndex(1)?.booleanValue ?? false
-                    isPlaying = result.atIndex(2)?.booleanValue ?? false
-                    currentSong = result.atIndex(3)?.stringValue ?? ""
-                    currentSongId = result.atIndex(4)?.stringValue?.components(separatedBy: ":").last ?? ""
-                    currentArtist = result.atIndex(5)?.stringValue ?? ""
-                    currentAlbum = result.atIndex(6)?.stringValue ?? ""
-                }
-            }
+    private func resetData() {
+        playerState = .stopped
+
+        currentSong = ""
+        currentSongId = ""
+        currentArtist = ""
+        currentAlbum = ""
+    }
+
+    private func update() {
+        if !(spotifyApp.isRunning ?? false) {
+            resetData()
+            return
         }
+
+        // This will open the app if it is closed, so we need to check isRunning first
+        playerState = spotifyApp.playerState ?? .stopped
+
+        // Sometimes the AEKeyword will be 0 when the app is killed
+        // Something about the Objective-C bridge allows the enum to still be created
+        if playerState != .paused && playerState != .playing {
+            resetData()
+            return
+        }
+
+        currentSong = spotifyApp.currentTrack?.name ?? ""
+        currentSongId = spotifyApp.currentTrack?.id?().components(separatedBy: ":").last ?? ""
+        currentArtist = spotifyApp.currentTrack?.artist ?? ""
+        currentAlbum = spotifyApp.currentTrack?.album ?? ""
     }
 }

@@ -2,61 +2,33 @@ import Foundation
 import AppKit
 import Combine
 
+import LaunchAtLogin
+
 class SpotifyViewModel: ObservableObject {
-    @Published var isApplicationRunning: Bool = false
-    @Published var isPlaying: Bool = false
+    @Published private(set) var playerState: SpotifyEPlSTyped = .stopped
 
-    @Published var currentSong: String = ""
-    @Published var currentSongId: String = ""
-    @Published var currentArtist: String = ""
-    @Published var currentAlbum: String = ""
+    @Published private(set) var currentSong: String = ""
+    @Published private(set) var currentSongId: String = ""
+    @Published private(set) var currentArtist: String = ""
+    @Published private(set) var currentAlbum: String = ""
 
-    var currentSongTrunc: String {
-        getStringBeforeCharacter(currentSong, character: "(")
-    }
-    
-    var currentArtistTrunc: String {
-        getStringBeforeCharacter(currentArtist, character: ",")
-    }
-    
     var nowPlaying: String {
-        if currentSong.isEmpty || currentArtist.isEmpty {
-            return ""
-        } else {
-            return truncateText("\(currentSongTrunc) - \(currentArtistTrunc)", length: 30)
+        get {
+            if currentSong.isEmpty || currentArtist.isEmpty {
+                return ""
+            } else {
+                return "\(currentSong.prefixBefore("(")) · \(currentArtist.prefixBefore(","))".truncate(length: 30)
+            }
         }
     }
-    
-    private var spotifyModel: SpotifyModel
-    private var timer: Timer?
-    private var cancellables = Set<AnyCancellable>()
-    
-    var spotifyAPI = SpotifyAPI()
-    
-    init() {
-        self.spotifyModel = SpotifyModel()
-        startTimer()
-        observeSpotifyModel()
-    }
-    
-    private func startTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] _ in
-            self?.spotifyModel.update()
-        }
-    }
-    
-    private func stopTimer() {
-        timer?.invalidate()
-        timer = nil
-    }
-    
-    private func observeSpotifyModel() {
-        spotifyModel.$isApplicationRunning
-            .assign(to: \.isApplicationRunning, on: self)
-            .store(in: &cancellables)
 
-        spotifyModel.$isPlaying
-            .assign(to: \.isPlaying, on: self)
+    private let spotifyModel: SpotifyModel = SpotifyModel()
+
+    private var cancellables = Set<AnyCancellable>()
+
+    init() {
+        spotifyModel.$playerState
+            .assign(to: \.playerState, on: self)
             .store(in: &cancellables)
 
         spotifyModel.$currentSong
@@ -70,32 +42,52 @@ class SpotifyViewModel: ObservableObject {
         spotifyModel.$currentArtist
             .assign(to: \.currentArtist, on: self)
             .store(in: &cancellables)
-        
+
         spotifyModel.$currentAlbum
             .assign(to: \.currentAlbum, on: self)
             .store(in: &cancellables)
     }
-    
-    deinit {
-        stopTimer()
+
+    func nextTrack() {
+        spotifyModel.nextTrack()
     }
-    
-    
-    private func truncateText(_ text: String, length: Int) -> String {
-        if text.count > length {
-            return String(text.prefix(length - 3)) + "..."
-        } else {
-            return text
+
+    func openCurrentSong() {
+        SpotifyAPI.getSpotifyURI(from: currentSongId, type: .song) { uri in
+            if let uriString = uri, let url = URL(string: uriString) {
+                NSWorkspace.shared.open(url)
+            }
         }
     }
-    
-    func getStringBeforeCharacter(_ text: String, character: String) -> String {
-        let components = text.components(separatedBy: character)
-        if components.count > 1 {
-            return components[0].trimmingCharacters(in: .whitespaces)
-        } else {
-            return text
+
+    func openCurrentArtist() {
+        SpotifyAPI.getSpotifyURI(from: currentSongId, type: .artist) { uri in
+            if let uriString = uri, let url = URL(string: uriString) {
+                NSWorkspace.shared.open(url)
+            }
         }
+    }
+
+    func openCurrentAlbum() {
+        SpotifyAPI.getSpotifyURI(from: currentSongId, type: .album) { uri in
+            if let uriString = uri, let url = URL(string: uriString) {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    }
+
+    func copySpotifyExternalURL() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString("https://open.spotify.com/track/\(currentSongId)", forType: .string)
+    }
+
+    func toggleOpenAtLogin() {
+        LaunchAtLogin.isEnabled.toggle()
+    }
+
+    func quitSoundSeer() {
+        NSApplication.shared.terminate(nil)
     }
 }
 

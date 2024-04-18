@@ -8,70 +8,42 @@ struct SoundSeerApp: App {
 
     var body: some Scene {
         MenuBarExtra {
-            Button("Next Track", systemImage: "forward.end") {
-                SpotifyAPI.skipToNextTrack()
-            }
-            .labelStyle(.titleAndIcon)
-            .disabled(!spotifyViewModel.isApplicationRunning)
+            Button("Next Track", systemImage: "forward.end", action: spotifyViewModel.nextTrack)
+                .labelStyle(.titleAndIcon)
+                .disabled(spotifyViewModel.playerState != .paused && spotifyViewModel.playerState != .playing)
 
             Divider()
 
-            Button(!spotifyViewModel.currentSong.isEmpty ? spotifyViewModel.currentSong : "Song unknown", systemImage: "music.note") {
-                SpotifyAPI.getSpotifyURI(from: spotifyViewModel.currentSongId, type: .song) { uri in
-                    if let uriString = uri, let url = URL(string: uriString) {
-                        NSWorkspace.shared.open(url)
-                    }
-                }
-            }
-            .labelStyle(.titleAndIcon)
-            .disabled(spotifyViewModel.currentSongId.isEmpty)
+            Button(!spotifyViewModel.currentSong.isEmpty ? spotifyViewModel.currentSong : "Song unknown", systemImage: "music.note", action: spotifyViewModel.openCurrentSong)
+                .labelStyle(.titleAndIcon)
+                .disabled(spotifyViewModel.currentSongId.isEmpty)
 
-            Button(!spotifyViewModel.currentArtist.isEmpty ? spotifyViewModel.currentArtist : "Artist unknown", systemImage: "person") {
-                SpotifyAPI.getSpotifyURI(from: spotifyViewModel.currentSongId, type: .artist) { uri in
-                    if let uriString = uri, let url = URL(string: uriString) {
-                        NSWorkspace.shared.open(url)
-                    }
-                }
-            }
-            .labelStyle(.titleAndIcon)
-            .disabled(spotifyViewModel.currentSongId.isEmpty)
+            Button(!spotifyViewModel.currentArtist.isEmpty ? spotifyViewModel.currentArtist : "Artist unknown", systemImage: "person", action: spotifyViewModel.openCurrentArtist)
+                .labelStyle(.titleAndIcon)
+                .disabled(spotifyViewModel.currentSongId.isEmpty)
 
-            Button(!spotifyViewModel.currentAlbum.isEmpty ? spotifyViewModel.currentAlbum : "Album unknown", systemImage: "opticaldisc") {
-                SpotifyAPI.getSpotifyURI(from: spotifyViewModel.currentSongId, type: .album) { uri in
-                    if let uriString = uri, let url = URL(string: uriString) {
-                        NSWorkspace.shared.open(url)
-                    }
-                }
-            }
-            .labelStyle(.titleAndIcon)
-            .disabled(spotifyViewModel.currentSongId.isEmpty)
+            Button(!spotifyViewModel.currentAlbum.isEmpty ? spotifyViewModel.currentAlbum : "Album unknown", systemImage: "opticaldisc", action: spotifyViewModel.openCurrentAlbum)
+                .labelStyle(.titleAndIcon)
+                .disabled(spotifyViewModel.currentSongId.isEmpty)
 
             Divider()
 
-            Button("Copy Spotify URL", systemImage: "doc.on.doc") {
-                let pasteboard = NSPasteboard.general
-                pasteboard.declareTypes([.string], owner: nil)
-                pasteboard.setString("https://open.spotify.com/track/\(spotifyViewModel.currentSongId)", forType: .string)
-            }
-            .labelStyle(.titleAndIcon)
-            .disabled(spotifyViewModel.currentSongId.isEmpty)
+            Button("Copy Spotify URL", systemImage: "doc.on.doc", action: spotifyViewModel.copySpotifyExternalURL)
+                .labelStyle(.titleAndIcon)
+                .disabled(spotifyViewModel.currentSongId.isEmpty)
 
             Divider()
 
-            Button {
-                LaunchAtLogin.isEnabled.toggle()
-            } label: {
+            Button(action: spotifyViewModel.toggleOpenAtLogin) {
                 if LaunchAtLogin.isEnabled {
                     Image(systemName: "checkmark")
                 }
                 Text("Open at Login")
             }
 
-            Button("Quit") {
-                NSApplication.shared.terminate(nil)
-            }
+            Button("Quit", action: spotifyViewModel.quitSoundSeer)
         } label: {
-            if !spotifyViewModel.isPlaying || spotifyViewModel.nowPlaying.isEmpty {
+            if spotifyViewModel.playerState != .playing || spotifyViewModel.nowPlaying.isEmpty {
                 Image(systemName: "ear")
             } else {
                 Text(spotifyViewModel.nowPlaying)
