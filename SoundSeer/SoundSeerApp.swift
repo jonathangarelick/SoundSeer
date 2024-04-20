@@ -2,11 +2,54 @@ import SwiftUI
 
 import LaunchAtLogin
 
+
+
 @main
 struct SoundSeerApp: App {
-    @StateObject private var spotifyViewModel = SpotifyViewModel()
+    @StateObject private var spotifyViewModel: SpotifyViewModel = SpotifyViewModel()
+    @State private var isOccluded = false
+    
+
+//    init() {
+//        spotifyViewModel = SpotifyViewModel($isOccluded)
+//    }
 
     var body: some Scene {
+        MenuBarExtra {
+
+        } label: {
+            Image(systemName: "forward.end")
+        }
+        MenuBarExtra {
+
+        } label: {
+            Image(systemName: "forward.end")
+        }
+        MenuBarExtra {
+
+        } label: {
+            Image(systemName: "forward.end")
+        }
+        MenuBarExtra {
+
+        } label: {
+            Image(systemName: "forward.end")
+        }
+        MenuBarExtra {
+
+        } label: {
+            Image(systemName: "forward.end")
+        }
+        MenuBarExtra {
+
+        } label: {
+            Image(systemName: "forward.end")
+        }
+        MenuBarExtra {
+
+        } label: {
+            Image(systemName: "forward.end")
+        }
         MenuBarExtra {
             Button("Next Track", systemImage: "forward.end", action: spotifyViewModel.nextTrack)
                 .labelStyle(.titleAndIcon)
@@ -43,11 +86,9 @@ struct SoundSeerApp: App {
 
             Button("Quit", action: spotifyViewModel.quitSoundSeer)
         } label: {
-            if spotifyViewModel.playerState != .playing || spotifyViewModel.nowPlaying.isEmpty {
-                Image(systemName: "ear")
-            } else {
-                Text(spotifyViewModel.nowPlaying)
-            }
+            MenuBarExtraLabelView(spotifyViewModel: spotifyViewModel)
+            
         }
+
     }
 }

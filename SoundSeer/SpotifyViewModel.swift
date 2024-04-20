@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 import AppKit
 import Combine
 
@@ -12,12 +13,14 @@ class SpotifyViewModel: ObservableObject {
     @Published private(set) var currentArtist: String = ""
     @Published private(set) var currentAlbum: String = ""
 
+    @Published var prefixLength = 100
+
     var nowPlaying: String {
         get {
             if currentSong.isEmpty || currentArtist.isEmpty {
                 return ""
             } else {
-                return "\(currentSong.prefixBefore("(")) · \(currentArtist.prefixBefore(","))".truncate(length: 30)
+                return "\(currentSong/*.prefixBefore("(")*/) · \(currentArtist/*.prefixBefore(",")*/)".truncate(length: prefixLength)
             }
         }
     }
@@ -26,7 +29,18 @@ class SpotifyViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
 
+    @Published var isVisible: Bool = false
+
     init() {
+        $isVisible
+            .sink { [weak self] newValue in
+                // Handle the updated value of isVisible
+                print("isVisible changed to: \(newValue)")
+                // Perform any additional actions based on the new value
+                self?.handleVisibilityChange(isVisible: newValue)
+            }
+            .store(in: &cancellables)
+
         spotifyModel.$playerState
             .assign(to: \.playerState, on: self)
             .store(in: &cancellables)
@@ -89,6 +103,37 @@ class SpotifyViewModel: ObservableObject {
     func quitSoundSeer() {
         NSApplication.shared.terminate(nil)
     }
+
+    private func handleVisibilityChange(isVisible: Bool) {
+        print("handleVisibilityChange")
+
+                if !isVisible {
+                    startResizing()
+                } else {
+                    stopResizing()
+                }
+    }
+
+    private var timer: Timer?
+
+
+    private func startResizing() {
+            timer?.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+                guard let self = self else { return }
+
+                if !self.isVisible && self.prefixLength > 5 {
+                    print("Old prefix length", self.prefixLength)
+                    self.prefixLength /= 2
+                    print("New prefix length", self.prefixLength)
+                }
+            }
+        }
+
+        private func stopResizing() {
+            timer?.invalidate()
+            timer = nil
+        }
 }
 
 
