@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9B1461312BD08573009C931B /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B1461302BD08573009C931B /* ScriptingBridge.framework */; };
-		9B1486532BD4569000D67669 /* MenuBarExtraLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1486522BD4569000D67669 /* MenuBarExtraLabelView.swift */; };
+		9B1486722BD475DA00D67669 /* WindowAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1486712BD475DA00D67669 /* WindowAccessor.swift */; };
 		9B8DFD3B2BCF3E29003F8A3B /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 9B8DFD3A2BCF3E29003F8A3B /* LaunchAtLogin */; };
 		9BAC6E112BD0A082004B80E1 /* SpotifyApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC6E102BD0A082004B80E1 /* SpotifyApplication.swift */; };
 		9BC6B6872BCA2CDF005421AE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9BC6B6862BCA2CDF005421AE /* Alamofire */; };
@@ -25,7 +25,7 @@
 		9B14612E2BD084E3009C931B /* Spotify.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spotify.h; sourceTree = "<group>"; };
 		9B1461302BD08573009C931B /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		9B1461322BD086E5009C931B /* SoundSeer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundSeer-Bridging-Header.h"; sourceTree = "<group>"; };
-		9B1486522BD4569000D67669 /* MenuBarExtraLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarExtraLabelView.swift; sourceTree = "<group>"; };
+		9B1486712BD475DA00D67669 /* WindowAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAccessor.swift; sourceTree = "<group>"; };
 		9BAC6E102BD0A082004B80E1 /* SpotifyApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyApplication.swift; sourceTree = "<group>"; };
 		9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPI.swift; sourceTree = "<group>"; };
 		9BD4DCE12BC9E9D4001572F7 /* SpotifyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyModel.swift; sourceTree = "<group>"; };
@@ -91,7 +91,7 @@
 				9BD4DCE12BC9E9D4001572F7 /* SpotifyModel.swift */,
 				9BD4DCE32BC9EC8B001572F7 /* SpotifyViewModel.swift */,
 				9BEB2DDA2BD1C02E0038E223 /* StringExtension.swift */,
-				9B1486522BD4569000D67669 /* MenuBarExtraLabelView.swift */,
+				9B1486712BD475DA00D67669 /* WindowAccessor.swift */,
 			);
 			path = SoundSeer;
 			sourceTree = "<group>";
@@ -185,11 +185,11 @@
 			files = (
 				9BE2FA1C2BC97CCC00A7124B /* SoundSeerApp.swift in Sources */,
 				9BD4DCE22BC9E9D4001572F7 /* SpotifyModel.swift in Sources */,
+				9B1486722BD475DA00D67669 /* WindowAccessor.swift in Sources */,
 				9BEB2DDB2BD1C02E0038E223 /* StringExtension.swift in Sources */,
 				9BD4DCE42BC9EC8B001572F7 /* SpotifyViewModel.swift in Sources */,
 				9BAC6E112BD0A082004B80E1 /* SpotifyApplication.swift in Sources */,
 				9BC6B6892BCA2D49005421AE /* SpotifyAPI.swift in Sources */,
-				9B1486532BD4569000D67669 /* MenuBarExtraLabelView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

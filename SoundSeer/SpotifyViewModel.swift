@@ -14,6 +14,7 @@ class SpotifyViewModel: ObservableObject {
     @Published private(set) var currentAlbum: String = ""
 
     @Published var prefixLength = 100
+    @Published var isVisible: Bool = false
 
     var nowPlaying: String {
         get {
@@ -29,15 +30,10 @@ class SpotifyViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
 
-    @Published var isVisible: Bool = false
-
     init() {
         $isVisible
-            .sink { [weak self] newValue in
-                // Handle the updated value of isVisible
-                print("isVisible changed to: \(newValue)")
-                // Perform any additional actions based on the new value
-                self?.handleVisibilityChange(isVisible: newValue)
+            .sink { [weak self] in
+                self?.handleVisibilityChange($0)
             }
             .store(in: &cancellables)
 
@@ -104,36 +100,39 @@ class SpotifyViewModel: ObservableObject {
         NSApplication.shared.terminate(nil)
     }
 
-    private func handleVisibilityChange(isVisible: Bool) {
-        print("handleVisibilityChange")
-
-                if !isVisible {
-                    startResizing()
-                } else {
-                    stopResizing()
-                }
+    func handleVisibilityChange(_ isVisible: Bool) {
+        if !isVisible && !isInMenuBar() {
+            startResizing()
+        } else {
+            stopResizing()
+        }
     }
 
     private var timer: Timer?
 
 
     private func startResizing() {
-            timer?.invalidate()
-            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-                guard let self = self else { return }
-
-                if !self.isVisible && self.prefixLength > 5 {
-                    print("Old prefix length", self.prefixLength)
-                    self.prefixLength /= 2
-                    print("New prefix length", self.prefixLength)
-                }
-            }
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            self?.prefixLength -= 5
+            print("New prefix length:", self?.prefixLength ?? -1)
         }
+    }
 
-        private func stopResizing() {
-            timer?.invalidate()
-            timer = nil
-        }
+    private func stopResizing() {
+        timer?.invalidate()
+        timer = nil
+    }
+
+    func isInMenuBar() -> Bool {
+        let processNamesWithStatusItems = Set(
+            (CGWindowListCopyWindowInfo(.optionOnScreenOnly, kCGNullWindowID) as! [NSDictionary])
+                .filter { $0[kCGWindowLayer] as! Int == 25 }
+                .map { $0[kCGWindowOwnerName] as! String }
+        )
+
+        return processNamesWithStatusItems.contains("SoundSeer")
+    }
 }
 
 
