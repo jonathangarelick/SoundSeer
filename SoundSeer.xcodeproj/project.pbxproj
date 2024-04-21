@@ -64,6 +64,7 @@
 				9B14612F2BD08573009C931B /* Frameworks */,
 				9BE2FA192BC97CCC00A7124B /* Products */,
 				9BE2FA1A2BC97CCC00A7124B /* SoundSeer */,
+				9BE2FA242BC97CCD00A7124B /* SoundSeer.entitlements */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,7 +81,6 @@
 			children = (
 				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
 				9B1461322BD086E5009C931B /* SoundSeer-Bridging-Header.h */,
-				9BE2FA242BC97CCD00A7124B /* SoundSeer.entitlements */,
 				9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */,
 				9B14612E2BD084E3009C931B /* Spotify.h */,
 				9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */,
@@ -307,7 +307,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = SoundSeer/SoundSeer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SoundSeer.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -343,7 +343,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = SoundSeer/SoundSeer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SoundSeer.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
