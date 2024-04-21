@@ -17,7 +17,6 @@
 		9BD4DCE42BC9EC8B001572F7 /* SpotifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4DCE32BC9EC8B001572F7 /* SpotifyViewModel.swift */; };
 		9BE2FA1C2BC97CCC00A7124B /* SoundSeerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */; };
 		9BE2FA202BC97CCD00A7124B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */; };
-		9BE2FA232BC97CCD00A7124B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE2FA222BC97CCD00A7124B /* Preview Assets.xcassets */; };
 		9BEB2DDB2BD1C02E0038E223 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB2DDA2BD1C02E0038E223 /* StringExtension.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,7 +32,6 @@
 		9BE2FA182BC97CCC00A7124B /* SoundSeer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundSeer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSeerApp.swift; sourceTree = "<group>"; };
 		9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9BE2FA222BC97CCD00A7124B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9BE2FA242BC97CCD00A7124B /* SoundSeer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SoundSeer.entitlements; sourceTree = "<group>"; };
 		9BEB2DDA2BD1C02E0038E223 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,7 +79,6 @@
 			isa = PBXGroup;
 			children = (
 				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
-				9BE2FA212BC97CCD00A7124B /* Preview Content */,
 				9B1461322BD086E5009C931B /* SoundSeer-Bridging-Header.h */,
 				9BE2FA242BC97CCD00A7124B /* SoundSeer.entitlements */,
 				9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */,
@@ -94,14 +91,6 @@
 				9B1486712BD475DA00D67669 /* WindowAccessor.swift */,
 			);
 			path = SoundSeer;
-			sourceTree = "<group>";
-		};
-		9BE2FA212BC97CCD00A7124B /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				9BE2FA222BC97CCD00A7124B /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,7 +160,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BE2FA232BC97CCD00A7124B /* Preview Assets.xcassets in Resources */,
 				9BE2FA202BC97CCD00A7124B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,7 +306,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SoundSeer/SoundSeer.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -327,7 +314,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"SoundSeer/Preview Content\"";
 				DEVELOPMENT_TEAM = 5DR54W29BC;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -356,7 +342,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SoundSeer/SoundSeer.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -365,7 +350,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"SoundSeer/Preview Content\"";
 				DEVELOPMENT_TEAM = 5DR54W29BC;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
