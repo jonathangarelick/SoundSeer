@@ -160,22 +160,6 @@ class SpotifyAPI {
                 }
         }
     }
-
-    static func skipToNextTrack() {
-        let scriptSource = """
-            tell application "Spotify"
-                next track
-            end tell
-        """
-
-        let script = NSAppleScript(source: scriptSource)
-        var errorInfo: NSDictionary?
-        script?.executeAndReturnError(&errorInfo)
-
-        if let error = errorInfo {
-            log.error("AppleScript execution error: \(error)")
-        }
-    }
 }
 
 enum IDType {

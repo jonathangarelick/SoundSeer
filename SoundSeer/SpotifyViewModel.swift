@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 import AppKit
 import Combine
 
@@ -12,12 +13,15 @@ class SpotifyViewModel: ObservableObject {
     @Published private(set) var currentArtist: String = ""
     @Published private(set) var currentAlbum: String = ""
 
+    @Published var prefixLength = 100
+    @Published var isVisible: Bool = false
+
     var nowPlaying: String {
         get {
             if currentSong.isEmpty || currentArtist.isEmpty {
                 return ""
             } else {
-                return "\(currentSong.prefixBefore("(")) · \(currentArtist.prefixBefore(","))".truncate(length: 30)
+                return "\(currentSong/*.prefixBefore("(")*/) · \(currentArtist/*.prefixBefore(",")*/)".truncate(length: prefixLength)
             }
         }
     }
@@ -27,6 +31,12 @@ class SpotifyViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     init() {
+        $isVisible
+            .sink { [weak self] in
+                self?.handleVisibilityChange($0)
+            }
+            .store(in: &cancellables)
+
         spotifyModel.$playerState
             .assign(to: \.playerState, on: self)
             .store(in: &cancellables)
@@ -88,6 +98,40 @@ class SpotifyViewModel: ObservableObject {
 
     func quitSoundSeer() {
         NSApplication.shared.terminate(nil)
+    }
+
+    func handleVisibilityChange(_ isVisible: Bool) {
+        if !isVisible && !isInMenuBar() {
+            startResizing()
+        } else {
+            stopResizing()
+        }
+    }
+
+    private var timer: Timer?
+
+
+    private func startResizing() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            self?.prefixLength -= 5
+            print("New prefix length:", self?.prefixLength ?? -1)
+        }
+    }
+
+    private func stopResizing() {
+        timer?.invalidate()
+        timer = nil
+    }
+
+    func isInMenuBar() -> Bool {
+        let processNamesWithStatusItems = Set(
+            (CGWindowListCopyWindowInfo(.optionOnScreenOnly, kCGNullWindowID) as! [NSDictionary])
+                .filter { $0[kCGWindowLayer] as! Int == 25 }
+                .map { $0[kCGWindowOwnerName] as! String }
+        )
+
+        return processNamesWithStatusItems.contains("SoundSeer")
     }
 }
 

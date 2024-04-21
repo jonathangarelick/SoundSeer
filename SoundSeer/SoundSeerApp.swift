@@ -4,7 +4,8 @@ import LaunchAtLogin
 
 @main
 struct SoundSeerApp: App {
-    @StateObject private var spotifyViewModel = SpotifyViewModel()
+    @StateObject private var spotifyViewModel: SpotifyViewModel = SpotifyViewModel()
+    @State private var window: NSWindow?
 
     var body: some Scene {
         MenuBarExtra {
@@ -43,11 +44,21 @@ struct SoundSeerApp: App {
 
             Button("Quit", action: spotifyViewModel.quitSoundSeer)
         } label: {
-            if spotifyViewModel.playerState != .playing || spotifyViewModel.nowPlaying.isEmpty {
-                Image(systemName: "ear")
-            } else {
-                Text(spotifyViewModel.nowPlaying)
+            Group {
+                if spotifyViewModel.playerState != .playing || spotifyViewModel.nowPlaying.isEmpty {
+                    Image(systemName: "ear")
+                } else {
+                    Text(spotifyViewModel.nowPlaying)
+                }
             }
+            .onReceive(NotificationCenter.default.publisher(for: NSWindow.didChangeOcclusionStateNotification)) { notification in
+                guard let window = notification.object as? NSWindow else { return }
+
+                spotifyViewModel.isVisible = window.occlusionState.contains(.visible)
+                print("isVisible: ", spotifyViewModel.isVisible)
+            }
+            .background(WindowAccessor(window: $window))
         }
+
     }
 }
