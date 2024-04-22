@@ -113,7 +113,7 @@ class SpotifyViewModel: ObservableObject {
 
     private func startResizing() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             self?.prefixLength -= 5
             print("New prefix length:", self?.prefixLength ?? -1)
         }
