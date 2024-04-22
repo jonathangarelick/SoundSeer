@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9B1461312BD08573009C931B /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B1461302BD08573009C931B /* ScriptingBridge.framework */; };
 		9B1486722BD475DA00D67669 /* WindowAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1486712BD475DA00D67669 /* WindowAccessor.swift */; };
+		9B5503042BD5F22E0005BEBD /* SoundSeerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5503032BD5F22E0005BEBD /* SoundSeerTests.swift */; };
 		9B8DFD3B2BCF3E29003F8A3B /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 9B8DFD3A2BCF3E29003F8A3B /* LaunchAtLogin */; };
 		9BAC6E112BD0A082004B80E1 /* SpotifyApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC6E102BD0A082004B80E1 /* SpotifyApplication.swift */; };
 		9BC6B6872BCA2CDF005421AE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9BC6B6862BCA2CDF005421AE /* Alamofire */; };
@@ -20,11 +21,23 @@
 		9BEB2DDB2BD1C02E0038E223 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB2DDA2BD1C02E0038E223 /* StringExtension.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		9B5503052BD5F22E0005BEBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9BE2FA102BC97CCC00A7124B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9BE2FA172BC97CCC00A7124B;
+			remoteInfo = SoundSeer;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		9B14612E2BD084E3009C931B /* Spotify.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spotify.h; sourceTree = "<group>"; };
 		9B1461302BD08573009C931B /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		9B1461322BD086E5009C931B /* SoundSeer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundSeer-Bridging-Header.h"; sourceTree = "<group>"; };
 		9B1486712BD475DA00D67669 /* WindowAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAccessor.swift; sourceTree = "<group>"; };
+		9B5503012BD5F22E0005BEBD /* SoundSeerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoundSeerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B5503032BD5F22E0005BEBD /* SoundSeerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSeerTests.swift; sourceTree = "<group>"; };
 		9BAC6E102BD0A082004B80E1 /* SpotifyApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyApplication.swift; sourceTree = "<group>"; };
 		9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPI.swift; sourceTree = "<group>"; };
 		9BD4DCE12BC9E9D4001572F7 /* SpotifyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyModel.swift; sourceTree = "<group>"; };
@@ -37,6 +50,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		9B5502FE2BD5F22E0005BEBD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9BE2FA152BC97CCC00A7124B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -58,6 +78,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9B5503022BD5F22E0005BEBD /* SoundSeerTests */ = {
+			isa = PBXGroup;
+			children = (
+				9B5503032BD5F22E0005BEBD /* SoundSeerTests.swift */,
+			);
+			path = SoundSeerTests;
+			sourceTree = "<group>";
+		};
 		9BE2FA0F2BC97CCC00A7124B = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +93,7 @@
 				9BE2FA192BC97CCC00A7124B /* Products */,
 				9BE2FA1A2BC97CCC00A7124B /* SoundSeer */,
 				9BE2FA242BC97CCD00A7124B /* SoundSeer.entitlements */,
+				9B5503022BD5F22E0005BEBD /* SoundSeerTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -72,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				9BE2FA182BC97CCC00A7124B /* SoundSeer.app */,
+				9B5503012BD5F22E0005BEBD /* SoundSeerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,6 +126,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		9B5503002BD5F22E0005BEBD /* SoundSeerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9B5503092BD5F22E0005BEBD /* Build configuration list for PBXNativeTarget "SoundSeerTests" */;
+			buildPhases = (
+				9B5502FD2BD5F22E0005BEBD /* Sources */,
+				9B5502FE2BD5F22E0005BEBD /* Frameworks */,
+				9B5502FF2BD5F22E0005BEBD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9B5503062BD5F22E0005BEBD /* PBXTargetDependency */,
+			);
+			name = SoundSeerTests;
+			productName = SoundSeerTests;
+			productReference = 9B5503012BD5F22E0005BEBD /* SoundSeerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		9BE2FA172BC97CCC00A7124B /* SoundSeer */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9BE2FA272BC97CCD00A7124B /* Build configuration list for PBXNativeTarget "SoundSeer" */;
@@ -127,6 +175,10 @@
 				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
+					9B5503002BD5F22E0005BEBD = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 9BE2FA172BC97CCC00A7124B;
+					};
 					9BE2FA172BC97CCC00A7124B = {
 						CreatedOnToolsVersion = 15.3;
 						LastSwiftMigration = 1530;
@@ -151,11 +203,19 @@
 			projectRoot = "";
 			targets = (
 				9BE2FA172BC97CCC00A7124B /* SoundSeer */,
+				9B5503002BD5F22E0005BEBD /* SoundSeerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		9B5502FF2BD5F22E0005BEBD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9BE2FA162BC97CCC00A7124B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -167,6 +227,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		9B5502FD2BD5F22E0005BEBD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B5503042BD5F22E0005BEBD /* SoundSeerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9BE2FA142BC97CCC00A7124B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -183,7 +251,51 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		9B5503062BD5F22E0005BEBD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9BE2FA172BC97CCC00A7124B /* SoundSeer */;
+			targetProxy = 9B5503052BD5F22E0005BEBD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		9B5503072BD5F22E0005BEBD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5DR54W29BC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.garelick.SoundSeerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SoundSeer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SoundSeer";
+			};
+			name = Debug;
+		};
+		9B5503082BD5F22E0005BEBD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5DR54W29BC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.garelick.SoundSeerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SoundSeer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SoundSeer";
+			};
+			name = Release;
+		};
 		9BE2FA252BC97CCD00A7124B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -376,6 +488,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9B5503092BD5F22E0005BEBD /* Build configuration list for PBXNativeTarget "SoundSeerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9B5503072BD5F22E0005BEBD /* Debug */,
+				9B5503082BD5F22E0005BEBD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9BE2FA132BC97CCC00A7124B /* Build configuration list for PBXProject "SoundSeer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
