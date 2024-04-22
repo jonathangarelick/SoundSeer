@@ -9,6 +9,10 @@ extension String {
     }
 
     func truncate(length: Int) -> String {
-        return self.count > length ? String(self.prefix(length - 3)) + "..." : self
+        guard length >= 3 else {
+            return String(repeating: ".", count: length)
+        }
+
+        return length >= self.count ? self : self.prefix(length - 3) + "..."
     }
 }
