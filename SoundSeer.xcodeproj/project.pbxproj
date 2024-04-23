@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9B1461312BD08573009C931B /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B1461302BD08573009C931B /* ScriptingBridge.framework */; };
 		9B1486722BD475DA00D67669 /* WindowAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1486712BD475DA00D67669 /* WindowAccessor.swift */; };
-		9B5503042BD5F22E0005BEBD /* SoundSeerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5503032BD5F22E0005BEBD /* SoundSeerTests.swift */; };
 		9B55030B2BD5F49C0005BEBD /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B55030A2BD5F49C0005BEBD /* StringExtensionTests.swift */; };
 		9B8DFD3B2BCF3E29003F8A3B /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 9B8DFD3A2BCF3E29003F8A3B /* LaunchAtLogin */; };
 		9BAC6E112BD0A082004B80E1 /* SpotifyApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC6E102BD0A082004B80E1 /* SpotifyApplication.swift */; };
@@ -38,7 +37,6 @@
 		9B1461322BD086E5009C931B /* SoundSeer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundSeer-Bridging-Header.h"; sourceTree = "<group>"; };
 		9B1486712BD475DA00D67669 /* WindowAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAccessor.swift; sourceTree = "<group>"; };
 		9B5503012BD5F22E0005BEBD /* SoundSeerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoundSeerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9B5503032BD5F22E0005BEBD /* SoundSeerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSeerTests.swift; sourceTree = "<group>"; };
 		9B55030A2BD5F49C0005BEBD /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		9BAC6E102BD0A082004B80E1 /* SpotifyApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyApplication.swift; sourceTree = "<group>"; };
 		9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPI.swift; sourceTree = "<group>"; };
@@ -83,7 +81,6 @@
 		9B5503022BD5F22E0005BEBD /* SoundSeerTests */ = {
 			isa = PBXGroup;
 			children = (
-				9B5503032BD5F22E0005BEBD /* SoundSeerTests.swift */,
 				9B55030A2BD5F49C0005BEBD /* StringExtensionTests.swift */,
 			);
 			path = SoundSeerTests;
@@ -235,7 +232,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B55030B2BD5F49C0005BEBD /* StringExtensionTests.swift in Sources */,
-				9B5503042BD5F22E0005BEBD /* SoundSeerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
