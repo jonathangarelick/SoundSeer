@@ -53,10 +53,10 @@ class SpotifyModel {
     }
 
     private func update() {
-        Self.logger.debug("Beginning update...")
+        Self.logger.info("Beginning update...")
 
         if !(spotifyApp.isRunning ?? false) {
-            Self.logger.debug("SB indicates app is not running. Resetting data and ending update")
+            Self.logger.info("SB indicates app is not running. Resetting data and ending update")
             resetData()
             return
         }
@@ -67,7 +67,7 @@ class SpotifyModel {
         // Sometimes the AEKeyword will be 0 when the app is killed
         // Something about the Objective-C bridge allows the enum to still be created
         if playerState != .paused && playerState != .playing {
-            Self.logger.debug("Spotify is in an unknown or stopped state. Resetting data and ending update")
+            Self.logger.info("Spotify is in an unknown or stopped state. Resetting data and ending update")
             resetData()
             return
         }
@@ -75,13 +75,22 @@ class SpotifyModel {
         currentSong = spotifyApp.currentTrack?.name ?? ""
         currentSongId = spotifyApp.currentTrack?.id?().components(separatedBy: ":").last ?? ""
         currentArtist = spotifyApp.currentTrack?.artist ?? ""
+
+        // I have no idea why this sometimes happens. It's only for artist
+        if currentArtist.isEmpty {
+            Self.logger.info("Current artist is empty. Retrying...")
+            DispatchQueue.main.async { [weak self] in
+                self?.currentArtist = self?.spotifyApp.currentTrack?.artist ?? ""
+            }
+        }
+
         currentAlbum = spotifyApp.currentTrack?.album ?? ""
 
-        Self.logger.debug("Retrieved current song: \(self.currentSong)")
-        Self.logger.debug("Retrieved current song ID: \(self.currentSongId)")
-        Self.logger.debug("Retrieved current artist: \(self.currentArtist)")
-        Self.logger.debug("Retrieved current album: \(self.currentAlbum)")
+        Self.logger.info("Retrieved current song: \(self.currentSong, privacy: .public)")
+        Self.logger.info("Retrieved current song ID: \(self.currentSongId, privacy: .public)")
+        Self.logger.info("Retrieved current artist: \(self.currentArtist, privacy: .public)")
+        Self.logger.info("Retrieved current album: \(self.currentAlbum, privacy: .public)")
 
-        Self.logger.debug("Update completed successfully")
+        Self.logger.info("Update completed successfully")
     }
 }
