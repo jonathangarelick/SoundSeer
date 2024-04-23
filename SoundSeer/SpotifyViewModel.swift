@@ -1,9 +1,7 @@
-import Foundation
-import SwiftUI
 import AppKit
 import Combine
-
-import LaunchAtLogin
+import Foundation
+import SwiftUI
 
 class SpotifyViewModel: ObservableObject {
     @Published private(set) var playerState: SpotifyEPlSTyped = .stopped
@@ -91,11 +89,7 @@ class SpotifyViewModel: ObservableObject {
         pasteboard.declareTypes([.string], owner: nil)
         pasteboard.setString("https://open.spotify.com/track/\(currentSongId)", forType: .string)
     }
-
-    func toggleOpenAtLogin() {
-        LaunchAtLogin.isEnabled.toggle()
-    }
-
+    
     func quitSoundSeer() {
         NSApplication.shared.terminate(nil)
     }

@@ -1,11 +1,18 @@
+import OSLog
+import ServiceManagement
 import SwiftUI
-
-import LaunchAtLogin
 
 @main
 struct SoundSeerApp: App {
+    // https://swiftwithmajid.com/2022/04/06/logging-in-swift/
+    private static let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: SoundSeerApp.self)
+    )
+
     @StateObject private var spotifyViewModel: SpotifyViewModel = SpotifyViewModel()
     @State private var window: NSWindow?
+    @State private var isOpenAtLoginEnabled: Bool = SMAppService.mainApp.status == .enabled
 
     var body: some Scene {
         MenuBarExtra {
@@ -35,8 +42,23 @@ struct SoundSeerApp: App {
 
             Divider()
 
-            Button(action: spotifyViewModel.toggleOpenAtLogin) {
-                if LaunchAtLogin.isEnabled {
+            Button {
+                // This is a bit of a hack. First, toggle the @State variable to immediately update the UI.
+                // Perform the state modification, then re-update the @State variable with the source of truth
+                do {
+                    isOpenAtLoginEnabled.toggle()
+
+                    if SMAppService.mainApp.status == .enabled {
+                        try SMAppService.mainApp.unregister()
+                    } else {
+                        try SMAppService.mainApp.register()
+                    }
+                } catch {
+                    Self.logger.debug("Error updating Open at Login: \(error.localizedDescription)")
+                }
+                isOpenAtLoginEnabled = SMAppService.mainApp.status == .enabled
+            } label: {
+                if isOpenAtLoginEnabled {
                     Image(systemName: "checkmark")
                 }
                 Text("Open at Login")
