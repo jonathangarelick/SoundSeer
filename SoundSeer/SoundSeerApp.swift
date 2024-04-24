@@ -74,10 +74,10 @@ struct SoundSeerApp: App {
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: NSWindow.didChangeOcclusionStateNotification)) { notification in
+                Self.logger.debug("Received didChangeOcclusionState notification")
+                
                 guard let window = notification.object as? NSWindow else { return }
-
-                spotifyViewModel.isVisible = window.occlusionState.contains(.visible)
-                print("isVisible: ", spotifyViewModel.isVisible)
+                spotifyViewModel.isAppVisibleInMenuBar = window.occlusionState.contains(.visible)
             }
             .background(WindowAccessor(window: $window))
         }

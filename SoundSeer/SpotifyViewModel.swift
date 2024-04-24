@@ -1,9 +1,12 @@
 import AppKit
 import Combine
 import Foundation
+import OSLog
 import SwiftUI
 
 class SpotifyViewModel: ObservableObject {
+    static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: SpotifyViewModel.self))
+
     @Published private(set) var playerState: SpotifyEPlSTyped = .stopped
 
     @Published private(set) var currentSong: String = ""
@@ -11,25 +14,12 @@ class SpotifyViewModel: ObservableObject {
     @Published private(set) var currentArtist: String = ""
     @Published private(set) var currentAlbum: String = ""
 
-    @Published var prefixLength = 100
-    @Published var isVisible: Bool = false
-
-    var nowPlaying: String {
-        get {
-            if currentSong.isEmpty || currentArtist.isEmpty {
-                return ""
-            } else {
-                return "\(currentSong/*.prefixBefore("(")*/) · \(currentArtist/*.prefixBefore(",")*/)".truncate(length: prefixLength)
-            }
-        }
-    }
-
     private let spotifyModel: SpotifyModel = SpotifyModel()
 
     private var cancellables = Set<AnyCancellable>()
 
     init() {
-        $isVisible
+        $isAppVisibleInMenuBar
             .sink { [weak self] in
                 self?.handleVisibilityChange($0)
             }
@@ -55,6 +45,8 @@ class SpotifyViewModel: ObservableObject {
             .assign(to: \.currentAlbum, on: self)
             .store(in: &cancellables)
     }
+
+    deinit { timer?.invalidate() }
 
     func nextTrack() {
         spotifyModel.nextTrack()
@@ -94,54 +86,51 @@ class SpotifyViewModel: ObservableObject {
         NSApplication.shared.terminate(nil)
     }
 
-    func handleVisibilityChange(_ isVisible: Bool) {
-        if !isVisible && !isInMenuBar() {
-            startResizing()
-        } else {
-            stopResizing()
-        }
-    }
+    // MARK: - Dynamic resizing
+    @Published var isAppVisibleInMenuBar: Bool = false // This will trigger dynamic resizing on startup, just to be safe
+    @Published var prefixLength = 100
 
     private var timer: Timer?
 
-
-    private func startResizing() {
-        timer?.invalidate()
-
-        // Something is very wrong
-        guard prefixLength > 0 else { return }
-
-        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-            guard let strongSelf = self else { return }
-            guard strongSelf.prefixLength >= 0 else {
-                strongSelf.timer?.invalidate()
-                return
+    var nowPlaying: String {
+        get {
+            if currentSong.isEmpty || currentArtist.isEmpty {
+                return ""
+            } else {
+                return "\(currentSong/*.prefixBefore("(")*/) · \(currentArtist/*.prefixBefore(",")*/)".truncate(length: prefixLength)
             }
-
-            strongSelf.prefixLength -= 5
-            print("New prefix length:", strongSelf.prefixLength)
         }
     }
 
-    private func stopResizing() {
-        timer?.invalidate()
-        timer = nil
-    }
-
-    func isInMenuBar() -> Bool {
+    // https://stackoverflow.com/a/77304045
+    private static func isAppInMenuBar(_ appName: String) -> Bool {
         let processNamesWithStatusItems = Set(
             (CGWindowListCopyWindowInfo(.optionOnScreenOnly, kCGNullWindowID) as! [NSDictionary])
                 .filter { $0[kCGWindowLayer] as! Int == 25 }
                 .map { $0[kCGWindowOwnerName] as! String }
         )
 
-        return processNamesWithStatusItems.contains("SoundSeer")
+        return processNamesWithStatusItems.contains(appName)
+    }
+
+    private func handleVisibilityChange(_ isVisible: Bool) {
+        timer?.invalidate()
+
+        if !isVisible && !Self.isAppInMenuBar("SoundSeer") {
+            doDynamicResizing()
+        }
+    }
+
+    private func doDynamicResizing() {
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+            guard self.prefixLength > 0 else {
+                Self.logger.debug("Prefix length is not positive, dynamic resizing stopped")
+                timer.invalidate()
+                return
+            }
+
+            Self.logger.debug("Current prefix length is \(self.prefixLength), decreasing by 5")
+            self.prefixLength -= 5
+        }
     }
 }
-
-
-
-
-
-
-
