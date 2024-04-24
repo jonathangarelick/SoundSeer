@@ -54,7 +54,7 @@ struct SoundSeerApp: App {
                         try SMAppService.mainApp.register()
                     }
                 } catch {
-                    Self.logger.debug("Error updating Open at Login: \(error.localizedDescription)")
+                    Self.logger.error("Error updating Open at Login: \(error.localizedDescription)")
                 }
                 isOpenAtLoginEnabled = SMAppService.mainApp.status == .enabled
             } label: {
