@@ -1,7 +1,7 @@
 # ![SoundSeer logo](SoundSeer/Assets.xcassets/AppIcon.appiconset/64.png) SoundSeer
 SoundSeer is a macOS menu bar app that shows your currently playing song, and allows you to skip a track, click straight to the song/artist/album, and copy the URL for sharing.
 
-<img src="menu-example.png" width="50%">
+<img src="images/menu-example.png" width="50%">
 
 ## Compatibility
 - macOS 13+
