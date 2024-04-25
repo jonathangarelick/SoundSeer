@@ -22,17 +22,23 @@ struct SoundSeerApp: App {
 
             Divider()
 
-            Button(!spotifyViewModel.currentSong.isEmpty ? spotifyViewModel.currentSong : "Song unknown", systemImage: "music.note", action: spotifyViewModel.openCurrentSong)
-                .labelStyle(.titleAndIcon)
-                .disabled(spotifyViewModel.currentSongId.isEmpty)
+            Button(!spotifyViewModel.currentSong.isEmpty
+                   ? spotifyViewModel.currentSong.truncate(length: Int(Double(spotifyViewModel.prefixLength) * 1.5))
+                   : "Song unknown", systemImage: "music.note", action: spotifyViewModel.openCurrentSong)
+            .labelStyle(.titleAndIcon)
+            .disabled(spotifyViewModel.currentSongId.isEmpty)
 
-            Button(!spotifyViewModel.currentArtist.isEmpty ? spotifyViewModel.currentArtist : "Artist unknown", systemImage: "person", action: spotifyViewModel.openCurrentArtist)
-                .labelStyle(.titleAndIcon)
-                .disabled(spotifyViewModel.currentSongId.isEmpty)
+            Button(!spotifyViewModel.currentArtist.isEmpty
+                   ? spotifyViewModel.currentArtist.truncate(length: Int(Double(spotifyViewModel.prefixLength) * 1.5))
+                   : "Artist unknown", systemImage: "person", action: spotifyViewModel.openCurrentArtist)
+            .labelStyle(.titleAndIcon)
+            .disabled(spotifyViewModel.currentSongId.isEmpty)
 
-            Button(!spotifyViewModel.currentAlbum.isEmpty ? spotifyViewModel.currentAlbum : "Album unknown", systemImage: "opticaldisc", action: spotifyViewModel.openCurrentAlbum)
-                .labelStyle(.titleAndIcon)
-                .disabled(spotifyViewModel.currentSongId.isEmpty)
+            Button(!spotifyViewModel.currentAlbum.isEmpty
+                   ? spotifyViewModel.currentAlbum.truncate(length: Int(Double(spotifyViewModel.prefixLength) * 1.5))
+                   : "Album unknown", systemImage: "opticaldisc", action: spotifyViewModel.openCurrentAlbum)
+            .labelStyle(.titleAndIcon)
+            .disabled(spotifyViewModel.currentSongId.isEmpty)
 
             Divider()
 
