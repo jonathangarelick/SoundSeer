@@ -9,7 +9,7 @@ class SpotifyModel {
         category: String(describing: SpotifyModel.self)
     )
 
-    @Published var playerState: SpotifyEPlSTyped = .stopped
+    @Published var playerState: SpotifyEPlS = .stopped
 
     @Published var currentSong: String = ""
     @Published var currentSongId: String = ""
@@ -53,21 +53,20 @@ class SpotifyModel {
     }
 
     private func update() {
-        Self.logger.info("Beginning update...")
-
-        if !(spotifyApp.isRunning ?? false) {
-            Self.logger.info("SB indicates app is not running. Resetting data and ending update")
+        // An event may be fired when Spotify is closed. This prevents it from reopening
+        guard Utils.isAppRunning("com.spotify.client") else {
+            Logger.playback.debug("Cancelled update. Spotify is not running")
             resetData()
             return
         }
 
-        // This will open the app if it is closed, so we need to check isRunning first
         playerState = spotifyApp.playerState ?? .stopped
+        Logger.playback.debug("Player state is now \(self.playerState.stringValue)")
 
         // Sometimes the AEKeyword will be 0 when the app is killed
         // Something about the Objective-C bridge allows the enum to still be created
-        if playerState != .paused && playerState != .playing {
-            Self.logger.info("Spotify is in an unknown or stopped state. Resetting data and ending update")
+        if Utils.playerStateIsStoppedOrUnknown(playerState) {
+            Logger.playback.debug("Cancelled update. Player in stopped or unknown state")
             resetData()
             return
         }
@@ -92,5 +91,22 @@ class SpotifyModel {
         Self.logger.info("Retrieved current album: \(self.currentAlbum, privacy: .public)")
 
         Self.logger.info("Update completed successfully")
+    }
+
+     
+}
+
+extension SpotifyEPlS {
+    var stringValue: String {
+        switch self {
+        case .stopped:
+            return "stopped"
+        case .playing:
+            return "playing"
+        case .paused:
+            return "paused"
+        default:
+            return "unknown"
+        }
     }
 }

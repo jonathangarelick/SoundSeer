@@ -7,7 +7,7 @@ import SwiftUI
 class SpotifyViewModel: ObservableObject {
     static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: SpotifyViewModel.self))
 
-    @Published private(set) var playerState: SpotifyEPlSTyped = .stopped
+    @Published private(set) var playerState: SpotifyEPlS = .stopped
 
     @Published private(set) var currentSong: String = ""
     @Published private(set) var currentSongId: String = ""
@@ -97,7 +97,7 @@ class SpotifyViewModel: ObservableObject {
             if currentSong.isEmpty || currentArtist.isEmpty {
                 return ""
             } else {
-                return "\(currentSong/*.prefixBefore("(")*/) · \(currentArtist/*.prefixBefore(",")*/)".truncate(length: prefixLength)
+                return "\(currentSong.prefixBefore("(")) · \(currentArtist.prefixBefore(","))".truncate(length: prefixLength)
             }
         }
     }
