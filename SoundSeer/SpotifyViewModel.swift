@@ -25,7 +25,15 @@ class SpotifyViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
+        // If the user manually clicks play on a song, Spotify will send a stopped and
+        // playing event in rapid succession. This prevents the UI from flickering
         spotifyModel.$playerState
+            .map { playerState in
+                Just(playerState)
+                    .delay(for: .milliseconds(100), scheduler: RunLoop.main)
+            }
+            .switchToLatest()
+            .throttle(for: .milliseconds(200), scheduler: DispatchQueue.main, latest: true)
             .assign(to: \.playerState, on: self)
             .store(in: &cancellables)
 
