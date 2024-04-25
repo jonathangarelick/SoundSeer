@@ -79,7 +79,7 @@ class SpotifyModel {
         // I have no idea why this sometimes happens. It's only for artist
         if currentArtist.isEmpty {
             Self.logger.info("Current artist is empty. Retrying...")
-            DispatchQueue.main.async { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
                 self?.currentArtist = self?.spotifyApp.currentTrack?.artist ?? ""
             }
         }
