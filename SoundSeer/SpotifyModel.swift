@@ -2,6 +2,23 @@ import AppKit
 import OSLog
 import ScriptingBridge
 
+enum SpotifyPlaybackState {
+    case paused
+    case playing
+    case stopped
+
+    init(_ descriptor: SpotifyEPlS?) {
+        switch descriptor {
+        case SpotifyEPlS(rawValue: 0x6b505370): // 'kPSp'
+            self = .paused
+        case SpotifyEPlS(rawValue: 0x6b505350): // 'kPSP'
+            self = .playing
+        default:
+            self = .stopped
+        }
+    }
+}
+
 class SpotifyModel {
     // https://swiftwithmajid.com/2022/04/06/logging-in-swift/
     private static let logger = Logger(
@@ -9,7 +26,7 @@ class SpotifyModel {
         category: String(describing: SpotifyModel.self)
     )
 
-    @Published var playerState: SpotifyEPlS = .stopped
+    @Published var playerState: SpotifyPlaybackState = .stopped
 
     @Published var currentSong: String = ""
     @Published var currentSongId: String = ""
@@ -60,8 +77,8 @@ class SpotifyModel {
             return
         }
 
-        playerState = spotifyApp.playerState ?? .stopped
-        Logger.playback.debug("Player state is now \(self.playerState.stringValue)")
+        playerState = SpotifyPlaybackState(spotifyApp.playerState)
+        Logger.playback.debug("Player state is now \(String(describing: self.playerState))")
 
         // Sometimes the AEKeyword will be 0 when the app is killed
         // Something about the Objective-C bridge allows the enum to still be created
@@ -94,19 +111,4 @@ class SpotifyModel {
     }
 
      
-}
-
-extension SpotifyEPlS {
-    var stringValue: String {
-        switch self {
-        case .stopped:
-            return "stopped"
-        case .playing:
-            return "playing"
-        case .paused:
-            return "paused"
-        default:
-            return "unknown"
-        }
-    }
 }

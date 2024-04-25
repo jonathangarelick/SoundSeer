@@ -7,7 +7,7 @@ import SwiftUI
 class SpotifyViewModel: ObservableObject {
     static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: SpotifyViewModel.self))
 
-    @Published private(set) var playerState: SpotifyEPlS = .stopped
+    @Published private(set) var playerState: SpotifyPlaybackState = .stopped
 
     @Published private(set) var currentSong: String = ""
     @Published private(set) var currentSongId: String = ""
