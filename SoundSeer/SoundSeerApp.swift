@@ -16,6 +16,12 @@ struct SoundSeerApp: App {
 
     var body: some Scene {
         MenuBarExtra {
+            if spotifyViewModel.playerState == .playing, spotifyViewModel.prefixLength <= 0 {
+                Button("Not enough room for song. Try restarting.", systemImage: "exclamationmark.triangle", action: {})
+                    .labelStyle(.titleAndIcon)
+                    .disabled(true)
+            }
+
             Button("Next Track", systemImage: "forward.end", action: spotifyViewModel.nextTrack)
                 .labelStyle(.titleAndIcon)
                 .disabled(spotifyViewModel.playerState != .paused && spotifyViewModel.playerState != .playing)
