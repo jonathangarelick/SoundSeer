@@ -101,7 +101,7 @@ class SpotifyViewModel: ObservableObject {
 
     // MARK: - Dynamic resizing
     @Published var isAppVisibleInMenuBar: Bool = false // This will trigger dynamic resizing on startup, just to be safe
-    @Published var prefixLength = 100
+    @Published var prefixLength = 45
 
     private var timer: Timer?
 

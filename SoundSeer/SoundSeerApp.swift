@@ -23,19 +23,25 @@ struct SoundSeerApp: App {
             Divider()
 
             Button(!spotifyViewModel.currentSong.isEmpty
-                   ? spotifyViewModel.currentSong.truncate(length: Int(Double(spotifyViewModel.prefixLength) * 1.5))
+                   ? (spotifyViewModel.prefixLength > 0
+                      ? spotifyViewModel.currentSong.truncate(length: Int(Double(spotifyViewModel.prefixLength) * 1.5))
+                      : spotifyViewModel.currentSong.truncate(length: 60))
                    : "Song unknown", systemImage: "music.note", action: spotifyViewModel.openCurrentSong)
             .labelStyle(.titleAndIcon)
             .disabled(spotifyViewModel.currentSongId.isEmpty)
 
             Button(!spotifyViewModel.currentArtist.isEmpty
-                   ? spotifyViewModel.currentArtist.truncate(length: Int(Double(spotifyViewModel.prefixLength) * 1.5))
+                   ? (spotifyViewModel.prefixLength > 0
+                      ? spotifyViewModel.currentArtist.truncate(length: Int(Double(spotifyViewModel.prefixLength) * 1.5))
+                      : spotifyViewModel.currentArtist.truncate(length: 60))
                    : "Artist unknown", systemImage: "person", action: spotifyViewModel.openCurrentArtist)
             .labelStyle(.titleAndIcon)
             .disabled(spotifyViewModel.currentSongId.isEmpty)
 
             Button(!spotifyViewModel.currentAlbum.isEmpty
-                   ? spotifyViewModel.currentAlbum.truncate(length: Int(Double(spotifyViewModel.prefixLength) * 1.5))
+                   ? (spotifyViewModel.prefixLength > 0
+                      ? spotifyViewModel.currentAlbum.truncate(length: Int(Double(spotifyViewModel.prefixLength) * 1.5))
+                      : spotifyViewModel.currentAlbum.truncate(length: 60))
                    : "Album unknown", systemImage: "opticaldisc", action: spotifyViewModel.openCurrentAlbum)
             .labelStyle(.titleAndIcon)
             .disabled(spotifyViewModel.currentSongId.isEmpty)
