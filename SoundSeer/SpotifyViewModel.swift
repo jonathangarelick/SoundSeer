@@ -32,7 +32,7 @@ class SpotifyViewModel: ObservableObject {
             .map { playerState -> AnyPublisher<SpotifyPlaybackState, Never> in
                 if playerState == .stopped {
                     return Just(playerState)
-                        .delay(for: .milliseconds(200), scheduler: DispatchQueue.main)
+                        .delay(for: .milliseconds(400), scheduler: DispatchQueue.main)
                         .eraseToAnyPublisher()
                 } else {
                     return Just(playerState).eraseToAnyPublisher()
