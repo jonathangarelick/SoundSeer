@@ -32,7 +32,7 @@ class SpotifyViewModel: ObservableObject {
             .map { playerState -> AnyPublisher<SpotifyPlaybackState, Never> in
                 if playerState == .stopped {
                     return Just(playerState)
-                        .delay(for: .milliseconds(400), scheduler: DispatchQueue.main)
+                        .delay(for: .milliseconds(600), scheduler: DispatchQueue.main)
                         .eraseToAnyPublisher()
                 } else {
                     return Just(playerState).eraseToAnyPublisher()
@@ -129,7 +129,7 @@ class SpotifyViewModel: ObservableObject {
     private func handleVisibilityChange(_ isVisible: Bool) {
         timer?.invalidate()
 
-        if !isVisible && !Self.isAppInMenuBar("SoundSeer") {
+        if playerState == .playing, !isVisible, !Self.isAppInMenuBar("SoundSeer") {
             doDynamicResizing()
         }
     }
