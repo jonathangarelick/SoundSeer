@@ -7,12 +7,10 @@ class SpotifyAPI {
     static let baseURL = "https://api.spotify.com/v1"
     static let clientID = "d5efe83ecf0043388152717eb2463a1e"
     static let clientSecret = ProcessInfo.processInfo.environment["CLIENT_SECRET"]
-
+    
     static var accessToken: String?
     static var expirationTime: Date?
-
-    static let log = Logger()
-
+    
     static func getAccessToken(completion: @escaping (String?) -> Void) {
         if let token = accessToken, let expiration = expirationTime, expiration > Date() {
             // Token is still valid, use the cached token
@@ -23,19 +21,19 @@ class SpotifyAPI {
             let headers: HTTPHeaders = [
                 "Content-Type": "application/x-www-form-urlencoded"
             ]
-
+            
             guard let clientSecret = clientSecret else {
-                log.error("Client secret is missing")
+                Logger.api.error("Client secret is missing")
                 completion(nil)
                 return
             }
-
+            
             let parameters: Parameters = [
                 "grant_type": "client_credentials",
                 "client_id": clientID,
                 "client_secret": clientSecret
             ]
-
+            
             AF.request(url, method: .post, parameters: parameters, headers: headers)
                 .validate()
                 .responseDecodable(of: AccessTokenResponse.self) { response in
@@ -45,13 +43,13 @@ class SpotifyAPI {
                         expirationTime = Date().addingTimeInterval(TimeInterval(tokenResponse.expiresIn))
                         completion(accessToken)
                     case .failure(let error):
-                        log.error("Error getting access token: \(error.localizedDescription)")
+                        Logger.api.error("Error getting access token: \(error.localizedDescription)")
                         completion(nil)
                     }
                 }
         }
     }
-
+    
     static func getSpotifyURI(from songID: String, type: URIType, completion: @escaping (String?) -> Void) {
         switch type {
         case .song:
@@ -60,12 +58,12 @@ class SpotifyAPI {
                     completion(nil)
                     return
                 }
-
+                
                 let url = "\(baseURL)/tracks/\(songID)"
                 let headers: HTTPHeaders = [
                     "Authorization": "Bearer \(accessToken)"
                 ]
-
+                
                 AF.request(url, method: .get, headers: headers)
                     .validate()
                     .responseDecodable(of: URIResponse.self) { response in
@@ -73,7 +71,7 @@ class SpotifyAPI {
                         case .success(let uriResponse):
                             completion(uriResponse.uri)
                         case .failure(let error):
-                            log.error("Error getting song URI: \(error.localizedDescription)")
+                            Logger.api.error("Error getting song URI: \(error.localizedDescription)")
                             completion(nil)
                         }
                     }
@@ -84,13 +82,13 @@ class SpotifyAPI {
                     completion(nil)
                     return
                 }
-
+                
                 getAccessToken { token in
                     guard let accessToken = token else {
                         completion(nil)
                         return
                     }
-
+                    
                     let url: String
                     switch type {
                     case .artist:
@@ -101,11 +99,11 @@ class SpotifyAPI {
                         // This case is handled separately
                         return
                     }
-
+                    
                     let headers: HTTPHeaders = [
                         "Authorization": "Bearer \(accessToken)"
                     ]
-
+                    
                     AF.request(url, method: .get, headers: headers)
                         .validate()
                         .responseDecodable(of: URIResponse.self) { response in
@@ -113,7 +111,7 @@ class SpotifyAPI {
                             case .success(let uriResponse):
                                 completion(uriResponse.uri)
                             case .failure(let error):
-                                log.error("Error getting URI: \(error.localizedDescription)")
+                                Logger.api.error("Error getting URI: \(error.localizedDescription)")
                                 completion(nil)
                             }
                         }
@@ -121,19 +119,19 @@ class SpotifyAPI {
             }
         }
     }
-
+    
     static func getArtistOrAlbumID(from songID: String, type: IDType, completion: @escaping (String?) -> Void) {
         getAccessToken { token in
             guard let accessToken = token else {
                 completion(nil)
                 return
             }
-
+            
             let url = "\(baseURL)/tracks/\(songID)"
             let headers: HTTPHeaders = [
                 "Authorization": "Bearer \(accessToken)"
             ]
-
+            
             AF.request(url, method: .get, headers: headers)
                 .validate()
                 .responseDecodable(of: TrackResponse.self) { response in
@@ -154,7 +152,7 @@ class SpotifyAPI {
                             }
                         }
                     case .failure(let error):
-                        log.error("Error getting artist or album ID: \(error.localizedDescription)")
+                        Logger.api.error("Error getting artist or album ID: \(error.localizedDescription)")
                         completion(nil)
                     }
                 }
@@ -169,7 +167,7 @@ enum IDType {
 struct TrackResponse: Decodable {
     let artists: [Artist]?
     let album: Album?
-
+    
     enum CodingKeys: String, CodingKey {
         case artists
         case album
@@ -193,7 +191,7 @@ enum URIType {
 
 struct URIResponse: Decodable {
     let uri: String
-
+    
     enum CodingKeys: String, CodingKey {
         case uri
     }
@@ -202,7 +200,7 @@ struct URIResponse: Decodable {
 struct AccessTokenResponse: Decodable {
     let accessToken: String
     let expiresIn: Int
-
+    
     enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
         case expiresIn = "expires_in"
@@ -214,7 +212,7 @@ struct Track: Decodable {
     let name: String
     let artists: [Artist]
     let previewURL: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case id
         case name
