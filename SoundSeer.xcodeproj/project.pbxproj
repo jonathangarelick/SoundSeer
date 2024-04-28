@@ -37,6 +37,7 @@
 		9B1461302BD08573009C931B /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		9B1461322BD086E5009C931B /* SoundSeer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundSeer-Bridging-Header.h"; sourceTree = "<group>"; };
 		9B1486712BD475DA00D67669 /* WindowAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAccessor.swift; sourceTree = "<group>"; };
+		9B258F2D2BDF193100DC5EE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9B5503012BD5F22E0005BEBD /* SoundSeerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoundSeerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B55030A2BD5F49C0005BEBD /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		9BAC6E102BD0A082004B80E1 /* SpotifyApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyApplication.swift; sourceTree = "<group>"; };
@@ -130,6 +131,7 @@
 		9BE2FA1A2BC97CCC00A7124B /* SoundSeer */ = {
 			isa = PBXGroup;
 			children = (
+				9B258F2D2BDF193100DC5EE2 /* Info.plist */,
 				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
 				9BAEAEA22BDAE8AD00C85936 /* Bridge */,
 				9BAEAEA32BDAE8D000C85936 /* Extensions */,
@@ -444,12 +446,13 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 15;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 5DR54W29BC;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SoundSeer/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SoundSeer;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -459,7 +462,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.garelick.SoundSeer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -480,12 +483,13 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 15;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 5DR54W29BC;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SoundSeer/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SoundSeer;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -495,7 +499,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.garelick.SoundSeer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
