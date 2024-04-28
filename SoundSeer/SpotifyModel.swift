@@ -20,12 +20,6 @@ enum SpotifyPlaybackState {
 }
 
 class SpotifyModel {
-    // https://swiftwithmajid.com/2022/04/06/logging-in-swift/
-    private static let logger = Logger(
-        subsystem: Bundle.main.bundleIdentifier!,
-        category: String(describing: SpotifyModel.self)
-    )
-
     @Published var playerState: SpotifyPlaybackState = .stopped
 
     @Published var currentSong: String = ""
@@ -40,27 +34,27 @@ class SpotifyModel {
 
     init() {
         // Need to trigger a "fake" event when SoundSeer is first opened
-        Self.logger.debug("Performing initial update")
+        Logger.model.debug("Performing initial update")
         update()
 
-        Self.logger.debug("Subscribing to Spotify playback change events")
+        Logger.model.debug("Subscribing to Spotify playback change events")
         notificationCenter.addObserver(forName: notificationName, object: nil, queue: nil) { [weak self] _ in
             self?.update()
         }
     }
 
     deinit {
-        Self.logger.debug("Removing subscription to Spotify playback events")
+        Logger.model.debug("Removing subscription to Spotify playback events")
         DistributedNotificationCenter.default().removeObserver(self)
     }
 
     func nextTrack() {
-        Self.logger.debug("Skipping track")
+        Logger.model.debug("Skipping track")
         spotifyApp.nextTrack?()
     }
 
     private func resetData() {
-        Self.logger.debug("Resetting data")
+        Logger.model.debug("Resetting data")
         playerState = .stopped
 
         currentSong = ""
@@ -94,21 +88,20 @@ class SpotifyModel {
 
         // I have no idea why this sometimes happens. It's only for artist
         if currentArtist.isEmpty {
-            Self.logger.info("Current artist is empty. Retrying...")
+            Logger.model.log("Current artist is empty. Retrying...")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
                 self?.currentArtist = self?.spotifyApp.currentTrack?.artist ?? ""
+                Logger.model.log("Second attempt to retrieve current artist: \(self?.currentArtist ?? "nil", privacy: .public)")
             }
         }
 
         currentAlbum = spotifyApp.currentTrack?.album ?? ""
 
-        Self.logger.info("Retrieved current song: \(self.currentSong, privacy: .public)")
-        Self.logger.info("Retrieved current song ID: \(self.currentSongId, privacy: .public)")
-        Self.logger.info("Retrieved current artist: \(self.currentArtist, privacy: .public)")
-        Self.logger.info("Retrieved current album: \(self.currentAlbum, privacy: .public)")
+        Logger.model.debug("Retrieved current song: \(self.currentSong, privacy: .public)")
+        Logger.model.debug("Retrieved current song ID: \(self.currentSongId, privacy: .public)")
+        Logger.model.debug("Retrieved current artist: \(self.currentArtist, privacy: .public)")
+        Logger.model.debug("Retrieved current album: \(self.currentAlbum, privacy: .public)")
 
-        Self.logger.info("Update completed successfully")
+        Logger.model.debug("Update completed successfully")
     }
-
-     
 }
