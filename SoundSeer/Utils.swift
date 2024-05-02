@@ -4,7 +4,7 @@ enum Utils {
             .filter { $0.bundleIdentifier == bundleIdentifier }.count > 0
     }
 
-    static func playerStateIsStoppedOrUnknown(_ playerState: SpotifyPlaybackState) -> Bool {
+    static func playerStateIsStoppedOrUnknown(_ playerState: PlaybackState) -> Bool {
         return playerState != .paused && playerState != .playing
     }
 }

@@ -2,16 +2,16 @@ import AppKit
 import OSLog
 import ScriptingBridge
 
-enum SpotifyPlaybackState {
+enum PlaybackState {
     case paused
     case playing
     case stopped
 
-    init(_ descriptor: SpotifyEPlS?) {
-        switch descriptor {
-        case SpotifyEPlS(rawValue: 0x6b505370): // 'kPSp'
+    init<T: RawRepresentable>(_ descriptor: T?) where T.RawValue == UInt32 {
+        switch descriptor?.rawValue {
+        case 0x6b505370:
             self = .paused
-        case SpotifyEPlS(rawValue: 0x6b505350): // 'kPSP'
+        case 0x6b505350, 0x6b505352, 0x6b505346: // playing, rewinding, fast-forwarding
             self = .playing
         default:
             self = .stopped
@@ -19,8 +19,8 @@ enum SpotifyPlaybackState {
     }
 }
 
-class SpotifyModel {
-    @Published var playerState: SpotifyPlaybackState = .stopped
+class PlayerModel {
+    @Published var playerState: PlaybackState = .stopped
 
     @Published var currentSong: String = ""
     @Published var currentSongId: String = ""
@@ -28,6 +28,7 @@ class SpotifyModel {
     @Published var currentAlbum: String = ""
 
     private let spotifyApp: SpotifyApplication = SBApplication(bundleIdentifier: "com.spotify.client")!
+    private let musicApp: MusicApplication = SBApplication(bundleIdentifier: "com.apple.Music")!
 
     private let notificationCenter = DistributedNotificationCenter.default()
     private let notificationName = Notification.Name("com.spotify.client.PlaybackStateChanged")
@@ -71,7 +72,7 @@ class SpotifyModel {
             return
         }
 
-        playerState = SpotifyPlaybackState(spotifyApp.playerState)
+        playerState = PlaybackState(spotifyApp.playerState)
         Logger.playback.debug("Player state is now \(String(describing: self.playerState))")
 
         // Sometimes the AEKeyword will be 0 when the app is killed
@@ -104,4 +105,16 @@ class SpotifyModel {
 
         Logger.model.debug("Update completed successfully")
     }
+
+//    func updateFromAppleMusic() {
+//        guard let currentTrack = musicApp.currentTrack else {
+//            resetData()
+//            return
+//        }
+//
+//        playerState = SpotifyPlaybackState(musicApp.playerState)
+//        currentSong = currentTrack.name ?? ""
+//        currentArtist = currentTrack.artist ?? ""
+//        currentAlbum = currentTrack.album ?? ""
+//    }
 }

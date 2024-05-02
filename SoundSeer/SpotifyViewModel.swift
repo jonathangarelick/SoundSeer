@@ -5,14 +5,14 @@ import OSLog
 import SwiftUI
 
 class SpotifyViewModel: ObservableObject {
-    @Published private(set) var playerState: SpotifyPlaybackState = .stopped
+    @Published private(set) var playerState: PlaybackState = .stopped
     
     @Published private(set) var currentSong: String = ""
     @Published private(set) var currentSongId: String = ""
     @Published private(set) var currentArtist: String = ""
     @Published private(set) var currentAlbum: String = ""
     
-    private let spotifyModel: SpotifyModel = SpotifyModel()
+    private let spotifyModel: PlayerModel = PlayerModel()
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -27,7 +27,7 @@ class SpotifyViewModel: ObservableObject {
         // If the user manually clicks play on a song (while currently playing), Spotify will
         // send a stopped and playing event in rapid succession. This prevents the UI from flickering
         spotifyModel.$playerState
-            .map { playerState -> AnyPublisher<SpotifyPlaybackState, Never> in
+            .map { playerState -> AnyPublisher<PlaybackState, Never> in
                 if playerState == .stopped {
                     return Just(playerState)
                         .delay(for: .milliseconds(600), scheduler: DispatchQueue.main)
