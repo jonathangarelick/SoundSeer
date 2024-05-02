@@ -1,16 +1,6 @@
 import AppKit
 import ScriptingBridge
 
-@objc public protocol SBObjectProtocol: NSObjectProtocol {
-    func get() -> Any!
-}
-
-@objc public protocol SBApplicationProtocol: SBObjectProtocol {
-    func activate()
-    var delegate: SBApplicationDelegate! { get set }
-    @objc optional var isRunning: Bool { get }
-}
-
 // MARK: SpotifyEPlS
 @objc public enum SpotifyEPlS : AEKeyword {
     case stopped = 0x6b505353 /* 'kPSS' */

@@ -11,6 +11,7 @@
 		9B1486722BD475DA00D67669 /* WindowAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1486712BD475DA00D67669 /* WindowAccessor.swift */; };
 		9B55030B2BD5F49C0005BEBD /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B55030A2BD5F49C0005BEBD /* StringExtensionTests.swift */; };
 		9B7A30B72BE3F1D600AD7C1E /* MusicApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A30B62BE3F1D600AD7C1E /* MusicApplication.swift */; };
+		9B7A30B92BE3FC4300AD7C1E /* SBProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A30B82BE3FC4300AD7C1E /* SBProtocol.swift */; };
 		9BAC6E112BD0A082004B80E1 /* SpotifyApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC6E102BD0A082004B80E1 /* SpotifyApplication.swift */; };
 		9BAEAE9F2BDAE2C400C85936 /* LoggerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAEAE9E2BDAE2C400C85936 /* LoggerExtension.swift */; };
 		9BAEAEA12BDAE6F200C85936 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAEAEA02BDAE6F200C85936 /* Utils.swift */; };
@@ -42,6 +43,8 @@
 		9B5503012BD5F22E0005BEBD /* SoundSeerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoundSeerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B55030A2BD5F49C0005BEBD /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		9B7A30B62BE3F1D600AD7C1E /* MusicApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicApplication.swift; sourceTree = "<group>"; };
+		9B7A30B82BE3FC4300AD7C1E /* SBProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBProtocol.swift; sourceTree = "<group>"; };
+		9B7A30BA2BE3FC7100AD7C1E /* Music.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Music.h; sourceTree = "<group>"; };
 		9BAC6E102BD0A082004B80E1 /* SpotifyApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyApplication.swift; sourceTree = "<group>"; };
 		9BAEAE9E2BDAE2C400C85936 /* LoggerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerExtension.swift; sourceTree = "<group>"; };
 		9BAEAEA02BDAE6F200C85936 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -91,13 +94,31 @@
 			path = SoundSeerTests;
 			sourceTree = "<group>";
 		};
+		9B7A30BB2BE3FC8300AD7C1E /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				9B7A30BA2BE3FC7100AD7C1E /* Music.h */,
+				9B7A30B62BE3F1D600AD7C1E /* MusicApplication.swift */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
+		9B7A30BC2BE3FC8A00AD7C1E /* Spotify */ = {
+			isa = PBXGroup;
+			children = (
+				9B14612E2BD084E3009C931B /* Spotify.h */,
+				9BAC6E102BD0A082004B80E1 /* SpotifyApplication.swift */,
+			);
+			path = Spotify;
+			sourceTree = "<group>";
+		};
 		9BAEAEA22BDAE8AD00C85936 /* Bridge */ = {
 			isa = PBXGroup;
 			children = (
+				9B7A30BB2BE3FC8300AD7C1E /* Music */,
+				9B7A30B82BE3FC4300AD7C1E /* SBProtocol.swift */,
 				9B1461322BD086E5009C931B /* SoundSeer-Bridging-Header.h */,
-				9B14612E2BD084E3009C931B /* Spotify.h */,
-				9BAC6E102BD0A082004B80E1 /* SpotifyApplication.swift */,
-				9B7A30B62BE3F1D600AD7C1E /* MusicApplication.swift */,
+				9B7A30BC2BE3FC8A00AD7C1E /* Spotify */,
 			);
 			path = Bridge;
 			sourceTree = "<group>";
@@ -267,6 +288,7 @@
 				9BD4DCE22BC9E9D4001572F7 /* PlayerModel.swift in Sources */,
 				9BAEAEA12BDAE6F200C85936 /* Utils.swift in Sources */,
 				9B1486722BD475DA00D67669 /* WindowAccessor.swift in Sources */,
+				9B7A30B92BE3FC4300AD7C1E /* SBProtocol.swift in Sources */,
 				9BEB2DDB2BD1C02E0038E223 /* StringExtension.swift in Sources */,
 				9BD4DCE42BC9EC8B001572F7 /* SpotifyViewModel.swift in Sources */,
 				9BAEAE9F2BDAE2C400C85936 /* LoggerExtension.swift in Sources */,
