@@ -27,12 +27,19 @@ class SpotifyModel {
     @Published var currentArtist: String = ""
     @Published var currentAlbum: String = ""
 
-    private let spotifyApp: SpotifyApplication = SBApplication(bundleIdentifier: "com.spotify.client")!
+    private let spotifyApp: SpotifyApplication
 
     private let notificationCenter = DistributedNotificationCenter.default()
     private let notificationName = Notification.Name("com.spotify.client.PlaybackStateChanged")
 
-    init() {
+    init?() {
+        guard let spotifyApp = SBApplication(bundleIdentifier: "com.spotify.client") else {
+            Logger.model.error("Could not find Spotify application")
+            return nil
+        }
+
+        self.spotifyApp = spotifyApp
+
         // Need to trigger a "fake" event when SoundSeer is first opened
         Logger.model.debug("Performing initial update")
         update()
