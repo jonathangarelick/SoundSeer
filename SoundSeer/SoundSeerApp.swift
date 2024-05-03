@@ -10,7 +10,7 @@ struct SoundSeerApp: App {
 
     // https://stackoverflow.com/a/67065308
     private struct SongMetaContent: View {
-        @StateObject var spotifyViewModel: SpotifyViewModel
+        @ObservedObject var spotifyViewModel: SpotifyViewModel
 
         var body: some View {
             if spotifyViewModel.playerState == .playing, spotifyViewModel.prefixLength <= 0 {
@@ -58,7 +58,7 @@ struct SoundSeerApp: App {
     }
 
     private struct LabelContent: View {
-        @StateObject var spotifyViewModel: SpotifyViewModel
+        @ObservedObject var spotifyViewModel: SpotifyViewModel
         @State private var window: NSWindow?
 
         var body: some View {
