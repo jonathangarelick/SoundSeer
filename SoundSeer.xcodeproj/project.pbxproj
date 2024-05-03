@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		9B1461312BD08573009C931B /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B1461302BD08573009C931B /* ScriptingBridge.framework */; };
 		9B1486722BD475DA00D67669 /* WindowAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1486712BD475DA00D67669 /* WindowAccessor.swift */; };
+		9B1B0F912BE59C3800E26B26 /* PlayerStateNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1B0F902BE59C3800E26B26 /* PlayerStateNotification.swift */; };
+		9B1B0F942BE5A55700E26B26 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1B0F932BE5A55700E26B26 /* Player.swift */; };
+		9B1B0F962BE5A57800E26B26 /* PlaybackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1B0F952BE5A57800E26B26 /* PlaybackState.swift */; };
 		9B55030B2BD5F49C0005BEBD /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B55030A2BD5F49C0005BEBD /* StringExtensionTests.swift */; };
 		9B7A30B72BE3F1D600AD7C1E /* MusicApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A30B62BE3F1D600AD7C1E /* MusicApplication.swift */; };
 		9B7A30B92BE3FC4300AD7C1E /* SBProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A30B82BE3FC4300AD7C1E /* SBProtocol.swift */; };
@@ -39,6 +42,9 @@
 		9B1461302BD08573009C931B /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		9B1461322BD086E5009C931B /* SoundSeer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundSeer-Bridging-Header.h"; sourceTree = "<group>"; };
 		9B1486712BD475DA00D67669 /* WindowAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAccessor.swift; sourceTree = "<group>"; };
+		9B1B0F902BE59C3800E26B26 /* PlayerStateNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStateNotification.swift; sourceTree = "<group>"; };
+		9B1B0F932BE5A55700E26B26 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		9B1B0F952BE5A57800E26B26 /* PlaybackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackState.swift; sourceTree = "<group>"; };
 		9B258F2D2BDF193100DC5EE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9B5503012BD5F22E0005BEBD /* SoundSeerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoundSeerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B55030A2BD5F49C0005BEBD /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
@@ -84,6 +90,24 @@
 				9B1461302BD08573009C931B /* ScriptingBridge.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9B1B0F922BE5A54A00E26B26 /* Primitives */ = {
+			isa = PBXGroup;
+			children = (
+				9B1B0F952BE5A57800E26B26 /* PlaybackState.swift */,
+				9B1B0F932BE5A55700E26B26 /* Player.swift */,
+			);
+			path = Primitives;
+			sourceTree = "<group>";
+		};
+		9B1B0F972BE5A5B800E26B26 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9BD4DCE12BC9E9D4001572F7 /* PlayerModel.swift */,
+				9B1B0F902BE59C3800E26B26 /* PlayerStateNotification.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		9B5503022BD5F22E0005BEBD /* SoundSeerTests */ = {
@@ -159,9 +183,10 @@
 				9BAEAEA22BDAE8AD00C85936 /* Bridge */,
 				9BAEAEA32BDAE8D000C85936 /* Extensions */,
 				9B258F2D2BDF193100DC5EE2 /* Info.plist */,
+				9B1B0F972BE5A5B800E26B26 /* Models */,
+				9B1B0F922BE5A54A00E26B26 /* Primitives */,
 				9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */,
 				9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */,
-				9BD4DCE12BC9E9D4001572F7 /* PlayerModel.swift */,
 				9BD4DCE32BC9EC8B001572F7 /* SpotifyViewModel.swift */,
 				9BAEAEA02BDAE6F200C85936 /* Utils.swift */,
 				9B1486712BD475DA00D67669 /* WindowAccessor.swift */,
@@ -284,13 +309,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B7A30B72BE3F1D600AD7C1E /* MusicApplication.swift in Sources */,
+				9B1B0F912BE59C3800E26B26 /* PlayerStateNotification.swift in Sources */,
 				9BE2FA1C2BC97CCC00A7124B /* SoundSeerApp.swift in Sources */,
 				9BD4DCE22BC9E9D4001572F7 /* PlayerModel.swift in Sources */,
 				9BAEAEA12BDAE6F200C85936 /* Utils.swift in Sources */,
+				9B1B0F942BE5A55700E26B26 /* Player.swift in Sources */,
 				9B1486722BD475DA00D67669 /* WindowAccessor.swift in Sources */,
 				9B7A30B92BE3FC4300AD7C1E /* SBProtocol.swift in Sources */,
 				9BEB2DDB2BD1C02E0038E223 /* StringExtension.swift in Sources */,
 				9BD4DCE42BC9EC8B001572F7 /* SpotifyViewModel.swift in Sources */,
+				9B1B0F962BE5A57800E26B26 /* PlaybackState.swift in Sources */,
 				9BAEAE9F2BDAE2C400C85936 /* LoggerExtension.swift in Sources */,
 				9BAC6E112BD0A082004B80E1 /* SpotifyApplication.swift in Sources */,
 				9BC6B6892BCA2D49005421AE /* SpotifyAPI.swift in Sources */,

@@ -3,23 +3,6 @@ import MusicKit
 import OSLog
 import ScriptingBridge
 
-enum PlaybackState {
-    case paused
-    case playing
-    case stopped
-
-    init<T: RawRepresentable>(_ descriptor: T?) where T.RawValue == UInt32 {
-        switch descriptor?.rawValue {
-        case 0x6b505370:
-            self = .paused
-        case 0x6b505350, 0x6b505352, 0x6b505346: // playing, rewinding, fast-forwarding
-            self = .playing
-        default:
-            self = .stopped
-        }
-    }
-}
-
 class PlayerModel {
     @Published var playerState: PlaybackState = .stopped
 
@@ -44,28 +27,18 @@ class PlayerModel {
 
         self.spotifyApp = spotifyApp
 
-        notificationCenter.addObserver(forName: musicNotificationName, object: nil, queue: nil) { notification in
-            // Handle the playback state change notification
-            print("Received playback state change notification")
-
-            // Extract the playback state information from the notification
-            if let userInfo = notification.userInfo,
-               let playerState = userInfo["Player State"] as? String {
-                // Handle the player state
-                print("Player State: \(playerState)")
-
-                // Perform any necessary actions based on the player state
-                // For example, update your app's UI or trigger specific behaviors
-            }
-        }
-
         // Need to trigger a "fake" event when SoundSeer is first opened
-        Logger.model.debug("Performing initial update")
-        update()
+//        Logger.model.debug("Performing initial update")
+//        update()
 
         Logger.model.debug("Subscribing to Spotify playback change events")
-        notificationCenter.addObserver(forName: notificationName, object: nil, queue: nil) { [weak self] _ in
-            self?.update()
+        notificationCenter.addObserver(forName: notificationName, object: nil, queue: nil) { [weak self] in
+            self?.update(PlayerStateNotification(.spotify, $0))
+        }
+
+        Logger.model.debug("Subscribing to Apple Music playback change events")
+        notificationCenter.addObserver(forName: musicNotificationName, object: nil, queue: nil) { [weak self] in
+            self?.update(PlayerStateNotification(.music, $0))
         }
     }
 
@@ -89,17 +62,28 @@ class PlayerModel {
         currentAlbum = ""
     }
 
-    private func update() {
-        // An event may be fired when Spotify is closed. This prevents it from reopening
-        guard Utils.isAppRunning("com.spotify.client") else {
-            Logger.playback.debug("Cancelled update. Spotify is not running")
-            resetData()
+    private func update(_ notification: PlayerStateNotification?) {
+        guard let notification = notification else {
+            Logger.model.error("Received bad event. Discarding")
             return
         }
 
-        playerState = PlaybackState(spotifyApp.playerState)
+        playerState = notification.playbackState
         Logger.playback.debug("Player state is now \(String(describing: self.playerState))")
 
+        currentSong = notification.songName ?? ""
+        currentSongId = "abc" //spotifyApp.currentTrack?.id?().components(separatedBy: ":").last ?? ""
+        currentArtist = notification.artistName ?? ""
+        currentAlbum = notification.albumName ?? ""
+
+        Logger.model.debug("Retrieved current song: \(self.currentSong, privacy: .public)")
+        Logger.model.debug("Retrieved current song ID: \(self.currentSongId, privacy: .public)")
+        Logger.model.debug("Retrieved current artist: \(self.currentArtist, privacy: .public)")
+        Logger.model.debug("Retrieved current album: \(self.currentAlbum, privacy: .public)")
+
+        Logger.model.debug("Update completed successfully")
+
+        /*
         // Sometimes the AEKeyword will be 0 when the app is killed
         // Something about the Objective-C bridge allows the enum to still be created
         if Utils.playerStateIsStoppedOrUnknown(playerState) {
@@ -108,9 +92,7 @@ class PlayerModel {
             return
         }
 
-        currentSong = spotifyApp.currentTrack?.name ?? ""
-        currentSongId = spotifyApp.currentTrack?.id?().components(separatedBy: ":").last ?? ""
-        currentArtist = spotifyApp.currentTrack?.artist ?? ""
+
 
         // I have no idea why this sometimes happens. It's only for artist
         if currentArtist.isEmpty {
@@ -123,11 +105,9 @@ class PlayerModel {
 
         currentAlbum = spotifyApp.currentTrack?.album ?? ""
 
-        Logger.model.debug("Retrieved current song: \(self.currentSong, privacy: .public)")
-        Logger.model.debug("Retrieved current song ID: \(self.currentSongId, privacy: .public)")
-        Logger.model.debug("Retrieved current artist: \(self.currentArtist, privacy: .public)")
-        Logger.model.debug("Retrieved current album: \(self.currentAlbum, privacy: .public)")
 
-        Logger.model.debug("Update completed successfully")
+
+
+         */
     }
 }
