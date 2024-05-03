@@ -6,8 +6,8 @@ import Alamofire
 class SpotifyAPI {
     static let baseURL = "https://api.spotify.com/v1"
     static let clientID = "d5efe83ecf0043388152717eb2463a1e"
-    static let clientSecret = ProcessInfo.processInfo.environment["CLIENT_SECRET"]
-    
+    static let clientSecret: String? = ProcessInfo.processInfo.environment["CLIENT_SECRET"]
+
     static var accessToken: String?
     static var expirationTime: Date?
     
