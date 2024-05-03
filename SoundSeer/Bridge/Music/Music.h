@@ -62,6 +62,8 @@ typedef enum MusicEPlS MusicEPlS;
 - (NSInteger) id;  // the id of the item
 @property (copy) NSString *name;  // the name of the item
 
+- (void) reveal;  // reveal and select a track or playlist
+
 @end
 
 // playable audio source

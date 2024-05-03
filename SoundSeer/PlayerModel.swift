@@ -1,4 +1,5 @@
 import AppKit
+import MusicKit
 import OSLog
 import ScriptingBridge
 
@@ -33,7 +34,24 @@ class PlayerModel {
     private let notificationCenter = DistributedNotificationCenter.default()
     private let notificationName = Notification.Name("com.spotify.client.PlaybackStateChanged")
 
+    let musicNotificationName = Notification.Name("com.apple.Music.playerInfo")
+
     init() {
+        notificationCenter.addObserver(forName: musicNotificationName, object: nil, queue: nil) { notification in
+            // Handle the playback state change notification
+            print("Received playback state change notification")
+
+            // Extract the playback state information from the notification
+            if let userInfo = notification.userInfo,
+               let playerState = userInfo["Player State"] as? String {
+                // Handle the player state
+                print("Player State: \(playerState)")
+
+                // Perform any necessary actions based on the player state
+                // For example, update your app's UI or trigger specific behaviors
+            }
+        }
+
         // Need to trigger a "fake" event when SoundSeer is first opened
         Logger.model.debug("Performing initial update")
         update()
@@ -105,16 +123,4 @@ class PlayerModel {
 
         Logger.model.debug("Update completed successfully")
     }
-
-//    func updateFromAppleMusic() {
-//        guard let currentTrack = musicApp.currentTrack else {
-//            resetData()
-//            return
-//        }
-//
-//        playerState = SpotifyPlaybackState(musicApp.playerState)
-//        currentSong = currentTrack.name ?? ""
-//        currentArtist = currentTrack.artist ?? ""
-//        currentAlbum = currentTrack.album ?? ""
-//    }
 }
