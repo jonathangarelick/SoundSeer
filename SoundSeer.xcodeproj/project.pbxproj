@@ -155,10 +155,10 @@
 		9BE2FA1A2BC97CCC00A7124B /* SoundSeer */ = {
 			isa = PBXGroup;
 			children = (
-				9B258F2D2BDF193100DC5EE2 /* Info.plist */,
 				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
 				9BAEAEA22BDAE8AD00C85936 /* Bridge */,
 				9BAEAEA32BDAE8D000C85936 /* Extensions */,
+				9B258F2D2BDF193100DC5EE2 /* Info.plist */,
 				9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */,
 				9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */,
 				9BD4DCE12BC9E9D4001572F7 /* PlayerModel.swift */,
@@ -472,7 +472,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 17;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 5DR54W29BC;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -488,8 +488,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = net.garelick.SoundSeer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -510,7 +509,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 17;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 5DR54W29BC;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -526,8 +525,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = net.garelick.SoundSeer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

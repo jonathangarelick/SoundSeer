@@ -12,11 +12,18 @@ class SpotifyViewModel: ObservableObject {
     @Published private(set) var currentArtist: String = ""
     @Published private(set) var currentAlbum: String = ""
     
-    private let spotifyModel: PlayerModel = PlayerModel()
+    private let spotifyModel: PlayerModel
     
     private var cancellables = Set<AnyCancellable>()
     
-    init() {
+    init?() {
+        guard let spotifyModel = PlayerModel() else {
+            // Model handles logging
+            return nil
+        }
+
+        self.spotifyModel = spotifyModel
+
         $isAppVisibleInMenuBar
             .sink { [weak self] in
                 self?.handleVisibilityChange($0)
@@ -91,10 +98,6 @@ class SpotifyViewModel: ObservableObject {
         let pasteboard = NSPasteboard.general
         pasteboard.declareTypes([.string], owner: nil)
         pasteboard.setString("https://open.spotify.com/track/\(currentSongId)", forType: .string)
-    }
-    
-    func quitSoundSeer() {
-        NSApplication.shared.terminate(nil)
     }
     
     // MARK: - Dynamic resizing

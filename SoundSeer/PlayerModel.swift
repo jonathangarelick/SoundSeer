@@ -28,7 +28,7 @@ class PlayerModel {
     @Published var currentArtist: String = ""
     @Published var currentAlbum: String = ""
 
-    private let spotifyApp: SpotifyApplication = SBApplication(bundleIdentifier: "com.spotify.client")!
+    private let spotifyApp: SpotifyApplication
     private let musicApp: MusicApplication = SBApplication(bundleIdentifier: "com.apple.Music")!
 
     private let notificationCenter = DistributedNotificationCenter.default()
@@ -36,7 +36,14 @@ class PlayerModel {
 
     let musicNotificationName = Notification.Name("com.apple.Music.playerInfo")
 
-    init() {
+    init?() {
+        guard let spotifyApp = SBApplication(bundleIdentifier: "com.spotify.client") else {
+            Logger.model.error("Could not find Spotify application")
+            return nil
+        }
+
+        self.spotifyApp = spotifyApp
+
         notificationCenter.addObserver(forName: musicNotificationName, object: nil, queue: nil) { notification in
             // Handle the playback state change notification
             print("Received playback state change notification")
