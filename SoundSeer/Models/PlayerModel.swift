@@ -72,6 +72,8 @@ class PlayerModel {
 
         currentSong = notification.songName ?? ""
         currentSongId = "abc" //spotifyApp.currentTrack?.id?().components(separatedBy: ":").last ?? ""
+        
+        // TODO: handle case when artist is sometimes empty on start
         currentArtist = notification.artistName ?? ""
         currentAlbum = notification.albumName ?? ""
 
@@ -81,32 +83,5 @@ class PlayerModel {
         Logger.model.debug("Retrieved current album: \(self.currentAlbum, privacy: .public)")
 
         Logger.model.debug("Update completed successfully")
-
-        /*
-        // Sometimes the AEKeyword will be 0 when the app is killed
-        // Something about the Objective-C bridge allows the enum to still be created
-        if Utils.playerStateIsStoppedOrUnknown(playerState) {
-            Logger.playback.debug("Cancelled update. Player in stopped or unknown state")
-            resetData()
-            return
-        }
-
-
-
-        // I have no idea why this sometimes happens. It's only for artist
-        if currentArtist.isEmpty {
-            Logger.model.log("Current artist is empty. Retrying...")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-                self?.currentArtist = self?.spotifyApp.currentTrack?.artist ?? ""
-                Logger.model.log("Second attempt to retrieve current artist: \(self?.currentArtist ?? "nil", privacy: .public)")
-            }
-        }
-
-        currentAlbum = spotifyApp.currentTrack?.album ?? ""
-
-
-
-
-         */
     }
 }
