@@ -1,5 +1,4 @@
 import AppKit
-import MusicKit
 import OSLog
 import ScriptingBridge
 
