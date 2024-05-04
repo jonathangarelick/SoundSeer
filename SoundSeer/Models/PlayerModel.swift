@@ -71,7 +71,7 @@ class PlayerModel {
         Logger.playback.debug("Player state is now \(String(describing: self.playerState))")
 
         currentSong = notification.songName ?? ""
-        currentSongId = "abc" //spotifyApp.currentTrack?.id?().components(separatedBy: ":").last ?? ""
+        currentSongId = notification.songId ?? ""
         
         // TODO: handle case when artist is sometimes empty on start
         currentArtist = notification.artistName ?? ""
