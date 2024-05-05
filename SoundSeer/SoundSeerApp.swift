@@ -6,11 +6,11 @@ import SwiftUI
 struct SoundSeerApp: App {
     @State private var isOpenAtLoginEnabled: Bool = SMAppService.mainApp.status == .enabled
 
-    private var spotifyViewModel: SpotifyViewModel? = SpotifyViewModel()
+    private var spotifyViewModel: PlayerViewModel? = PlayerViewModel()
 
     // https://stackoverflow.com/a/67065308
     private struct SongMetaContent: View {
-        @ObservedObject var spotifyViewModel: SpotifyViewModel
+        @ObservedObject var spotifyViewModel: PlayerViewModel
 
         var body: some View {
             if spotifyViewModel.playerState == .playing, spotifyViewModel.prefixLength <= 0 {
@@ -58,7 +58,7 @@ struct SoundSeerApp: App {
     }
 
     private struct LabelContent: View {
-        @ObservedObject var spotifyViewModel: SpotifyViewModel
+        @ObservedObject var spotifyViewModel: PlayerViewModel
         @State private var window: NSWindow?
 
         var body: some View {

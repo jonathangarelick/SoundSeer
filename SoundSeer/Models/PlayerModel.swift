@@ -3,6 +3,7 @@ import OSLog
 import ScriptingBridge
 
 class PlayerModel {
+    @Published var currentPlayer: Player?
     @Published var playerState: PlaybackState = .stopped
 
     @Published var currentSong: String = ""

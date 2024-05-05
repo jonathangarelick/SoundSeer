@@ -4,7 +4,7 @@ import Foundation
 import OSLog
 import SwiftUI
 
-class SpotifyViewModel: ObservableObject {
+class PlayerViewModel: ObservableObject {
     @Published private(set) var playerState: PlaybackState = .stopped
     
     @Published private(set) var currentSong: String = ""
