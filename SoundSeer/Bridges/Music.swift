@@ -9,6 +9,7 @@ import ScriptingBridge
 }
 
 @objc public protocol MusicApplication {
+    @objc optional var playerState: MusicEPlS { get }
     @objc optional var currentTrack: MusicTrack { get }
     @objc optional func nextTrack()
 }
