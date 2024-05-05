@@ -49,6 +49,7 @@ extension SBApplication: MusicApplication {}
 @objc public protocol MusicItem: SBObjectProtocol, MusicGenericMethods {
     @objc optional func id() -> Int // the id of the item
     @objc optional var name: String { get } // the name of the item
+    @objc optional func reveal() // reveal and select a track or playlist
 }
 extension SBObject: MusicItem {}
 
