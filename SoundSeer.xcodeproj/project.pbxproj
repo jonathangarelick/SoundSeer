@@ -21,6 +21,7 @@
 		9BAEAEA12BDAE6F200C85936 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAEAEA02BDAE6F200C85936 /* Utils.swift */; };
 		9BC6A97D2BE7F1FC0069726E /* MusicAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6A97C2BE7F1FC0069726E /* MusicAPI.swift */; };
 		9BC6A97F2BE7F2080069726E /* PlayerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6A97E2BE7F2080069726E /* PlayerAPI.swift */; };
+		9BC6A9822BE7F4400069726E /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = 9BC6A9812BE7F4400069726E /* SwiftJWT */; };
 		9BC6B6872BCA2CDF005421AE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9BC6B6862BCA2CDF005421AE /* Alamofire */; };
 		9BC6B6892BCA2D49005421AE /* SpotifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */; };
 		9BD4DCE22BC9E9D4001572F7 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4DCE12BC9E9D4001572F7 /* PlayerModel.swift */; };
@@ -84,6 +85,7 @@
 			files = (
 				9B1461312BD08573009C931B /* ScriptingBridge.framework in Frameworks */,
 				9BC6B6872BCA2CDF005421AE /* Alamofire in Frameworks */,
+				9BC6A9822BE7F4400069726E /* SwiftJWT in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +241,7 @@
 			name = SoundSeer;
 			packageProductDependencies = (
 				9BC6B6862BCA2CDF005421AE /* Alamofire */,
+				9BC6A9812BE7F4400069726E /* SwiftJWT */,
 			);
 			productName = SoundSeer;
 			productReference = 9BE2FA182BC97CCC00A7124B /* SoundSeer.app */;
@@ -275,6 +278,7 @@
 			mainGroup = 9BE2FA0F2BC97CCC00A7124B;
 			packageReferences = (
 				9BC6B6852BCA2CDF005421AE /* XCRemoteSwiftPackageReference "Alamofire" */,
+				9BC6A9802BE7F4400069726E /* XCRemoteSwiftPackageReference "Swift-JWT" */,
 			);
 			productRefGroup = 9BE2FA192BC97CCC00A7124B /* Products */;
 			projectDirPath = "";
@@ -608,6 +612,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9BC6A9802BE7F4400069726E /* XCRemoteSwiftPackageReference "Swift-JWT" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/Swift-JWT.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
 		9BC6B6852BCA2CDF005421AE /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -619,6 +631,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9BC6A9812BE7F4400069726E /* SwiftJWT */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9BC6A9802BE7F4400069726E /* XCRemoteSwiftPackageReference "Swift-JWT" */;
+			productName = SwiftJWT;
+		};
 		9BC6B6862BCA2CDF005421AE /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9BC6B6852BCA2CDF005421AE /* XCRemoteSwiftPackageReference "Alamofire" */;

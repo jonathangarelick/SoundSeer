@@ -5,6 +5,7 @@ import OSLog
 import SwiftUI
 
 class PlayerViewModel: ObservableObject {
+    @Published private(set) var currentPlayer: Player?
     @Published private(set) var playerState: PlaybackState = .stopped
     
     @Published private(set) var currentSong: String = ""
@@ -12,7 +13,7 @@ class PlayerViewModel: ObservableObject {
     @Published private(set) var currentArtist: String = ""
     @Published private(set) var currentAlbum: String = ""
     
-    private let spotifyModel: PlayerModel
+    private let playerModel: PlayerModel
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -22,7 +23,7 @@ class PlayerViewModel: ObservableObject {
             return nil
         }
 
-        self.spotifyModel = spotifyModel
+        self.playerModel = spotifyModel
 
         $isAppVisibleInMenuBar
             .sink { [weak self] in
@@ -30,6 +31,10 @@ class PlayerViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
+        playerModel.$currentPlayer
+            .assign(to: \.currentPlayer, on: self)
+            .store(in: &cancellables)
+
         // FIXED BUG (#26):
         // If the user manually clicks play on a song (while currently playing), Spotify will
         // send a stopped and playing event in rapid succession. This prevents the UI from flickering
@@ -67,14 +72,32 @@ class PlayerViewModel: ObservableObject {
     deinit { timer?.invalidate() }
     
     func nextTrack() {
-        spotifyModel.nextTrack()
+        playerModel.nextTrack()
     }
     
     func openCurrentSong() {
-        SpotifyAPI.getSpotifyURI(from: currentSongId, type: .song) { uri in
-            if let uriString = uri, let url = URL(string: uriString) {
-                NSWorkspace.shared.open(url)
+        guard let currentPlayer = currentPlayer else { return }
+        switch currentPlayer {
+        case .music:
+            // this seems broken, looks like i might need to rely on the scripting bridge
+            DispatchQueue.global(qos: .default).async {
+                let script = """
+                    tell application "Music"
+                        reveal current track
+                    end tell
+                    """
+
+                let appleScript = NSAppleScript(source: script)
+                var errorInfo: NSDictionary?
+
+                appleScript?.executeAndReturnError(&errorInfo)
+
+                if let error = errorInfo {
+                    print("Error executing AppleScript: \(error)")
+                }
             }
+        case .spotify:
+            NSWorkspace.shared.open(URL(string: "spotify:track:\(currentSongId)")!)
         }
     }
     

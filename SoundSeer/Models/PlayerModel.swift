@@ -68,6 +68,7 @@ class PlayerModel {
             return
         }
 
+        currentPlayer = notification.player
         playerState = notification.playbackState
         Logger.playback.debug("Player state is now \(String(describing: self.playerState))")
 

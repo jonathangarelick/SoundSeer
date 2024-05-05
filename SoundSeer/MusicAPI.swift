@@ -1,18 +1,58 @@
 import Foundation
 import OSLog
 import Alamofire
+import SwiftJWT
 
 class MusicAPI {
     static let baseURL = "https://api.music.apple.com/v1"
-    static let developerToken = "your_developer_token"
+    static let secret = """
+    -----BEGIN PRIVATE KEY-----
+    top secret
+    -----END PRIVATE KEY-----
+    """
+    static let keyId = "key"
+    static let teamId = "team"
+    static let alg = "ES256"
 
-    static func getMusicURI(from songID: String, type: MusicURIType, completion: @escaping (String?) -> Void) {
+    static var authToken: String?
+    static var authTokenExpiration: Date?
+
+    static func generateAuthToken() -> String? {
+        if let token = authToken, let expiration = authTokenExpiration, expiration > Date() {
+            // Previous auth token is still valid, return it
+            return token
+        }
+
+        let timeNow = Date()
+        let timeExpired = timeNow.addingTimeInterval(12 * 60 * 60) // 12 hours from now
+
+        let header = SwiftJWT.Header(kid: keyId)
+        let claims = ClaimsStandardJWT(iss: teamId, exp: timeExpired, iat: timeNow)
+
+        var jwt = JWT(header: header, claims: claims)
+
+        do {
+
+            let privateKey = JWTSigner.es256(privateKey: secret.data(using: .utf8)!)
+            let signedJWT = try jwt.sign(using: privateKey)
+            return signedJWT
+        } catch {
+            Logger.api.error("Error generating auth token: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
+    static func getMusicURI(from songID: String, type: URIType, completion: @escaping (String?) -> Void) {
+        guard let authToken = generateAuthToken() else {
+            completion(nil)
+            return
+        }
+
         switch type {
         case .song:
             let url = "\(baseURL)/catalog/us/songs/\(songID)"
             let headers: HTTPHeaders = [
-                "Authorization": "Bearer \(developerToken)",
-                "Music-User-Token": developerToken
+                "Authorization": "Bearer \(authToken)"
             ]
 
             AF.request(url, method: .get, headers: headers)
@@ -27,7 +67,7 @@ class MusicAPI {
                     }
                 }
         case .artist, .album:
-            getArtistOrAlbumID(from: songID, type: type == .artist ? MusicIDType.artist : MusicIDType.album) { id in
+            getArtistOrAlbumID(from: songID, type: type == .artist ? IDType.artist : IDType.album) { id in
                 guard let id = id else {
                     completion(nil)
                     return
@@ -45,8 +85,7 @@ class MusicAPI {
                 }
 
                 let headers: HTTPHeaders = [
-                    "Authorization": "Bearer \(developerToken)",
-                    "Music-User-Token": developerToken
+                    "Authorization": "Bearer \(authToken)"
                 ]
 
                 AF.request(url, method: .get, headers: headers)
@@ -64,11 +103,15 @@ class MusicAPI {
         }
     }
 
-    static func getArtistOrAlbumID(from songID: String, type: MusicIDType, completion: @escaping (String?) -> Void) {
+    static func getArtistOrAlbumID(from songID: String, type: IDType, completion: @escaping (String?) -> Void) {
+        guard let authToken = generateAuthToken() else {
+            completion(nil)
+            return
+        }
+
         let url = "\(baseURL)/catalog/us/songs/\(songID)"
         let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(developerToken)",
-            "Music-User-Token": developerToken
+            "Authorization": "Bearer \(authToken)"
         ]
 
         AF.request(url, method: .get, headers: headers)
@@ -96,6 +139,11 @@ class MusicAPI {
                 }
             }
     }
+}
+
+struct Header: Codable {
+    var alg: String = "ES256"
+    let kid: String
 }
 
 enum MusicIDType {
@@ -135,10 +183,6 @@ struct MusicAlbums: Decodable {
 
 struct MusicAlbum: Decodable {
     let id: String
-}
-
-enum MusicURIType {
-    case song, artist, album
 }
 
 struct MusicURIResponse: Decodable {
