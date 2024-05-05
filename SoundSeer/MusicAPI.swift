@@ -1,6 +1,6 @@
+import Alamofire
 import Foundation
 import OSLog
-import Alamofire
 import SwiftJWT
 
 class MusicAPI {
@@ -42,149 +42,42 @@ class MusicAPI {
         }
     }
 
-    static func getMusicURI(from songID: String, type: URIType, completion: @escaping (String?) -> Void) {
+    static func getURI(songId: String, for type: IDType, completion: @escaping (String?) -> Void) {
         guard let authToken = generateAuthToken() else {
             completion(nil)
             return
         }
 
-        switch type {
-        case .song:
-            let url = "\(baseURL)/catalog/us/songs/\(songID)"
-            let headers: HTTPHeaders = [
-                "Authorization": "Bearer \(authToken)"
-            ]
+        let url = "\(baseURL)/catalog/us/songs/\(songId)/\(type == .artist ? "artists" : "albums")"
 
-            AF.request(url, method: .get, headers: headers)
-                .validate()
-                .responseDecodable(of: SongResponse.self) { response in
-                    switch response.result {
-                    case .success(let songResponse):
-                        completion(songResponse.data.first?.attributes?.url)
-                    case .failure(let error):
-                        Logger.api.error("Error getting song URI: \(error.localizedDescription)")
-                        completion(nil)
-                    }
-                }
-        case .artist, .album:
-            getArtistOrAlbumID(from: songID, type: type == .artist ? IDType.artist : IDType.album) { id in
-                guard let id = id else {
-                    completion(nil)
-                    return
-                }
-
-                let url: String
-                switch type {
-                case .artist:
-                    url = "\(baseURL)/catalog/us/artists/\(id)"
-                case .album:
-                    url = "\(baseURL)/catalog/us/albums/\(id)"
-                case .song:
-                    // This case is handled separately
-                    return
-                }
-
-                let headers: HTTPHeaders = [
-                    "Authorization": "Bearer \(authToken)"
-                ]
-
-                AF.request(url, method: .get, headers: headers)
-                    .validate()
-                    .responseDecodable(of: URIResponse.self) { response in
-                        switch response.result {
-                        case .success(let uriResponse):
-                            completion(uriResponse.uri)
-                        case .failure(let error):
-                            Logger.api.error("Error getting URI: \(error.localizedDescription)")
-                            completion(nil)
-                        }
-                    }
-            }
-        }
-    }
-
-    static func getArtistOrAlbumID(from songID: String, type: IDType, completion: @escaping (String?) -> Void) {
-        guard let authToken = generateAuthToken() else {
-            completion(nil)
-            return
-        }
-
-        let url = "\(baseURL)/catalog/us/songs/\(songID)"
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(authToken)"
         ]
 
         AF.request(url, method: .get, headers: headers)
             .validate()
-            .responseDecodable(of: SongResponse.self) { response in
+            .responseDecodable(of: ArtistAlbumResponse.self) { response in
                 switch response.result {
-                case .success(let songResponse):
-                    switch type {
-                    case .artist:
-                        if let artistID = songResponse.data.first?.relationships?.artists?.data.first?.id {
-                            completion(artistID)
-                        } else {
-                            completion(nil)
-                        }
-                    case .album:
-                        if let albumID = songResponse.data.first?.relationships?.albums?.data.first?.id {
-                            completion(albumID)
-                        } else {
-                            completion(nil)
-                        }
-                    }
+                case .success(let uriResponse):
+                    completion(uriResponse.data.first?.attributes.url)
                 case .failure(let error):
-                    Logger.api.error("Error getting artist or album ID: \(error.localizedDescription)")
+                    Logger.api.error("Error getting URI: \(error.localizedDescription)")
                     completion(nil)
                 }
             }
     }
-}
 
-struct Header: Codable {
-    var alg: String = "ES256"
-    let kid: String
-}
+    // This is pretty hacky, but the artist and album responses have the same shape.
+    // This is OK for now, ideally should figure out how to use Apple's built in models
+    private struct ArtistAlbumResponse: Codable {
+        let data: [ArtistAlbum]
+    }
 
-enum MusicIDType {
-    case artist, album
-}
+    private struct ArtistAlbum: Codable {
+        let attributes: ArtistAlbumAttributes
+    }
 
-struct SongResponse: Decodable {
-    let data: [Song]
-}
-
-struct Song: Decodable {
-    let id: String
-    let attributes: SongAttributes?
-    let relationships: SongRelationships?
-}
-
-struct SongAttributes: Decodable {
-    let url: String
-}
-
-struct SongRelationships: Decodable {
-    let artists: MusicArtists?
-    let albums: MusicAlbums?
-}
-
-struct MusicArtists: Decodable {
-    let data: [MusicArtist]
-}
-
-struct MusicArtist: Decodable {
-    let id: String
-}
-
-struct MusicAlbums: Decodable {
-    let data: [MusicAlbum]
-}
-
-struct MusicAlbum: Decodable {
-    let id: String
-}
-
-struct MusicURIResponse: Decodable {
-    let uri: String
+    private struct ArtistAlbumAttributes: Codable {
+        let url: String
+    }
 }
