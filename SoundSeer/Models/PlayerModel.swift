@@ -12,7 +12,7 @@ class PlayerModel {
     @Published var currentAlbum: String = ""
 
     private let spotifyApp: SpotifyApplication
-    private let musicApp: MusicApplication = SBApplication(bundleIdentifier: "com.apple.Music")!
+    let musicApp: MusicApplication = SBApplication(bundleIdentifier: "com.apple.Music")!
 
     private let notificationCenter = DistributedNotificationCenter.default()
     private let notificationName = Notification.Name("com.spotify.client.PlaybackStateChanged")

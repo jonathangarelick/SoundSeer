@@ -79,23 +79,7 @@ class PlayerViewModel: ObservableObject {
         guard let currentPlayer = currentPlayer else { return }
         switch currentPlayer {
         case .music:
-            // this seems broken, looks like i might need to rely on the scripting bridge
-            DispatchQueue.global(qos: .default).async {
-                let script = """
-                    tell application "Music"
-                        reveal current track
-                    end tell
-                    """
-
-                let appleScript = NSAppleScript(source: script)
-                var errorInfo: NSDictionary?
-
-                appleScript?.executeAndReturnError(&errorInfo)
-
-                if let error = errorInfo {
-                    print("Error executing AppleScript: \(error)")
-                }
-            }
+            playerModel.musicApp.currentTrack?.reveal?()
         case .spotify:
             NSWorkspace.shared.open(URL(string: "spotify:track:\(currentSongId)")!)
         }
