@@ -9,7 +9,7 @@ import ScriptingBridge
 }
 
 // MARK: SpotifyApplication
-@objc public protocol SpotifyApplication: SBApplicationProtocol {
+@objc public protocol SpotifyApplication {
     @objc optional var currentTrack: SpotifyTrack { get } // The current playing track.
     @objc optional var soundVolume: Int { get } // The sound output volume (0 = minimum, 100 = maximum)
     @objc optional var playerState: SpotifyEPlS { get } // Is Spotify stopped, paused, or playing?
@@ -35,7 +35,7 @@ import ScriptingBridge
 extension SBApplication: SpotifyApplication {}
 
 // MARK: SpotifyTrack
-@objc public protocol SpotifyTrack: SBObjectProtocol {
+@objc public protocol SpotifyTrack {
     @objc optional var artist: String { get } // The artist of the track.
     @objc optional var album: String { get } // The album of the track.
     @objc optional var discNumber: Int { get } // The disc number of the track.

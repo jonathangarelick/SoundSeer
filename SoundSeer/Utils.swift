@@ -1,3 +1,5 @@
+import AppKit
+
 enum Utils {
     static func isAppRunning(_ bundleIdentifier: String) -> Bool {
         return NSWorkspace.shared.runningApplications
