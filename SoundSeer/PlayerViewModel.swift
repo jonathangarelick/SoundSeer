@@ -18,12 +18,12 @@ class PlayerViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     init?() {
-        guard let spotifyModel = PlayerModel() else {
+        guard let playerModel = PlayerModel() else {
             // Model handles logging
             return nil
         }
 
-        self.playerModel = spotifyModel
+        self.playerModel = playerModel
 
         $isAppVisibleInMenuBar
             .sink { [weak self] in
@@ -38,7 +38,7 @@ class PlayerViewModel: ObservableObject {
         // FIXED BUG (#26):
         // If the user manually clicks play on a song (while currently playing), Spotify will
         // send a stopped and playing event in rapid succession. This prevents the UI from flickering
-        spotifyModel.$playerState
+        playerModel.$playerState
             .map { playerState -> AnyPublisher<PlaybackState, Never> in
                 if playerState == .stopped {
                     return Just(playerState)
@@ -52,19 +52,19 @@ class PlayerViewModel: ObservableObject {
             .assign(to: \.playerState, on: self)
             .store(in: &cancellables)
         
-        spotifyModel.$currentSong
+        playerModel.$currentSong
             .assign(to: \.currentSong, on: self)
             .store(in: &cancellables)
         
-        spotifyModel.$currentSongId
+        playerModel.$currentSongId
             .assign(to: \.currentSongId, on: self)
             .store(in: &cancellables)
         
-        spotifyModel.$currentArtist
+        playerModel.$currentArtist
             .assign(to: \.currentArtist, on: self)
             .store(in: &cancellables)
         
-        spotifyModel.$currentAlbum
+        playerModel.$currentAlbum
             .assign(to: \.currentAlbum, on: self)
             .store(in: &cancellables)
     }
@@ -110,7 +110,13 @@ class PlayerViewModel: ObservableObject {
         pasteboard.declareTypes([.string], owner: nil)
         pasteboard.setString("https://open.spotify.com/track/\(currentSongId)", forType: .string)
     }
-    
+
+    func copyMusicExternalURL() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        // TODO: implement this
+    }
+
     // MARK: - Dynamic resizing
     @Published var isAppVisibleInMenuBar: Bool = false // This will trigger dynamic resizing on startup, just to be safe
     @Published var prefixLength = 45

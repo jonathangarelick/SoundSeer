@@ -183,10 +183,10 @@
 				9B1B0F972BE5A5B800E26B26 /* Models */,
 				9BD4DCE32BC9EC8B001572F7 /* PlayerViewModel.swift */,
 				9B1B0F922BE5A54A00E26B26 /* Primitives */,
+				9B2755892BE960D60007E18B /* Secrets.swift */,
 				9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */,
 				9BAEAEA02BDAE6F200C85936 /* Utils.swift */,
 				9B1486712BD475DA00D67669 /* WindowAccessor.swift */,
-				9B2755892BE960D60007E18B /* Secrets.swift */,
 			);
 			path = SoundSeer;
 			sourceTree = "<group>";
