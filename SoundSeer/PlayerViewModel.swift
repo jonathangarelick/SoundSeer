@@ -87,36 +87,20 @@ class PlayerViewModel: ObservableObject {
     
     func openCurrentArtist() {
         guard let currentPlayer = currentPlayer else { return }
-        switch currentPlayer {
-        case .music:
-            MusicAPI.getURI(songId: currentSongId, for: .artist) { uri in
-                if let uriString = uri, let url = URL(string: uriString) {
-                    NSWorkspace.shared.open(url)
-                }
-            }
-        case .spotify:
-            SpotifyAPI.getSpotifyURI(from: currentSongId, type: .artist) { uri in
-                if let uriString = uri, let url = URL(string: uriString) {
-                    NSWorkspace.shared.open(url)
-                }
+
+        currentPlayer.API.getURI(songId: currentSongId, for: .artist) { uri in
+            if let uri = uri {
+                NSWorkspace.shared.open(uri)
             }
         }
     }
 
     func openCurrentAlbum() {
         guard let currentPlayer = currentPlayer else { return }
-        switch currentPlayer {
-        case .music:
-            MusicAPI.getURI(songId: currentSongId, for: .album) { uri in
-                if let uriString = uri, let url = URL(string: uriString) {
-                    NSWorkspace.shared.open(url)
-                }
-            }
-        case .spotify:
-            SpotifyAPI.getSpotifyURI(from: currentSongId, type: .album) { uri in
-                if let uriString = uri, let url = URL(string: uriString) {
-                    NSWorkspace.shared.open(url)
-                }
+
+        currentPlayer.API.getURI(songId: currentSongId, for: .album) { uri in
+            if let uri = uri {
+                NSWorkspace.shared.open(uri)
             }
         }
     }

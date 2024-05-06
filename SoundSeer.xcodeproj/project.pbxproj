@@ -13,6 +13,7 @@
 		9B1B0F942BE5A55700E26B26 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1B0F932BE5A55700E26B26 /* Player.swift */; };
 		9B1B0F962BE5A57800E26B26 /* PlaybackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1B0F952BE5A57800E26B26 /* PlaybackState.swift */; };
 		9B1B0F992BE5AE8300E26B26 /* UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1B0F982BE5AE8300E26B26 /* UtilsTests.swift */; };
+		9B27558A2BE960D60007E18B /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2755892BE960D60007E18B /* Secrets.swift */; };
 		9B55030B2BD5F49C0005BEBD /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B55030A2BD5F49C0005BEBD /* StringExtensionTests.swift */; };
 		9BAC6E112BD0A082004B80E1 /* SpotifyBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC6E102BD0A082004B80E1 /* SpotifyBridge.swift */; };
 		9BAEAE9F2BDAE2C400C85936 /* LoggerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAEAE9E2BDAE2C400C85936 /* LoggerExtension.swift */; };
@@ -48,6 +49,7 @@
 		9B1B0F952BE5A57800E26B26 /* PlaybackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackState.swift; sourceTree = "<group>"; };
 		9B1B0F982BE5AE8300E26B26 /* UtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTests.swift; sourceTree = "<group>"; };
 		9B258F2D2BDF193100DC5EE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9B2755892BE960D60007E18B /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		9B5503012BD5F22E0005BEBD /* SoundSeerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoundSeerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B55030A2BD5F49C0005BEBD /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		9BAC6E102BD0A082004B80E1 /* SpotifyBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyBridge.swift; sourceTree = "<group>"; };
@@ -113,6 +115,16 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		9B2755882BE95E9A0007E18B /* API */ = {
+			isa = PBXGroup;
+			children = (
+				9BC6A97C2BE7F1FC0069726E /* MusicAPI.swift */,
+				9BC6A97E2BE7F2080069726E /* PlayerAPI.swift */,
+				9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		9B5503022BD5F22E0005BEBD /* SoundSeerTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,19 +175,18 @@
 		9BE2FA1A2BC97CCC00A7124B /* SoundSeer */ = {
 			isa = PBXGroup;
 			children = (
+				9B2755882BE95E9A0007E18B /* API */,
 				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
 				9BAEAEA22BDAE8AD00C85936 /* Bridges */,
 				9BAEAEA32BDAE8D000C85936 /* Extensions */,
 				9B258F2D2BDF193100DC5EE2 /* Info.plist */,
 				9B1B0F972BE5A5B800E26B26 /* Models */,
-				9BC6A97C2BE7F1FC0069726E /* MusicAPI.swift */,
-				9BC6A97E2BE7F2080069726E /* PlayerAPI.swift */,
 				9BD4DCE32BC9EC8B001572F7 /* PlayerViewModel.swift */,
 				9B1B0F922BE5A54A00E26B26 /* Primitives */,
 				9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */,
-				9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */,
 				9BAEAEA02BDAE6F200C85936 /* Utils.swift */,
 				9B1486712BD475DA00D67669 /* WindowAccessor.swift */,
+				9B2755892BE960D60007E18B /* Secrets.swift */,
 			);
 			path = SoundSeer;
 			sourceTree = "<group>";
@@ -298,6 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BC6A9852BE803D80069726E /* MusicBridge.swift in Sources */,
+				9B27558A2BE960D60007E18B /* Secrets.swift in Sources */,
 				9BC6A97F2BE7F2080069726E /* PlayerAPI.swift in Sources */,
 				9B1B0F912BE59C3800E26B26 /* PlayerStateNotification.swift in Sources */,
 				9BE2FA1C2BC97CCC00A7124B /* SoundSeerApp.swift in Sources */,

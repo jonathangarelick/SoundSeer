@@ -5,4 +5,13 @@ enum Player: String {
     var bundleID: String {
         return self.rawValue
     }
+
+    var API: PlayerAPI.Type {
+        switch self {
+        case .music:
+            return MusicAPI.self
+        case .spotify:
+            return SpotifyAPI.self
+        }
+    }
 }
