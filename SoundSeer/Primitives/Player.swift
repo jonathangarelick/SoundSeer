@@ -18,7 +18,7 @@ enum Player: String {
     var baseSongURL: String {
         switch self {
         case .music:
-         return "https://music.apple.com/us/album"
+         return "https://music.apple.com/album"
         case .spotify:
             return "https://open.spotify.com/track"
         }

@@ -6,74 +6,74 @@ import SwiftUI
 struct SoundSeerApp: App {
     @State private var isOpenAtLoginEnabled: Bool = SMAppService.mainApp.status == .enabled
 
-    private var spotifyViewModel: PlayerViewModel? = PlayerViewModel()
+    private var playerViewModel: PlayerViewModel? = PlayerViewModel()
 
     // https://stackoverflow.com/a/67065308
     private struct SongMetaContent: View {
-        @ObservedObject var spotifyViewModel: PlayerViewModel
+        @ObservedObject var playerViewModel: PlayerViewModel
 
         var body: some View {
-            if spotifyViewModel.playerState == .playing, spotifyViewModel.prefixLength <= 0 {
+            if playerViewModel.playerState == .playing, playerViewModel.prefixLength <= 0 {
                 Button("Not enough room for song. Try restarting.", systemImage: "exclamationmark.triangle", action: {})
                     .labelStyle(.titleAndIcon)
                     .disabled(true)
             }
 
-            Button("Next Track", systemImage: "forward.end", action: spotifyViewModel.nextTrack)
+            Button("Next Track", systemImage: "forward.end", action: playerViewModel.nextTrack)
                 .labelStyle(.titleAndIcon)
-                .disabled(spotifyViewModel.playerState != .paused && spotifyViewModel.playerState != .playing)
+                .disabled(playerViewModel.playerState != .paused && playerViewModel.playerState != .playing)
 
             Divider()
 
-            Button(!spotifyViewModel.currentSong.isEmpty
-                   ? (spotifyViewModel.prefixLength > 0
-                      ? spotifyViewModel.currentSong.truncate(length: Int(Double(spotifyViewModel.prefixLength) * 1.5))
-                      : spotifyViewModel.currentSong.truncate(length: 60))
-                   : "Song unknown", systemImage: "music.note", action: spotifyViewModel.openCurrentSong)
+            Button(!playerViewModel.currentSong.isEmpty
+                   ? (playerViewModel.prefixLength > 0
+                      ? playerViewModel.currentSong.truncate(length: Int(Double(playerViewModel.prefixLength) * 1.5))
+                      : playerViewModel.currentSong.truncate(length: 60))
+                   : "Song unknown", systemImage: "music.note", action: playerViewModel.openCurrentSong)
             .labelStyle(.titleAndIcon)
-            .disabled(spotifyViewModel.currentSongId.isEmpty)
+            .disabled(playerViewModel.currentSongId.isEmpty)
 
-            Button(!spotifyViewModel.currentArtist.isEmpty
-                   ? (spotifyViewModel.prefixLength > 0
-                      ? spotifyViewModel.currentArtist.truncate(length: Int(Double(spotifyViewModel.prefixLength) * 1.5))
-                      : spotifyViewModel.currentArtist.truncate(length: 60))
-                   : "Artist unknown", systemImage: "person", action: spotifyViewModel.openCurrentArtist)
+            Button(!playerViewModel.currentArtist.isEmpty
+                   ? (playerViewModel.prefixLength > 0
+                      ? playerViewModel.currentArtist.truncate(length: Int(Double(playerViewModel.prefixLength) * 1.5))
+                      : playerViewModel.currentArtist.truncate(length: 60))
+                   : "Artist unknown", systemImage: "person", action: playerViewModel.openCurrentArtist)
             .labelStyle(.titleAndIcon)
-            .disabled(spotifyViewModel.currentSongId.isEmpty)
+            .disabled(playerViewModel.currentSongId.isEmpty)
 
-            Button(!spotifyViewModel.currentAlbum.isEmpty
-                   ? (spotifyViewModel.prefixLength > 0
-                      ? spotifyViewModel.currentAlbum.truncate(length: Int(Double(spotifyViewModel.prefixLength) * 1.5))
-                      : spotifyViewModel.currentAlbum.truncate(length: 60))
-                   : "Album unknown", systemImage: "opticaldisc", action: spotifyViewModel.openCurrentAlbum)
+            Button(!playerViewModel.currentAlbum.isEmpty
+                   ? (playerViewModel.prefixLength > 0
+                      ? playerViewModel.currentAlbum.truncate(length: Int(Double(playerViewModel.prefixLength) * 1.5))
+                      : playerViewModel.currentAlbum.truncate(length: 60))
+                   : "Album unknown", systemImage: "opticaldisc", action: playerViewModel.openCurrentAlbum)
             .labelStyle(.titleAndIcon)
-            .disabled(spotifyViewModel.currentSongId.isEmpty)
+            .disabled(playerViewModel.currentSongId.isEmpty)
 
             Divider()
 
-            Button("Copy Song URL", systemImage: "doc.on.doc", action: spotifyViewModel.copySongExternalURL)
+            Button("Copy Song URL", systemImage: "doc.on.doc", action: playerViewModel.copySongExternalURL)
                 .labelStyle(.titleAndIcon)
-                .disabled(spotifyViewModel.currentSongId.isEmpty)
+                .disabled(playerViewModel.currentSongId.isEmpty)
         }
     }
 
     private struct LabelContent: View {
-        @ObservedObject var spotifyViewModel: PlayerViewModel
+        @ObservedObject var playerViewModel: PlayerViewModel
         @State private var window: NSWindow?
 
         var body: some View {
             Group {
-                if spotifyViewModel.playerState != .playing || spotifyViewModel.nowPlaying.isEmpty {
+                if playerViewModel.playerState != .playing || playerViewModel.nowPlaying.isEmpty {
                     Image(systemName: "ear")
                 } else {
-                    Text(spotifyViewModel.nowPlaying)
+                    Text(playerViewModel.nowPlaying)
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: NSWindow.didChangeOcclusionStateNotification)) { notification in
                 Logger.view.debug("Received didChangeOcclusionState notification")
 
                 guard let window = notification.object as? NSWindow else { return }
-                spotifyViewModel.isAppVisibleInMenuBar = window.occlusionState.contains(.visible)
+                playerViewModel.isAppVisibleInMenuBar = window.occlusionState.contains(.visible)
             }
             .background(WindowAccessor(window: $window))
         }
@@ -81,8 +81,8 @@ struct SoundSeerApp: App {
 
     var body: some Scene {
         MenuBarExtra {
-            if let spotifyViewModel = spotifyViewModel {
-                SongMetaContent(spotifyViewModel: spotifyViewModel)
+            if let playerViewModel = playerViewModel {
+                SongMetaContent(playerViewModel: playerViewModel)
             } else {
                 Button("Spotify app not found.", systemImage: "exclamationmark.triangle", action: {})
                     .labelStyle(.titleAndIcon)
@@ -117,8 +117,8 @@ struct SoundSeerApp: App {
                 NSApplication.shared.terminate(nil)
             }
         } label: {
-            if let spotifyViewModel = spotifyViewModel {
-                LabelContent(spotifyViewModel: spotifyViewModel)
+            if let playerViewModel = playerViewModel {
+                LabelContent(playerViewModel: playerViewModel)
             } else {
                 Image(systemName: "ear")
             }
