@@ -14,4 +14,13 @@ enum Player: String {
             return SpotifyAPI.self
         }
     }
+
+    var baseSongURL: String {
+        switch self {
+        case .music:
+         return "https://music.apple.com/us/album"
+        case .spotify:
+            return "https://open.spotify.com/track"
+        }
+    }
 }

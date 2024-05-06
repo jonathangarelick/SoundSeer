@@ -10,6 +10,7 @@ class PlayerModel {
     @Published var currentSongId: String = ""
     @Published var currentArtist: String = ""
     @Published var currentAlbum: String = ""
+    @Published var currentAlbumId: String = ""
 
     private let spotifyApp: SpotifyApplication
     let musicApp: MusicApplication = SBApplication(bundleIdentifier: "com.apple.Music")!
@@ -60,6 +61,7 @@ class PlayerModel {
         currentSongId = ""
         currentArtist = ""
         currentAlbum = ""
+        currentAlbumId = ""
     }
 
     private func update(_ notification: PlayerStateNotification?) {
@@ -78,11 +80,13 @@ class PlayerModel {
         // TODO: handle case when artist is sometimes empty on start
         currentArtist = notification.artistName ?? ""
         currentAlbum = notification.albumName ?? ""
+        currentAlbumId = notification.albumId ?? ""
 
         Logger.model.debug("Retrieved current song: \(self.currentSong, privacy: .public)")
         Logger.model.debug("Retrieved current song ID: \(self.currentSongId, privacy: .public)")
         Logger.model.debug("Retrieved current artist: \(self.currentArtist, privacy: .public)")
         Logger.model.debug("Retrieved current album: \(self.currentAlbum, privacy: .public)")
+        Logger.model.debug("Retrieved current album ID: \(self.currentAlbumId, privacy: .public)")
 
         Logger.model.debug("Update completed successfully")
     }

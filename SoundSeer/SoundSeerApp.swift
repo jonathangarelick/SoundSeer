@@ -51,7 +51,7 @@ struct SoundSeerApp: App {
 
             Divider()
 
-            Button("Copy Spotify URL", systemImage: "doc.on.doc", action: spotifyViewModel.copySpotifyExternalURL)
+            Button("Copy Song URL", systemImage: "doc.on.doc", action: spotifyViewModel.copySongExternalURL)
                 .labelStyle(.titleAndIcon)
                 .disabled(spotifyViewModel.currentSongId.isEmpty)
         }

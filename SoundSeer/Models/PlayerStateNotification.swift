@@ -7,6 +7,7 @@ struct PlayerStateNotification {
     let songId: String?
     let artistName: String?
     let albumName: String?
+    let albumId: String?
 
     init?(_ player: Player, _ notification: Notification) {
         guard let playbackStateString = notification.userInfo?["Player State"] as? String else {
@@ -19,9 +20,18 @@ struct PlayerStateNotification {
 
         switch player {
         case .music:
-            songId = Utils.getFinalNumber(from: (notification.userInfo?["Store URL"] as? String ?? ""))
+            if let storeURL = notification.userInfo?["Store URL"] as? String,
+               let components = URLComponents(string: storeURL),
+               let queryItems = components.queryItems {
+                songId = queryItems.first(where: { $0.name == "i" })?.value
+                albumId = queryItems.first(where: { $0.name == "p" })?.value
+            } else {
+                songId = nil
+                albumId = nil
+            }
         case .spotify:
             songId = (notification.userInfo?["Track ID"] as? String)?.components(separatedBy: ":").last
+            albumId = nil
         }
 
         self.artistName = notification.userInfo?["Artist"] as? String

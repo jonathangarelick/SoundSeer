@@ -12,7 +12,9 @@ class PlayerViewModel: ObservableObject {
     @Published private(set) var currentSongId: String = ""
     @Published private(set) var currentArtist: String = ""
     @Published private(set) var currentAlbum: String = ""
-    
+    @Published private(set) var currentAlbumId: String = ""
+
+
     private let playerModel: PlayerModel
     
     private var cancellables = Set<AnyCancellable>()
@@ -67,6 +69,10 @@ class PlayerViewModel: ObservableObject {
         playerModel.$currentAlbum
             .assign(to: \.currentAlbum, on: self)
             .store(in: &cancellables)
+
+        playerModel.$currentAlbumId
+            .assign(to: \.currentAlbumId, on: self)
+            .store(in: &cancellables)
     }
     
     deinit { timer?.invalidate() }
@@ -105,16 +111,20 @@ class PlayerViewModel: ObservableObject {
         }
     }
     
-    func copySpotifyExternalURL() {
-        let pasteboard = NSPasteboard.general
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString("https://open.spotify.com/track/\(currentSongId)", forType: .string)
-    }
+    func copySongExternalURL() {
+        guard let currentPlayer = currentPlayer else { return }
 
-    func copyMusicExternalURL() {
+        var urlBuilder = currentPlayer.baseSongURL
+        switch currentPlayer {
+        case .music:
+            urlBuilder += "/\(currentAlbumId)?i=\(currentSongId)"
+        case .spotify:
+            urlBuilder += "/\(currentSongId)"
+        }
+
         let pasteboard = NSPasteboard.general
         pasteboard.declareTypes([.string], owner: nil)
-        // TODO: implement this
+        pasteboard.setString(urlBuilder, forType: .string)
     }
 
     // MARK: - Dynamic resizing
