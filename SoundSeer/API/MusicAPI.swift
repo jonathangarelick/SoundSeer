@@ -2,6 +2,8 @@ import Alamofire
 import OSLog
 import SwiftJWT
 
+// TODO: get song id and album id functions for initial loading
+
 class MusicAPI: PlayerAPI {
     private static let baseURL = "https://api.music.apple.com/v1"
     private static var token: String?
