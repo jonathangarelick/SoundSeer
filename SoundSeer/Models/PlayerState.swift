@@ -1,25 +1,45 @@
 import Foundation
 
-struct PlayerStateNotification {
-    let application: Application
-    let playerState: PlayerState
+class PlayerState: ObservableObject {
+    let player: Player
+    let playbackState: PlaybackState
     let songName: String?
     let songId: String?
     let artistName: String?
     let albumName: String?
     let albumId: String?
 
-    init?(_ player: Application, _ notification: Notification) {
+    init?(_ player: Player, _ app: SBMusicApplication) {
+        self.player = .music
+        playbackState = PlaybackState(app.playerState)
+        songName = app.currentTrack?.name ?? ""
+        songId = "" //TODO
+        artistName = app.currentTrack?.artist ?? ""
+        albumName = app.currentTrack?.album ?? ""
+        albumId = "" //TODO
+    }
+
+    init?(_ player: Player, _ app: SBSpotifyApplication) {
+        self.player = .spotify
+        playbackState = PlaybackState(app.playerState)
+        songName = app.currentTrack?.name ?? ""
+        songId = app.currentTrack?.id()?.components(separatedBy: ":").last ?? ""
+        artistName = app.currentTrack?.artist ?? ""
+        albumName = app.currentTrack?.album ?? ""
+        albumId = nil
+    }
+
+    init?(_ player: Player, _ notification: Notification) {
         guard let playbackStateString = notification.userInfo?["Player State"] as? String else {
             return nil
         }
 
-        self.application = player
-        self.playerState = PlayerState(state: playbackStateString)
+        self.player = player
+        self.playbackState = PlaybackState(playbackStateString)
         self.songName = notification.userInfo?["Name"] as? String
 
         switch player {
-        case is MusicApplication:
+        case .music:
             if let storeURL = notification.userInfo?["Store URL"] as? String,
                let components = URLComponents(string: storeURL),
                let queryItems = components.queryItems {
@@ -29,11 +49,8 @@ struct PlayerStateNotification {
                 songId = nil
                 albumId = nil
             }
-        case is SpotifyApplication:
+        case .spotify:
             songId = (notification.userInfo?["Track ID"] as? String)?.components(separatedBy: ":").last
-            albumId = nil
-        default:
-            songId = nil
             albumId = nil
         }
 

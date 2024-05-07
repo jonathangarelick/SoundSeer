@@ -4,16 +4,15 @@ import SwiftUI
 
 @main
 struct SoundSeerApp: App {
-    @State private var isOpenAtLoginEnabled: Bool = SMAppService.mainApp.status == .enabled
-
-    private var playerViewModel: PlayerViewModel? = PlayerViewModel()
+    @StateObject var viewModel = SoundSeerViewModel()
+    @State var isOpenAtLoginEnabled: Bool = SMAppService.mainApp.status == .enabled
 
     // https://stackoverflow.com/a/67065308
     private struct SongMetaContent: View {
-        @ObservedObject var playerViewModel: PlayerViewModel
+        @ObservedObject var playerViewModel: SoundSeerViewModel
 
         var body: some View {
-            if playerViewModel.playerState == .playing, playerViewModel.prefixLength <= 0 {
+            if playerViewModel.playerState?.playbackState == .playing, playerViewModel.prefixLength <= 0 {
                 Button("Not enough room for song. Try restarting.", systemImage: "exclamationmark.triangle", action: {})
                     .labelStyle(.titleAndIcon)
                     .disabled(true)
@@ -21,11 +20,11 @@ struct SoundSeerApp: App {
 
             Button("Next Track", systemImage: "forward.end", action: playerViewModel.nextTrack)
                 .labelStyle(.titleAndIcon)
-                .disabled(playerViewModel.playerState != .paused && playerViewModel.playerState != .playing)
+                .disabled(playerViewModel.playerState?.playbackState != .paused && playerViewModel.playerState?.playbackState != .playing)
 
             Divider()
 
-            Button(!playerViewModel.currentSong.isEmpty
+            Button(!playerViewModel.currentSong?.isEmpty
                    ? (playerViewModel.prefixLength > 0
                       ? playerViewModel.currentSong.truncate(length: Int(Double(playerViewModel.prefixLength) * 1.5))
                       : playerViewModel.currentSong.truncate(length: 60))
@@ -58,12 +57,12 @@ struct SoundSeerApp: App {
     }
 
     private struct LabelContent: View {
-        @ObservedObject var playerViewModel: PlayerViewModel
+        @ObservedObject var playerViewModel: SoundSeerViewModel
         @State private var window: NSWindow?
 
         var body: some View {
             Group {
-                if playerViewModel.playerState != .playing || playerViewModel.nowPlaying.isEmpty {
+                if playerViewModel.playerState?.playbackState != .playing || playerViewModel.nowPlaying.isEmpty {
                     Image(systemName: "ear")
                 } else {
                     Text(playerViewModel.nowPlaying)
@@ -81,8 +80,8 @@ struct SoundSeerApp: App {
 
     var body: some Scene {
         MenuBarExtra {
-            if let playerViewModel = playerViewModel {
-                SongMetaContent(playerViewModel: playerViewModel)
+            if let model = viewModel.model {
+                SongMetaContent(playerViewModel: viewModel)
             } else {
                 Button("Spotify app not found.", systemImage: "exclamationmark.triangle", action: {})
                     .labelStyle(.titleAndIcon)
@@ -117,8 +116,8 @@ struct SoundSeerApp: App {
                 NSApplication.shared.terminate(nil)
             }
         } label: {
-            if let playerViewModel = playerViewModel {
-                LabelContent(playerViewModel: playerViewModel)
+            if let model = viewModel.model {
+                LabelContent(playerViewModel: viewModel)
             } else {
                 Image(systemName: "ear")
             }
