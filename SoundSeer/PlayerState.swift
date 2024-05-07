@@ -1,4 +1,4 @@
-enum PlaybackState {
+enum PlayerState {
     case paused
     case playing
     case stopped

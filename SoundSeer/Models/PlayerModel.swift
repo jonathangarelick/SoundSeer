@@ -3,8 +3,8 @@ import OSLog
 import ScriptingBridge
 
 class PlayerModel {
-    @Published var currentPlayer: Player?
-    @Published var playerState: PlaybackState = .stopped
+    @Published var currentApplication: Application?
+    @Published var playerState: PlayerState = .stopped
 
     @Published var currentSong: String = ""
     @Published var currentSongId: String = ""
@@ -12,8 +12,8 @@ class PlayerModel {
     @Published var currentAlbum: String = ""
     @Published var currentAlbumId: String = ""
 
-    private let spotifyApp: SpotifyApplication
-    let musicApp: MusicApplication = SBApplication(bundleIdentifier: "com.apple.Music")!
+    private let spotifyApp: AnyObject
+    let musicApp: AnyObject = SBApplication(bundleIdentifier: "com.apple.Music")!
 
     private let notificationCenter = DistributedNotificationCenter.default()
     private let notificationName = Notification.Name("com.spotify.client.PlaybackStateChanged")
@@ -26,6 +26,11 @@ class PlayerModel {
             return nil
         }
 
+//        let myApp = SBApplication(bundleIdentifier: "com.spotify.client") as? SBSpotifyApplication
+
+//        print(myApp?.shuffling)
+        SpotifyBridge.spotifyApplication().play()
+
         self.spotifyApp = spotifyApp
 
         // Need to trigger a "fake" event when SoundSeer is first opened
@@ -34,12 +39,12 @@ class PlayerModel {
 
         Logger.model.debug("Subscribing to Spotify playback change events")
         notificationCenter.addObserver(forName: notificationName, object: nil, queue: nil) { [weak self] in
-            self?.update(PlayerStateNotification(.spotify, $0))
+            self?.update(PlayerStateNotification(SpotifyApplication.shared, $0))
         }
 
         Logger.model.debug("Subscribing to Apple Music playback change events")
         notificationCenter.addObserver(forName: musicNotificationName, object: nil, queue: nil) { [weak self] in
-            self?.update(PlayerStateNotification(.music, $0))
+            self?.update(PlayerStateNotification(MusicApplication.shared, $0))
         }
     }
 
@@ -70,8 +75,8 @@ class PlayerModel {
             return
         }
 
-        currentPlayer = notification.player
-        playerState = notification.playbackState
+        currentApplication = notification.application
+        playerState = notification.playerState
         Logger.playback.debug("Player state is now \(String(describing: self.playerState))")
 
         currentSong = notification.songName ?? ""

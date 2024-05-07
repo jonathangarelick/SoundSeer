@@ -17,7 +17,7 @@ enum Utils {
         return nil
     }
 
-    static func playerStateIsStoppedOrUnknown(_ playerState: PlaybackState) -> Bool {
+    static func playerStateIsStoppedOrUnknown(_ playerState: PlayerState) -> Bool {
         return playerState != .paused && playerState != .playing
     }
 }

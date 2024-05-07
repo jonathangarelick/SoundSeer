@@ -5,8 +5,8 @@ import OSLog
 import SwiftUI
 
 class PlayerViewModel: ObservableObject {
-    @Published private(set) var currentPlayer: Player?
-    @Published private(set) var playerState: PlaybackState = .stopped
+    @Published private(set) var currentApplication: Application?
+    @Published private(set) var playerState: PlayerState = .stopped
     
     @Published private(set) var currentSong: String = ""
     @Published private(set) var currentSongId: String = ""
@@ -25,6 +25,12 @@ class PlayerViewModel: ObservableObject {
             return nil
         }
 
+        SpotifyApplication.revealSong()
+
+        SpotifyApplication.revealArtist()
+
+        SpotifyApplication.revealAlbum()
+
         self.playerModel = playerModel
 
         $isAppVisibleInMenuBar
@@ -33,15 +39,15 @@ class PlayerViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        playerModel.$currentPlayer
-            .assign(to: \.currentPlayer, on: self)
+        playerModel.$currentApplication
+            .assign(to: \.currentApplication, on: self)
             .store(in: &cancellables)
 
         // FIXED BUG (#26):
         // If the user manually clicks play on a song (while currently playing), Spotify will
         // send a stopped and playing event in rapid succession. This prevents the UI from flickering
         playerModel.$playerState
-            .map { playerState -> AnyPublisher<PlaybackState, Never> in
+            .map { playerState -> AnyPublisher<PlayerState, Never> in
                 if playerState == .stopped {
                     return Just(playerState)
                         .delay(for: .milliseconds(600), scheduler: DispatchQueue.main)
@@ -76,56 +82,16 @@ class PlayerViewModel: ObservableObject {
     }
     
     deinit { timer?.invalidate() }
-    
+
     func nextTrack() {
-        playerModel.nextTrack()
-    }
-    
-    func openCurrentSong() {
-        guard let currentPlayer = currentPlayer else { return }
-        switch currentPlayer {
-        case .music:
-            playerModel.musicApp.currentTrack?.reveal?()
-        case .spotify:
-            NSWorkspace.shared.open(URL(string: "spotify:track:\(currentSongId)")!)
-        }
-    }
-    
-    func openCurrentArtist() {
-        guard let currentPlayer = currentPlayer else { return }
-
-        currentPlayer.API.getURI(songId: currentSongId, for: .artist) { uri in
-            if let uri = uri {
-                NSWorkspace.shared.open(uri)
-            }
-        }
+        guard let currentApplication = currentApplication else { return }
+        type(of: currentApplication).nextTrack()
     }
 
-    func openCurrentAlbum() {
-        guard let currentPlayer = currentPlayer else { return }
-
-        currentPlayer.API.getURI(songId: currentSongId, for: .album) { uri in
-            if let uri = uri {
-                NSWorkspace.shared.open(uri)
-            }
-        }
-    }
-    
-    func copySongExternalURL() {
-        guard let currentPlayer = currentPlayer else { return }
-
-        var urlBuilder = currentPlayer.baseSongURL
-        switch currentPlayer {
-        case .music:
-            urlBuilder += "/\(currentAlbumId)?i=\(currentSongId)"
-        case .spotify:
-            urlBuilder += "/\(currentSongId)"
-        }
-
-        let pasteboard = NSPasteboard.general
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString(urlBuilder, forType: .string)
-    }
+    func openCurrentSong() {}
+    func openCurrentArtist() {}
+    func openCurrentAlbum() {}
+    func copySongExternalURL() {}
 
     // MARK: - Dynamic resizing
     @Published var isAppVisibleInMenuBar: Bool = false // This will trigger dynamic resizing on startup, just to be safe

@@ -159,7 +159,7 @@ struct AccessTokenResponse: Decodable {
     }
 }
 
-struct Track: Decodable {
+struct APITrack: Decodable {
     let id: String
     let name: String
     let artists: [Artist]
