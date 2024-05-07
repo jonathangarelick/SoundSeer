@@ -1,19 +1,19 @@
 /*
- * Spotify.h
+ * SBSpotify.h
  */
 
 #import <AppKit/AppKit.h>
 #import <ScriptingBridge/ScriptingBridge.h>
 
 
-@class SpotifyApplication, SpotifyTrack, SpotifyApplication;
+@class SBSpotifyApplication, SBSpotifyTrack, SBSpotifyApplication;
 
-enum SpotifyEPlS {
-    SpotifyEPlSStopped = 'kPSS',
-    SpotifyEPlSPlaying = 'kPSP',
-    SpotifyEPlSPaused = 'kPSp'
+enum SBSpotifyEPlS {
+    SBSpotifyEPlSStopped = 'kPSS',
+    SBSpotifyEPlSPlaying = 'kPSP',
+    SBSpotifyEPlSPaused = 'kPSp'
 };
-typedef enum SpotifyEPlS SpotifyEPlS;
+typedef enum SBSpotifyEPlS SBSpotifyEPlS;
 
 
 
@@ -22,11 +22,11 @@ typedef enum SpotifyEPlS SpotifyEPlS;
  */
 
 // The Spotify application.
-@interface SpotifyApplication : SBApplication
+@interface SBSpotifyApplication : SBApplication
 
-@property (copy, readonly) SpotifyTrack *currentTrack;  // The current playing track.
+@property (copy, readonly) SBSpotifyTrack *currentTrack;  // The current playing track.
 @property NSInteger soundVolume;  // The sound output volume (0 = minimum, 100 = maximum)
-@property (readonly) SpotifyEPlS playerState;  // Is Spotify stopped, paused, or playing?
+@property (readonly) SBSpotifyEPlS playerState;  // Is Spotify stopped, paused, or playing?
 @property double playerPosition;  // The player’s position within the currently playing track in seconds.
 @property (readonly) BOOL repeatingEnabled;  // Is repeating enabled in the current playback context?
 @property BOOL repeating;  // Is repeating on or off?
@@ -43,7 +43,7 @@ typedef enum SpotifyEPlS SpotifyEPlS;
 @end
 
 // A Spotify track.
-@interface SpotifyTrack : SBObject
+@interface SBSpotifyTrack : SBObject
 
 @property (copy, readonly) NSString *artist;  // The artist of the track.
 @property (copy, readonly) NSString *album;  // The album of the track.
@@ -70,7 +70,7 @@ typedef enum SpotifyEPlS SpotifyEPlS;
  */
 
 // The application's top level scripting object.
-@interface SpotifyApplication (StandardSuite)
+@interface SBSpotifyApplication (StandardSuite)
 
 @property (copy, readonly) NSString *name;  // The name of the application.
 @property (readonly) BOOL frontmost;  // Is this the frontmost (active) application?

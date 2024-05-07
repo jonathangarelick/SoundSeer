@@ -6,7 +6,7 @@ class MusicApplication: Application {
     
     private static let instance = MusicApplication()
 
-    let app = AppleMusicBridge.appleMusicApplication()
+    let app: SBMusicApplication? = SBApplicationManager.musicApp()
     var songId: String?
     var albumId: String?
 

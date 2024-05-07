@@ -10,7 +10,7 @@ class SpotifyApplication: Application {
         instance
     }
 
-    let app = SpotifyBridge.spotifyApplication()
+    let app: SBSpotifyApplication? = SBApplicationManager.spotifyApp()
 
     var songId: String? {
         app?.currentTrack.spotifyUrl.components(separatedBy: ":").last
