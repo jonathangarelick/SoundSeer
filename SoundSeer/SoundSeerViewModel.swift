@@ -6,25 +6,33 @@ import SwiftUI
 
 class SoundSeerViewModel: ObservableObject {
     let model: SoundSeerModel? = SoundSeerModel()
-
+    
     @Published var playerState: PlayerState?
-
+    
+    var player: Player? {
+        playerState?.player
+    }
+    
     var currentSong: String {
         playerState?.songName ?? ""
     }
-
+    
     var currentSongId: String {
         playerState?.songId ?? ""
     }
-
+    
     var currentArtist: String {
         playerState?.artistName ?? ""
     }
-
+    
     var currentAlbum: String {
         playerState?.albumName ?? ""
     }
-
+    
+    var currentAlbumId: String {
+        playerState?.albumId ?? ""
+    }
+    
     private var cancellables = Set<AnyCancellable>()
     
     init() {
@@ -40,27 +48,80 @@ class SoundSeerViewModel: ObservableObject {
     }
     
     deinit { timer?.invalidate() }
-
+    
     func nextTrack() {
-//        currentApplication?.nextTrack()
+        guard let player = player else { return }
+        switch player {
+        case .music:
+            MusicApplication.app?.nextTrack()
+        case .spotify:
+            SpotifyApplication.app?.nextTrack()
+        }
     }
-
+    
     func openCurrentSong() {
-//        currentApplication?.revealSong()
+        guard let player = player else { return }
+        switch player {
+        case .music:
+            MusicApplication.app?.currentTrack?.reveal()
+        case .spotify:
+            if let uriString = SpotifyApplication.app?.currentTrack?.spotifyUrl, let uri = URL(string: uriString) {
+                NSWorkspace.shared.open(uri)
+            }
+        }
     }
     
     func openCurrentArtist() {
-//        currentApplication?.revealArtist()
+        guard let player = player, !currentSongId.isEmpty else { return }
+        switch player {
+        case .music:
+            MusicAPI.getURI(songId: currentSongId, for: .artist) { uri in
+                if let uri = uri {
+                    NSWorkspace.shared.open(uri)
+                }
+            }
+        case .spotify:
+            SpotifyAPI.getURI(songId: currentSongId, for: .artist) { uri in
+                if let uri = uri {
+                    NSWorkspace.shared.open(uri)
+                }
+            }
+        }
     }
-
+    
     func openCurrentAlbum() {
-//        currentApplication?.revealAlbum()
+        guard let player = player, !currentSongId.isEmpty else { return }
+        switch player {
+        case .music:
+            MusicAPI.getURI(songId: currentSongId, for: .album) { uri in
+                if let uri = uri {
+                    NSWorkspace.shared.open(uri)
+                }
+            }
+        case .spotify:
+            SpotifyAPI.getURI(songId: currentSongId, for: .album) { uri in
+                if let uri = uri {
+                    NSWorkspace.shared.open(uri)
+                }
+            }
+        }
     }
-
+    
     func copySongExternalURL() {
-//        currentApplication?.copySongURL()
+        guard let player = player, !currentSongId.isEmpty else { return }
+        switch player {
+        case .music:
+            guard !currentAlbumId.isEmpty else { return }
+            let pasteboard = NSPasteboard.general
+            pasteboard.declareTypes([.string], owner: nil)
+            pasteboard.setString("https://music.apple.com/album/\(currentAlbumId)?i=\(currentSongId)", forType: .string)
+        case .spotify:
+            let pasteboard = NSPasteboard.general
+            pasteboard.declareTypes([.string], owner: nil)
+            pasteboard.setString("https://open.spotify.com/track/\(currentSongId)", forType: .string)
+        }
     }
-
+    
     // MARK: - Dynamic resizing
     @Published var isAppVisibleInMenuBar: Bool = false // This will trigger dynamic resizing on startup, just to be safe
     @Published var prefixLength = 45
