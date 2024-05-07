@@ -9,7 +9,7 @@ class SoundSeerViewModel: ObservableObject {
 
     @Published var playerState: PlayerState?
 
-    var currentSong: String? {
+    var currentSong: String {
         playerState?.songName ?? ""
     }
 

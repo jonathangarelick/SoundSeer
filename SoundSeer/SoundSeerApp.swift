@@ -24,7 +24,7 @@ struct SoundSeerApp: App {
 
             Divider()
 
-            Button(!playerViewModel.currentSong?.isEmpty
+            Button(!playerViewModel.currentSong.isEmpty
                    ? (playerViewModel.prefixLength > 0
                       ? playerViewModel.currentSong.truncate(length: Int(Double(playerViewModel.prefixLength) * 1.5))
                       : playerViewModel.currentSong.truncate(length: 60))
@@ -80,7 +80,7 @@ struct SoundSeerApp: App {
 
     var body: some Scene {
         MenuBarExtra {
-            if let model = viewModel.model {
+            if viewModel.model != nil {
                 SongMetaContent(playerViewModel: viewModel)
             } else {
                 Button("Spotify app not found.", systemImage: "exclamationmark.triangle", action: {})
@@ -116,7 +116,7 @@ struct SoundSeerApp: App {
                 NSApplication.shared.terminate(nil)
             }
         } label: {
-            if let model = viewModel.model {
+            if viewModel.model != nil {
                 LabelContent(playerViewModel: viewModel)
             } else {
                 Image(systemName: "ear")
