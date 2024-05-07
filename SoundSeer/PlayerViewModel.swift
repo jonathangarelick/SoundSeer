@@ -25,12 +25,6 @@ class PlayerViewModel: ObservableObject {
             return nil
         }
 
-        SpotifyApplication.revealSong()
-
-        SpotifyApplication.revealArtist()
-
-        SpotifyApplication.revealAlbum()
-
         self.playerModel = playerModel
 
         $isAppVisibleInMenuBar
@@ -84,14 +78,24 @@ class PlayerViewModel: ObservableObject {
     deinit { timer?.invalidate() }
 
     func nextTrack() {
-        guard let currentApplication = currentApplication else { return }
-        type(of: currentApplication).nextTrack()
+        currentApplication?.nextTrack()
     }
 
-    func openCurrentSong() {}
-    func openCurrentArtist() {}
-    func openCurrentAlbum() {}
-    func copySongExternalURL() {}
+    func openCurrentSong() {
+        currentApplication?.revealSong()
+    }
+    
+    func openCurrentArtist() {
+        currentApplication?.revealArtist()
+    }
+
+    func openCurrentAlbum() {
+        currentApplication?.revealAlbum()
+    }
+
+    func copySongExternalURL() {
+        currentApplication?.copySongURL()
+    }
 
     // MARK: - Dynamic resizing
     @Published var isAppVisibleInMenuBar: Bool = false // This will trigger dynamic resizing on startup, just to be safe

@@ -138,8 +138,8 @@
 				9BA0471D2BE9B83600AF3F34 /* Music.h */,
 				9BA0471B2BE9B81A00AF3F34 /* MusicBridge.m */,
 				9BA047142BE9ADE400AF3F34 /* SoundSeer-Bridging-Header.h */,
-				9BA047192BE9B6D900AF3F34 /* SpotifyBridge.m */,
 				9BA047132BE9ADC000AF3F34 /* Spotify.h */,
+				9BA047192BE9B6D900AF3F34 /* SpotifyBridge.m */,
 			);
 			path = Bridges;
 			sourceTree = "<group>";
@@ -176,19 +176,19 @@
 		9BE2FA1A2BC97CCC00A7124B /* SoundSeer */ = {
 			isa = PBXGroup;
 			children = (
-				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
-				9BFF831D2BE9BEDA0030B722 /* Application */,
 				9B2755882BE95E9A0007E18B /* API */,
+				9BFF831D2BE9BEDA0030B722 /* Application */,
+				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
 				9BAEAEA22BDAE8AD00C85936 /* Bridges */,
 				9BAEAEA32BDAE8D000C85936 /* Extensions */,
+				9B258F2D2BDF193100DC5EE2 /* Info.plist */,
 				9B1B0F972BE5A5B800E26B26 /* Models */,
+				9B1B0F952BE5A57800E26B26 /* PlayerState.swift */,
 				9BD4DCE32BC9EC8B001572F7 /* PlayerViewModel.swift */,
 				9B2755892BE960D60007E18B /* Secrets.swift */,
-				9B1B0F952BE5A57800E26B26 /* PlayerState.swift */,
 				9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */,
 				9BAEAEA02BDAE6F200C85936 /* Utils.swift */,
 				9B1486712BD475DA00D67669 /* WindowAccessor.swift */,
-				9B258F2D2BDF193100DC5EE2 /* Info.plist */,
 			);
 			path = SoundSeer;
 			sourceTree = "<group>";

@@ -1,19 +1,21 @@
 import AppKit
 
 class SpotifyApplication: Application {
-    static let app = SpotifyBridge.spotifyApplication()
-
     private static let instance = SpotifyApplication()
 
     static var shared: Application {
         instance
     }
 
-    private static var songId: String? {
+    let app = SpotifyBridge.spotifyApplication()
+
+    var songId: String? {
         app?.currentTrack.spotifyUrl.components(separatedBy: ":").last
     }
 
-    static func copySongURL() {
+    private init() {}
+
+    func copySongURL() {
         guard let songId = songId else { return }
 
         let pasteboard = NSPasteboard.general
@@ -21,17 +23,17 @@ class SpotifyApplication: Application {
         pasteboard.setString("https://open.spotify.com/track/\(songId)", forType: .string)
     }
 
-    static func nextTrack() {
+    func nextTrack() {
         app?.nextTrack()
     }
 
-    static func revealSong() {
+    func revealSong() {
         if let urlString = app?.currentTrack.spotifyUrl, let url = URL(string: urlString) {
             NSWorkspace.shared.open(url)
         }
     }
 
-    static func revealArtist() {
+    func revealArtist() {
         guard let songId = songId else { return }
 
         SpotifyAPI.getURI(songId: songId, for: .artist) { uri in
@@ -41,7 +43,7 @@ class SpotifyApplication: Application {
         }
     }
 
-    static func revealAlbum() {
+    func revealAlbum() {
         guard let songId = songId else { return }
 
         SpotifyAPI.getURI(songId: songId, for: .album) { uri in
