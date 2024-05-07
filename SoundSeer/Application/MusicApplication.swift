@@ -1,6 +1,9 @@
 import AppKit
 
 class MusicApplication: Application {
+    static let bundleID = "com.apple.Music"
+    static let notificationName = Notification.Name("com.apple.Music.playerInfo")
+    
     private static let instance = MusicApplication()
 
     let app = AppleMusicBridge.appleMusicApplication()
@@ -11,6 +14,10 @@ class MusicApplication: Application {
 
     static var shared: Application {
         instance
+    }
+
+    var playerState: PlayerState {
+        PlayerState(app?.playerState)
     }
 
      func copySongURL() {

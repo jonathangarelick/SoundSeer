@@ -1,6 +1,9 @@
 import AppKit
 
 class SpotifyApplication: Application {
+    static let bundleID = "com.spotify.client"
+    static let notificationName = Notification.Name("com.spotify.client.PlaybackStateChanged")
+
     private static let instance = SpotifyApplication()
 
     static var shared: Application {
@@ -14,6 +17,10 @@ class SpotifyApplication: Application {
     }
 
     private init() {}
+
+    var playerState: PlayerState {
+        PlayerState(app?.playerState)
+    }
 
     func copySongURL() {
         guard let songId = songId else { return }

@@ -12,38 +12,29 @@ class PlayerModel {
     @Published var currentAlbum: String = ""
     @Published var currentAlbumId: String = ""
 
-    private let spotifyApp: AnyObject
-    let musicApp: AnyObject = SBApplication(bundleIdentifier: "com.apple.Music")!
-
-    private let notificationCenter = DistributedNotificationCenter.default()
-    private let notificationName = Notification.Name("com.spotify.client.PlaybackStateChanged")
-
-    let musicNotificationName = Notification.Name("com.apple.Music.playerInfo")
-
     init?() {
-        guard let spotifyApp = SBApplication(bundleIdentifier: "com.spotify.client") else {
-            Logger.model.error("Could not find Spotify application")
+        if !Utils.isAppInstalled(MusicApplication.bundleID),
+           !Utils.isAppInstalled(SpotifyApplication.bundleID) {
+            Logger.model.error("Could not find Apple Music or Spotify application")
             return nil
         }
 
-//        let myApp = SBApplication(bundleIdentifier: "com.spotify.client") as? SBSpotifyApplication
-
-//        print(myApp?.shuffling)
-        SpotifyBridge.spotifyApplication().play()
-
-        self.spotifyApp = spotifyApp
-
-        // Need to trigger a "fake" event when SoundSeer is first opened
-//        Logger.model.debug("Performing initial update")
-//        update()
+        Logger.model.debug("Performing initial update")
+        if Utils.isAppRunning(MusicApplication.bundleID) {
+            doInitialUpdate(MusicApplication.shared)
+        } else if Utils.isAppRunning(SpotifyApplication.bundleID) {
+            doInitialUpdate(SpotifyApplication.shared)
+        } else {
+            Logger.model.debug("Neither app is running, waiting quietly...")
+        }
 
         Logger.model.debug("Subscribing to Spotify playback change events")
-        notificationCenter.addObserver(forName: notificationName, object: nil, queue: nil) { [weak self] in
+        DistributedNotificationCenter.default().addObserver(forName: SpotifyApplication.notificationName, object: nil, queue: nil) { [weak self] in
             self?.update(PlayerStateNotification(SpotifyApplication.shared, $0))
         }
 
         Logger.model.debug("Subscribing to Apple Music playback change events")
-        notificationCenter.addObserver(forName: musicNotificationName, object: nil, queue: nil) { [weak self] in
+        DistributedNotificationCenter.default().addObserver(forName: MusicApplication.notificationName, object: nil, queue: nil) { [weak self] in
             self?.update(PlayerStateNotification(MusicApplication.shared, $0))
         }
     }
@@ -51,11 +42,6 @@ class PlayerModel {
     deinit {
         Logger.model.debug("Removing subscription to Spotify playback events")
         DistributedNotificationCenter.default().removeObserver(self)
-    }
-
-    func nextTrack() {
-        Logger.model.debug("Skipping track")
-        spotifyApp.nextTrack?()
     }
 
     private func resetData() {
@@ -67,6 +53,12 @@ class PlayerModel {
         currentArtist = ""
         currentAlbum = ""
         currentAlbumId = ""
+    }
+
+    private func doInitialUpdate(_ application: Application) {
+        currentApplication = application
+        playerState = application.playerState
+        // do more
     }
 
     private func update(_ notification: PlayerStateNotification?) {
