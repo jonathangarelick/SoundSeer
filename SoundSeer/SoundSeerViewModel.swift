@@ -84,7 +84,19 @@ class SoundSeerViewModel: ObservableObject {
         }
     }
 
-    func openCurrentSong() {
+    var songShort: String {
+        guard !currentSong.isEmpty else { return "Song unknown" }
+
+        return prefixLength > 0
+           ? currentSong.truncate(length: Int(Double(prefixLength) * 1.5))
+           : currentSong.truncate(length: 60)
+    }
+
+    var canRevealSong: Bool {
+        player != nil
+    }
+
+    func revealSong() {
         guard let player = player else { return }
         switch player {
         case .music:
@@ -96,7 +108,19 @@ class SoundSeerViewModel: ObservableObject {
         }
     }
 
-    func openCurrentArtist() {
+    var artistShort: String {
+        guard !currentArtist.isEmpty else { return "Artist unknown" }
+
+        return prefixLength > 0
+           ? currentArtist.truncate(length: Int(Double(prefixLength) * 1.5))
+           : currentArtist.truncate(length: 60)
+    }
+
+    var canRevealArtist: Bool {
+        !currentSongId.isEmpty
+    }
+
+    func revealArtist() {
         guard let player = player, !currentSongId.isEmpty else { return }
         switch player {
         case .music:
@@ -114,7 +138,19 @@ class SoundSeerViewModel: ObservableObject {
         }
     }
 
-    func openCurrentAlbum() {
+    var albumShort: String {
+        guard !currentAlbum.isEmpty else { return "Album unknown" }
+        
+        return prefixLength > 0
+           ? currentAlbum.truncate(length: Int(Double(prefixLength) * 1.5))
+           : currentAlbum.truncate(length: 60)
+    }
+
+    var canRevealAlbum: Bool {
+        !currentSongId.isEmpty
+    }
+
+    func revealAlbum() {
         guard let player = player, !currentSongId.isEmpty else { return }
         switch player {
         case .music:
