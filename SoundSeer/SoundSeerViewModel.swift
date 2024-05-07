@@ -4,51 +4,76 @@ import Foundation
 import OSLog
 import SwiftUI
 
+enum ViewModelState {
+    case ok, noMusicPlayer, outOfSpace
+}
+
 class SoundSeerViewModel: ObservableObject {
     let model: SoundSeerModel? = SoundSeerModel()
-    
+
     @Published var playerState: PlayerState?
-    
+
     var player: Player? {
         playerState?.player
     }
-    
+
+    var playbackState: PlaybackState? {
+        playerState?.playbackState
+    }
+
     var currentSong: String {
         playerState?.songName ?? ""
     }
-    
+
     var currentSongId: String {
         playerState?.songId ?? ""
     }
-    
+
     var currentArtist: String {
         playerState?.artistName ?? ""
     }
-    
+
     var currentAlbum: String {
         playerState?.albumName ?? ""
     }
-    
+
     var currentAlbumId: String {
         playerState?.albumId ?? ""
     }
-    
+
+    var isPlayerStopped: Bool {
+        guard let playbackState = playbackState else { return true }
+        return playbackState == .stopped
+    }
+
+    var isPlaying: Bool {
+        playbackState == .playing
+    }
+
+    var isValid: Bool {
+        model != nil
+    }
+
+    var hasNoMusicPlayer: Bool {
+        model == nil
+    }
+
     private var cancellables = Set<AnyCancellable>()
-    
+
     init() {
         $isAppVisibleInMenuBar
             .sink { [weak self] in
                 self?.handleVisibilityChange($0)
             }
             .store(in: &cancellables)
-        
+
         model?.$playerState
             .assign(to: \.playerState, on: self)
             .store(in: &cancellables)
     }
-    
+
     deinit { timer?.invalidate() }
-    
+
     func nextTrack() {
         guard let player = player else { return }
         switch player {
@@ -58,7 +83,7 @@ class SoundSeerViewModel: ObservableObject {
             SpotifyApplication.app?.nextTrack()
         }
     }
-    
+
     func openCurrentSong() {
         guard let player = player else { return }
         switch player {
@@ -70,7 +95,7 @@ class SoundSeerViewModel: ObservableObject {
             }
         }
     }
-    
+
     func openCurrentArtist() {
         guard let player = player, !currentSongId.isEmpty else { return }
         switch player {
@@ -88,7 +113,7 @@ class SoundSeerViewModel: ObservableObject {
             }
         }
     }
-    
+
     func openCurrentAlbum() {
         guard let player = player, !currentSongId.isEmpty else { return }
         switch player {
@@ -106,7 +131,7 @@ class SoundSeerViewModel: ObservableObject {
             }
         }
     }
-    
+
     func copySongExternalURL() {
         guard let player = player, !currentSongId.isEmpty else { return }
         switch player {
@@ -121,13 +146,13 @@ class SoundSeerViewModel: ObservableObject {
             pasteboard.setString("https://open.spotify.com/track/\(currentSongId)", forType: .string)
         }
     }
-    
+
     // MARK: - Dynamic resizing
     @Published var isAppVisibleInMenuBar: Bool = false // This will trigger dynamic resizing on startup, just to be safe
     @Published var prefixLength = 45
-    
+
     private var timer: Timer?
-    
+
     var nowPlaying: String {
         get {
             if currentSong.isEmpty || currentArtist.isEmpty {
@@ -137,7 +162,7 @@ class SoundSeerViewModel: ObservableObject {
             }
         }
     }
-    
+
     // https://stackoverflow.com/a/77304045
     private static func isAppInMenuBar(_ appName: String) -> Bool {
         let processNamesWithStatusItems = Set(
@@ -145,18 +170,18 @@ class SoundSeerViewModel: ObservableObject {
                 .filter { $0[kCGWindowLayer] as! Int == 25 }
                 .map { $0[kCGWindowOwnerName] as! String }
         )
-        
+
         return processNamesWithStatusItems.contains(appName)
     }
-    
+
     private func handleVisibilityChange(_ isVisible: Bool) {
         timer?.invalidate()
-        
+
         if playerState?.playbackState == .playing, !isVisible, !Self.isAppInMenuBar("SoundSeer") {
             doDynamicResizing()
         }
     }
-    
+
     private func doDynamicResizing() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
             guard self.prefixLength > 0 else {
@@ -164,7 +189,7 @@ class SoundSeerViewModel: ObservableObject {
                 timer.invalidate()
                 return
             }
-            
+
             Logger.view.debug("Current prefix length is \(self.prefixLength), decreasing by 5")
             self.prefixLength -= 5
         }

@@ -29,6 +29,11 @@
 		9BEB2DDB2BD1C02E0038E223 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB2DDA2BD1C02E0038E223 /* StringExtension.swift */; };
 		9BF013C22BEA75010082457D /* SBApplicationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF013C12BEA75010082457D /* SBApplicationManager.m */; };
 		9BF013C52BEA86280082457D /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF013C42BEA86280082457D /* Player.swift */; };
+		9BF013C92BEAAE120082457D /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF013C82BEAAE120082457D /* PlayerControlsView.swift */; };
+		9BF013CD2BEACB080082457D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF013CC2BEACB080082457D /* SettingsView.swift */; };
+		9BF013CF2BEACC3D0082457D /* SongDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF013CE2BEACC3D0082457D /* SongDetailsView.swift */; };
+		9BF013D12BEACDF80082457D /* NowPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF013D02BEACDF80082457D /* NowPlayingView.swift */; };
+		9BF013D32BEACFF20082457D /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF013D22BEACFF20082457D /* WarningView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +75,11 @@
 		9BF013C12BEA75010082457D /* SBApplicationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBApplicationManager.m; sourceTree = "<group>"; };
 		9BF013C32BEA76560082457D /* SBApplicationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBApplicationManager.h; sourceTree = "<group>"; };
 		9BF013C42BEA86280082457D /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		9BF013C82BEAAE120082457D /* PlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsView.swift; sourceTree = "<group>"; };
+		9BF013CC2BEACB080082457D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		9BF013CE2BEACC3D0082457D /* SongDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetailsView.swift; sourceTree = "<group>"; };
+		9BF013D02BEACDF80082457D /* NowPlayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingView.swift; sourceTree = "<group>"; };
+		9BF013D22BEACFF20082457D /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,9 +196,22 @@
 				9BD4DCE12BC9E9D4001572F7 /* SoundSeerModel.swift */,
 				9BD4DCE32BC9EC8B001572F7 /* SoundSeerViewModel.swift */,
 				9BAEAEA02BDAE6F200C85936 /* Utils.swift */,
+				9BF013CA2BEAAEF90082457D /* Views */,
 				9B1486712BD475DA00D67669 /* WindowAccessor.swift */,
 			);
 			path = SoundSeer;
+			sourceTree = "<group>";
+		};
+		9BF013CA2BEAAEF90082457D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9BF013D02BEACDF80082457D /* NowPlayingView.swift */,
+				9BF013C82BEAAE120082457D /* PlayerControlsView.swift */,
+				9BF013CC2BEACB080082457D /* SettingsView.swift */,
+				9BF013CE2BEACC3D0082457D /* SongDetailsView.swift */,
+				9BF013D22BEACFF20082457D /* WarningView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,18 +335,23 @@
 				9B1B0F912BE59C3800E26B26 /* PlayerState.swift in Sources */,
 				9BE2FA1C2BC97CCC00A7124B /* SoundSeerApp.swift in Sources */,
 				9BD4DCE22BC9E9D4001572F7 /* SoundSeerModel.swift in Sources */,
+				9BF013C92BEAAE120082457D /* PlayerControlsView.swift in Sources */,
 				9BF013C22BEA75010082457D /* SBApplicationManager.m in Sources */,
 				9BA047212BE9BBA000AF3F34 /* SpotifyApplication.swift in Sources */,
 				9BAEAEA12BDAE6F200C85936 /* Utils.swift in Sources */,
 				9BA047252BE9BE5700AF3F34 /* MusicApplication.swift in Sources */,
 				9B1486722BD475DA00D67669 /* WindowAccessor.swift in Sources */,
 				9BEB2DDB2BD1C02E0038E223 /* StringExtension.swift in Sources */,
+				9BF013D12BEACDF80082457D /* NowPlayingView.swift in Sources */,
 				9BD4DCE42BC9EC8B001572F7 /* SoundSeerViewModel.swift in Sources */,
 				9B1B0F962BE5A57800E26B26 /* PlaybackState.swift in Sources */,
+				9BF013D32BEACFF20082457D /* WarningView.swift in Sources */,
 				9BAEAE9F2BDAE2C400C85936 /* LoggerExtension.swift in Sources */,
 				9BC6A97D2BE7F1FC0069726E /* MusicAPI.swift in Sources */,
+				9BF013CF2BEACC3D0082457D /* SongDetailsView.swift in Sources */,
 				9BF013C52BEA86280082457D /* Player.swift in Sources */,
 				9BC6B6892BCA2D49005421AE /* SpotifyAPI.swift in Sources */,
+				9BF013CD2BEACB080082457D /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
