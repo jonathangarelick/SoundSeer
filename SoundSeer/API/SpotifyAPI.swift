@@ -2,7 +2,7 @@ import Alamofire
 import Foundation
 import OSLog
 
-class SpotifyAPI: PlayerAPI {
+class SpotifyAPI {
     private static let baseURL = "https://api.spotify.com/v1"
     private static var token: String?
     private static var tokenExpiration: Date?

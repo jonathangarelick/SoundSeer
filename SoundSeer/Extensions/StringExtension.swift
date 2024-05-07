@@ -1,10 +1,4 @@
-import AppKit
-
 extension String {
-    var fourCharCode: FourCharCode {
-        return self.utf16.reduce(0, {$0 << 8 + FourCharCode($1)})
-    }
-
     func prefixBefore(_ str: String) -> String {
         let components = self.components(separatedBy: str)
         if components.count > 1 {

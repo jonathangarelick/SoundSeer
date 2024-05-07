@@ -4,7 +4,7 @@ import SwiftJWT
 
 // TODO: get song id and album id functions for initial loading
 
-class MusicAPI: PlayerAPI {
+class MusicAPI {
     private static let baseURL = "https://api.music.apple.com/v1"
     private static var token: String?
     private static var tokenExpiration: Date?
