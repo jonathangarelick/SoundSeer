@@ -4,7 +4,7 @@ SoundSeer is a macOS menu bar app that shows your currently playing song, and al
 <img src="images/menu-example.png" width="50%">
 
 ## Compatibility
-- macOS 13+
+- macOS 14+
 ## Download
 You can either build this project from the source for free, or purchase it from the [Mac App Store](https://apps.apple.com/us/app/soundseer/id6497167012?mt=12) for $2.
 
