@@ -3,7 +3,7 @@ enum MusicApplication {
     static let app: SBMusicApplication? = SBApplicationManager.musicApp()
 
     static func getPlayerState() -> PlayerState? {
-        guard let app = app else { return nil }
+        guard let app = app, Utils.isAppRunning(bundleID) else { return nil }
         return PlayerState(.music, app)
     }
 }

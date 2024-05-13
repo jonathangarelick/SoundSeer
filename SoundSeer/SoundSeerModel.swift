@@ -11,13 +11,7 @@ class SoundSeerModel {
             return nil
         }
 
-        if Utils.isAppRunning(MusicApplication.bundleID) {
-            playerState = MusicApplication.getPlayerState()
-        } else if Utils.isAppRunning(SpotifyApplication.bundleID) {
-            playerState = SpotifyApplication.getPlayerState()
-        } else {
-            Logger.model.debug("Neither app is running")
-        }
+        playerState = getPlayerState()
 
         DistributedNotificationCenter.default().addObserver(
             forName: Notification.Name("com.apple.Music.playerInfo"), object: nil, queue: nil) { [weak self] in
@@ -32,5 +26,17 @@ class SoundSeerModel {
 
     deinit {
         DistributedNotificationCenter.default().removeObserver(self)
+    }
+
+    func getPlayerState() -> PlayerState? {
+        let musicState = MusicApplication.getPlayerState()
+        let spotifyState = SpotifyApplication.getPlayerState()
+
+        if (spotifyState?.playbackState == .playing && (musicState == nil || musicState?.playbackState != .playing))
+            || (spotifyState?.playbackState != .playing && musicState == nil) {
+            return spotifyState
+        }
+
+        return musicState
     }
 }
