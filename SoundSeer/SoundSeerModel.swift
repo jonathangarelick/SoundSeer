@@ -27,16 +27,17 @@ class SoundSeerModel {
     deinit {
         DistributedNotificationCenter.default().removeObserver(self)
     }
-
+    
     func getPlayerState() -> PlayerState? {
         let musicState = MusicApplication.getPlayerState()
         let spotifyState = SpotifyApplication.getPlayerState()
-
+        
         if (spotifyState?.playbackState == .playing && (musicState == nil || musicState?.playbackState != .playing))
-            || (spotifyState?.playbackState != .playing && musicState == nil) {
+            || (spotifyState?.playbackState != .playing && musicState == nil)
+            || ((spotifyState?.playbackState == .paused || spotifyState?.playbackState == .playing) && musicState?.playbackState == .stopped) {
             return spotifyState
         }
-
+        
         return musicState
     }
 }
