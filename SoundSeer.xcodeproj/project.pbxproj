@@ -538,7 +538,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = SoundSeer;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSAppleEventsUsageDescription = "This permission is necessary to read Spotify data and control playback.";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "This permission is necessary to read your music player's data and control playback.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "2024 Jonathan Garelick";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -575,7 +575,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = SoundSeer;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSAppleEventsUsageDescription = "This permission is necessary to read Spotify data and control playback.";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "This permission is necessary to read your music player's data and control playback.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "2024 Jonathan Garelick";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
