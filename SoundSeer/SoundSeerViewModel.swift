@@ -93,7 +93,10 @@ class SoundSeerViewModel: ObservableObject {
     }
 
     var canRevealSong: Bool {
-        player != nil
+        if player != nil, let playbackState = playbackState {
+            return playbackState == .paused || playbackState == .playing
+        }
+        return false
     }
 
     func revealSong() {
@@ -101,6 +104,7 @@ class SoundSeerViewModel: ObservableObject {
         switch player {
         case .music:
             MusicApplication.app?.currentTrack?.reveal()
+            MusicApplication.app?.activate() // Reveal does not bring the app to the foreground
         case .spotify:
             if let uriString = SpotifyApplication.app?.currentTrack?.spotifyUrl, let uri = URL(string: uriString) {
                 NSWorkspace.shared.open(uri)
