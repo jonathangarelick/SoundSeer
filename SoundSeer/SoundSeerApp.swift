@@ -27,10 +27,14 @@ struct SoundSeerApp: App {
             case .noMusicPlayer:
                 WarningView("Music player not found.")
 
-            case .outOfSpace:
-                WarningView("Not enough room for song. Try restarting.")
+            case .outOfSpace, .ok:
+                if state == .outOfSpace {
+                    WarningView("Not enough room for song. Reset width or restart.")
+                    Button("Reset Width", systemImage: "arrow.left.and.line.vertical.and.arrow.right", action: viewModel.resetWidth)
+                        .labelStyle(.titleAndIcon)
+                    Divider()
+                }
 
-            case .ok:
                 PlayerControlsView(viewModel: viewModel)
                 Divider()
                 SongDetailsView(viewModel: viewModel)

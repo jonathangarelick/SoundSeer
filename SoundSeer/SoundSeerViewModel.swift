@@ -188,8 +188,9 @@ class SoundSeerViewModel: ObservableObject {
     }
 
     // MARK: - Dynamic resizing
+    static let maxPrefixLength = 45
     @Published var isAppVisibleInMenuBar: Bool = false // This will trigger dynamic resizing on startup, just to be safe
-    @Published var prefixLength = 45
+    @Published var prefixLength = maxPrefixLength
 
     private var timer: Timer?
 
@@ -201,6 +202,10 @@ class SoundSeerViewModel: ObservableObject {
                 return "\(currentSong.prefixBefore("(")) · \(currentArtist)".truncate(length: prefixLength)
             }
         }
+    }
+
+    func resetWidth() {
+        prefixLength = Self.maxPrefixLength
     }
 
     // https://stackoverflow.com/a/77304045
