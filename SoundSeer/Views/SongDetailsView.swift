@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SongDetailsView: View {
-    @ObservedObject var viewModel: SoundSeerViewModel
+    var viewModel: SoundSeerViewModel
 
     var body: some View {
         Button(viewModel.songShort, systemImage: "music.note", action: viewModel.revealSong)
@@ -15,5 +15,11 @@ struct SongDetailsView: View {
         Button(viewModel.albumShort, systemImage: "opticaldisc", action: viewModel.revealAlbum)
             .labelStyle(.titleAndIcon)
             .disabled(!viewModel.canRevealAlbum)
+
+        Divider()
+
+        Button("Copy Song URL", systemImage: "doc.on.doc", action: viewModel.copySongExternalURL)
+            .labelStyle(.titleAndIcon)
+            .disabled(viewModel.currentSongId.isEmpty)
     }
 }

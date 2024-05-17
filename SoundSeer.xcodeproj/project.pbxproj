@@ -11,6 +11,11 @@
 		9B1B0F912BE59C3800E26B26 /* PlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1B0F902BE59C3800E26B26 /* PlayerState.swift */; };
 		9B1B0F962BE5A57800E26B26 /* PlaybackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1B0F952BE5A57800E26B26 /* PlaybackState.swift */; };
 		9B27558A2BE960D60007E18B /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2755892BE960D60007E18B /* Secrets.swift */; };
+		9B2B1A522BF80D2700DE1F5F /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 9B2B1A512BF80D2700DE1F5F /* LaunchAtLogin */; };
+		9B2B1A542BF8201400DE1F5F /* NoMusicPlayerMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2B1A532BF8201400DE1F5F /* NoMusicPlayerMenuView.swift */; };
+		9B2B1A562BF8203C00DE1F5F /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2B1A552BF8203C00DE1F5F /* WarningView.swift */; };
+		9B2B1A582BF8215700DE1F5F /* OutOfSpaceMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2B1A572BF8215700DE1F5F /* OutOfSpaceMenuView.swift */; };
+		9B2B1A5B2BF822AC00DE1F5F /* StandardMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2B1A5A2BF822AC00DE1F5F /* StandardMenuView.swift */; };
 		9B55030B2BD5F49C0005BEBD /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B55030A2BD5F49C0005BEBD /* StringExtensionTests.swift */; };
 		9B8FB46B2BEAE2F400EA402E /* URIType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FB46A2BEAE2F400EA402E /* URIType.swift */; };
 		9BA047212BE9BBA000AF3F34 /* SpotifyApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA047202BE9BBA000AF3F34 /* SpotifyApplication.swift */; };
@@ -21,7 +26,6 @@
 		9BC6A9822BE7F4400069726E /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = 9BC6A9812BE7F4400069726E /* SwiftJWT */; };
 		9BC6B6872BCA2CDF005421AE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9BC6B6862BCA2CDF005421AE /* Alamofire */; };
 		9BC6B6892BCA2D49005421AE /* SpotifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */; };
-		9BD4DCE22BC9E9D4001572F7 /* SoundSeerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4DCE12BC9E9D4001572F7 /* SoundSeerModel.swift */; };
 		9BD4DCE42BC9EC8B001572F7 /* SoundSeerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4DCE32BC9EC8B001572F7 /* SoundSeerViewModel.swift */; };
 		9BE2FA1C2BC97CCC00A7124B /* SoundSeerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */; };
 		9BE2FA202BC97CCD00A7124B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */; };
@@ -32,7 +36,6 @@
 		9BF013CD2BEACB080082457D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF013CC2BEACB080082457D /* SettingsView.swift */; };
 		9BF013CF2BEACC3D0082457D /* SongDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF013CE2BEACC3D0082457D /* SongDetailsView.swift */; };
 		9BF013D12BEACDF80082457D /* NowPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF013D02BEACDF80082457D /* NowPlayingView.swift */; };
-		9BF013D32BEACFF20082457D /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF013D22BEACFF20082457D /* WarningView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,10 @@
 		9B1B0F952BE5A57800E26B26 /* PlaybackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackState.swift; sourceTree = "<group>"; };
 		9B258F2D2BDF193100DC5EE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B2755892BE960D60007E18B /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		9B2B1A532BF8201400DE1F5F /* NoMusicPlayerMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoMusicPlayerMenuView.swift; sourceTree = "<group>"; };
+		9B2B1A552BF8203C00DE1F5F /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
+		9B2B1A572BF8215700DE1F5F /* OutOfSpaceMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutOfSpaceMenuView.swift; sourceTree = "<group>"; };
+		9B2B1A5A2BF822AC00DE1F5F /* StandardMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardMenuView.swift; sourceTree = "<group>"; };
 		9B5503012BD5F22E0005BEBD /* SoundSeerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoundSeerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B55030A2BD5F49C0005BEBD /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		9B8FB46A2BEAE2F400EA402E /* URIType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URIType.swift; sourceTree = "<group>"; };
@@ -63,7 +70,6 @@
 		9BAEAEA02BDAE6F200C85936 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		9BC6A97C2BE7F1FC0069726E /* MusicAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicAPI.swift; sourceTree = "<group>"; };
 		9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPI.swift; sourceTree = "<group>"; };
-		9BD4DCE12BC9E9D4001572F7 /* SoundSeerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSeerModel.swift; sourceTree = "<group>"; };
 		9BD4DCE32BC9EC8B001572F7 /* SoundSeerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSeerViewModel.swift; sourceTree = "<group>"; };
 		9BE2FA182BC97CCC00A7124B /* SoundSeer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundSeer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSeerApp.swift; sourceTree = "<group>"; };
@@ -77,7 +83,6 @@
 		9BF013CC2BEACB080082457D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9BF013CE2BEACC3D0082457D /* SongDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetailsView.swift; sourceTree = "<group>"; };
 		9BF013D02BEACDF80082457D /* NowPlayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingView.swift; sourceTree = "<group>"; };
-		9BF013D22BEACFF20082457D /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +99,7 @@
 			files = (
 				9B1461312BD08573009C931B /* ScriptingBridge.framework in Frameworks */,
 				9BC6B6872BCA2CDF005421AE /* Alamofire in Frameworks */,
+				9B2B1A522BF80D2700DE1F5F /* LaunchAtLogin in Frameworks */,
 				9BC6A9822BE7F4400069726E /* SwiftJWT in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,6 +135,24 @@
 				9B8FB46A2BEAE2F400EA402E /* URIType.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		9B2B1A592BF8219B00DE1F5F /* MenuViews */ = {
+			isa = PBXGroup;
+			children = (
+				9B2B1A532BF8201400DE1F5F /* NoMusicPlayerMenuView.swift */,
+				9B2B1A572BF8215700DE1F5F /* OutOfSpaceMenuView.swift */,
+				9B2B1A5A2BF822AC00DE1F5F /* StandardMenuView.swift */,
+			);
+			path = MenuViews;
+			sourceTree = "<group>";
+		};
+		9B2B1A5C2BF823CF00DE1F5F /* UtilityViews */ = {
+			isa = PBXGroup;
+			children = (
+				9B2B1A552BF8203C00DE1F5F /* WarningView.swift */,
+			);
+			path = UtilityViews;
 			sourceTree = "<group>";
 		};
 		9B5503022BD5F22E0005BEBD /* SoundSeerTests */ = {
@@ -191,7 +215,6 @@
 				9BAEAEA22BDAE8AD00C85936 /* ScriptingBridge */,
 				9B2755892BE960D60007E18B /* Secrets.swift */,
 				9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */,
-				9BD4DCE12BC9E9D4001572F7 /* SoundSeerModel.swift */,
 				9BD4DCE32BC9EC8B001572F7 /* SoundSeerViewModel.swift */,
 				9BAEAEA02BDAE6F200C85936 /* Utils.swift */,
 				9BF013CA2BEAAEF90082457D /* Views */,
@@ -202,11 +225,12 @@
 		9BF013CA2BEAAEF90082457D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9B2B1A592BF8219B00DE1F5F /* MenuViews */,
+				9B2B1A5C2BF823CF00DE1F5F /* UtilityViews */,
 				9BF013D02BEACDF80082457D /* NowPlayingView.swift */,
 				9BF013C82BEAAE120082457D /* PlayerControlsView.swift */,
-				9BF013CC2BEACB080082457D /* SettingsView.swift */,
 				9BF013CE2BEACC3D0082457D /* SongDetailsView.swift */,
-				9BF013D22BEACFF20082457D /* WarningView.swift */,
+				9BF013CC2BEACB080082457D /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -248,6 +272,7 @@
 			packageProductDependencies = (
 				9BC6B6862BCA2CDF005421AE /* Alamofire */,
 				9BC6A9812BE7F4400069726E /* SwiftJWT */,
+				9B2B1A512BF80D2700DE1F5F /* LaunchAtLogin */,
 			);
 			productName = SoundSeer;
 			productReference = 9BE2FA182BC97CCC00A7124B /* SoundSeer.app */;
@@ -261,7 +286,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					9B5503002BD5F22E0005BEBD = {
 						CreatedOnToolsVersion = 15.3;
@@ -285,6 +310,7 @@
 			packageReferences = (
 				9BC6B6852BCA2CDF005421AE /* XCRemoteSwiftPackageReference "Alamofire" */,
 				9BC6A9802BE7F4400069726E /* XCRemoteSwiftPackageReference "Swift-JWT" */,
+				9B2B1A502BF80D2700DE1F5F /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
 			);
 			productRefGroup = 9BE2FA192BC97CCC00A7124B /* Products */;
 			projectDirPath = "";
@@ -330,23 +356,25 @@
 				9B27558A2BE960D60007E18B /* Secrets.swift in Sources */,
 				9B1B0F912BE59C3800E26B26 /* PlayerState.swift in Sources */,
 				9BE2FA1C2BC97CCC00A7124B /* SoundSeerApp.swift in Sources */,
-				9BD4DCE22BC9E9D4001572F7 /* SoundSeerModel.swift in Sources */,
 				9BF013C92BEAAE120082457D /* PlayerControlsView.swift in Sources */,
 				9BF013C22BEA75010082457D /* SBApplicationManager.m in Sources */,
 				9B8FB46B2BEAE2F400EA402E /* URIType.swift in Sources */,
 				9BA047212BE9BBA000AF3F34 /* SpotifyApplication.swift in Sources */,
 				9BAEAEA12BDAE6F200C85936 /* Utils.swift in Sources */,
 				9BA047252BE9BE5700AF3F34 /* MusicApplication.swift in Sources */,
+				9B2B1A582BF8215700DE1F5F /* OutOfSpaceMenuView.swift in Sources */,
 				9BEB2DDB2BD1C02E0038E223 /* StringExtension.swift in Sources */,
 				9BF013D12BEACDF80082457D /* NowPlayingView.swift in Sources */,
+				9B2B1A562BF8203C00DE1F5F /* WarningView.swift in Sources */,
 				9BD4DCE42BC9EC8B001572F7 /* SoundSeerViewModel.swift in Sources */,
+				9B2B1A5B2BF822AC00DE1F5F /* StandardMenuView.swift in Sources */,
 				9B1B0F962BE5A57800E26B26 /* PlaybackState.swift in Sources */,
-				9BF013D32BEACFF20082457D /* WarningView.swift in Sources */,
 				9BAEAE9F2BDAE2C400C85936 /* LoggerExtension.swift in Sources */,
 				9BC6A97D2BE7F1FC0069726E /* MusicAPI.swift in Sources */,
 				9BF013CF2BEACC3D0082457D /* SongDetailsView.swift in Sources */,
 				9BF013C52BEA86280082457D /* Player.swift in Sources */,
 				9BC6B6892BCA2D49005421AE /* SpotifyAPI.swift in Sources */,
+				9B2B1A542BF8201400DE1F5F /* NoMusicPlayerMenuView.swift in Sources */,
 				9BF013CD2BEACB080082457D /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +396,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 5DR54W29BC;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
@@ -386,6 +415,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 5DR54W29BC;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
@@ -432,6 +462,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -496,6 +527,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -529,9 +561,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 22;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 5DR54W29BC;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SoundSeer/Info.plist;
@@ -546,6 +580,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.2.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = net.garelick.SoundSeer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -566,9 +601,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 22;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 5DR54W29BC;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SoundSeer/Info.plist;
@@ -583,6 +620,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.2.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = net.garelick.SoundSeer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -624,6 +662,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9B2B1A502BF80D2700DE1F5F /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin-Modern";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		9BC6A9802BE7F4400069726E /* XCRemoteSwiftPackageReference "Swift-JWT" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Kitura/Swift-JWT.git";
@@ -643,6 +689,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9B2B1A512BF80D2700DE1F5F /* LaunchAtLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B2B1A502BF80D2700DE1F5F /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */;
+			productName = LaunchAtLogin;
+		};
 		9BC6A9812BE7F4400069726E /* SwiftJWT */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9BC6A9802BE7F4400069726E /* XCRemoteSwiftPackageReference "Swift-JWT" */;

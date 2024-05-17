@@ -4,14 +4,9 @@ import Foundation
 import OSLog
 import SwiftUI
 
-enum ViewModelState {
-    case ok, noMusicPlayer, outOfSpace
-}
 
-class SoundSeerViewModel: ObservableObject {
-    let model: SoundSeerModel? = SoundSeerModel()
-
-    @Published var playerState: PlayerState?
+@Observable class SoundSeerViewModel {
+    var playerState: PlayerState?
 
     var player: Player? {
         playerState?.player
@@ -50,29 +45,67 @@ class SoundSeerViewModel: ObservableObject {
         playbackState == .playing
     }
 
-    var isValid: Bool {
-        model != nil
-    }
-
-    var hasNoMusicPlayer: Bool {
-        model == nil
-    }
-
     private var cancellables = Set<AnyCancellable>()
 
-    init() {
-        $isAppVisibleInMenuBar
-            .sink { [weak self] in
-                self?.handleVisibilityChange($0)
-            }
-            .store(in: &cancellables)
+    let hasNoMusicPlayer: Bool
 
-        model?.$playerState
-            .assign(to: \.playerState, on: self)
-            .store(in: &cancellables)
+    var isOutOfSpace: Bool {
+        isPlaying && prefixLength <= 0
     }
 
-    deinit { timer?.invalidate() }
+    init() {
+        // START MODEL CODE
+        if !Utils.isAppInstalled(MusicApplication.bundleID),
+           !Utils.isAppInstalled(SpotifyApplication.bundleID) {
+            Logger.model.error("Could not find Apple Music or Spotify application")
+            hasNoMusicPlayer = true
+            return
+        }
+
+        hasNoMusicPlayer = false
+        playerState = getPlayerState()
+
+        DistributedNotificationCenter.default().addObserver(
+            forName: Notification.Name("com.apple.Music.playerInfo"), object: nil, queue: nil) { [weak self] in
+                self?.playerState = PlayerState(.music, $0)
+            }
+
+        DistributedNotificationCenter.default().addObserver(
+            forName: Notification.Name("com.spotify.client.PlaybackStateChanged"), object: nil, queue: nil) { [weak self] in
+                self?.playerState = PlayerState(.spotify, $0)
+            }
+
+        // END MODEL CODE
+//        NotificationCenter.default.addObserver(forName: NSWindow.didChangeOcclusionStateNotification, object: nil, queue: nil) { notification in
+//            if let obj = notification.object {
+//                let str = String(describing: type(of: obj))
+//                if str == "NSStatusBarWindow" {
+//                    print("bingo", Self.isAppInMenuBar("SoundSeer"))
+//                } else {
+//                    print("nah")
+//                }
+//            }
+////            print(notification)
+//        }
+    }
+
+    deinit {
+        DistributedNotificationCenter.default().removeObserver(self)
+        timer?.invalidate()
+    }
+
+    func getPlayerState() -> PlayerState? {
+        let musicState = MusicApplication.getPlayerState()
+        let spotifyState = SpotifyApplication.getPlayerState()
+
+        if (spotifyState?.playbackState == .playing && (musicState == nil || musicState?.playbackState != .playing))
+            || (spotifyState?.playbackState != .playing && musicState == nil)
+            || ((spotifyState?.playbackState == .paused || spotifyState?.playbackState == .playing) && musicState?.playbackState == .stopped) {
+            return spotifyState
+        }
+
+        return musicState
+    }
 
     func nextTrack() {
         guard let player = player else { return }
@@ -188,9 +221,9 @@ class SoundSeerViewModel: ObservableObject {
     }
 
     // MARK: - Dynamic resizing
-    static let maxPrefixLength = 45
-    @Published var isAppVisibleInMenuBar: Bool = false // This will trigger dynamic resizing on startup, just to be safe
-    @Published var prefixLength = maxPrefixLength
+    static let maxPrefixLength = 100
+    var isAppVisibleInMenuBar: Bool = false // This will trigger dynamic resizing on startup, just to be safe
+    var prefixLength = maxPrefixLength
 
     private var timer: Timer?
 
@@ -199,7 +232,7 @@ class SoundSeerViewModel: ObservableObject {
             if currentSong.isEmpty || currentArtist.isEmpty {
                 return ""
             } else {
-                return "\(currentSong.prefixBefore("(")) · \(currentArtist)".truncate(length: prefixLength)
+                return "\(currentSong/*.prefixBefore("(")*/) · \(currentArtist)".truncate(length: prefixLength)
             }
         }
     }
