@@ -208,16 +208,16 @@
 			isa = PBXGroup;
 			children = (
 				9B2755882BE95E9A0007E18B /* API */,
-				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
 				9BAEAEA32BDAE8D000C85936 /* Extensions */,
-				9B258F2D2BDF193100DC5EE2 /* Info.plist */,
 				9B1B0F972BE5A5B800E26B26 /* Models */,
 				9BAEAEA22BDAE8AD00C85936 /* ScriptingBridge */,
+				9BF013CA2BEAAEF90082457D /* Views */,
+				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
+				9B258F2D2BDF193100DC5EE2 /* Info.plist */,
 				9B2755892BE960D60007E18B /* Secrets.swift */,
 				9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */,
 				9BD4DCE32BC9EC8B001572F7 /* SoundSeerViewModel.swift */,
 				9BAEAEA02BDAE6F200C85936 /* Utils.swift */,
-				9BF013CA2BEAAEF90082457D /* Views */,
 			);
 			path = SoundSeer;
 			sourceTree = "<group>";
