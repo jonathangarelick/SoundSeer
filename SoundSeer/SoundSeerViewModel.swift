@@ -227,6 +227,7 @@ import SwiftUI
 
     private var timer: Timer?
 
+    // TODO: remember to remove prefix comment
     var nowPlaying: String {
         get {
             if currentSong.isEmpty || currentArtist.isEmpty {
