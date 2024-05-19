@@ -6,6 +6,9 @@ import SwiftUI
 
 
 @Observable class SoundSeerViewModel {
+    // This object is never initialized if static is used
+    let notificationService = NotificationService.shared
+
     var playerState: PlayerState?
 
     var player: Player? {
@@ -64,33 +67,9 @@ import SwiftUI
 
         hasNoMusicPlayer = false
         playerState = getPlayerState()
-
-        DistributedNotificationCenter.default().addObserver(
-            forName: Notification.Name("com.apple.Music.playerInfo"), object: nil, queue: nil) { [weak self] in
-                self?.playerState = PlayerState(.music, $0)
-            }
-
-        DistributedNotificationCenter.default().addObserver(
-            forName: Notification.Name("com.spotify.client.PlaybackStateChanged"), object: nil, queue: nil) { [weak self] in
-                self?.playerState = PlayerState(.spotify, $0)
-            }
-
-        // END MODEL CODE
-//        NotificationCenter.default.addObserver(forName: NSWindow.didChangeOcclusionStateNotification, object: nil, queue: nil) { notification in
-//            if let obj = notification.object {
-//                let str = String(describing: type(of: obj))
-//                if str == "NSStatusBarWindow" {
-//                    print("bingo", Self.isAppInMenuBar("SoundSeer"))
-//                } else {
-//                    print("nah")
-//                }
-//            }
-////            print(notification)
-//        }
     }
 
     deinit {
-        DistributedNotificationCenter.default().removeObserver(self)
         timer?.invalidate()
     }
 
