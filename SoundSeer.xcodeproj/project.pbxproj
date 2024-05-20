@@ -153,6 +153,19 @@
 			path = SoundSeerTests;
 			sourceTree = "<group>";
 		};
+		9BA4870D2BFC0209001A53C1 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				9B9E81842BFA78490067B910 /* AppleMusicPlayer.swift */,
+				9B1B0F952BE5A57800E26B26 /* PlaybackState.swift */,
+				9B9E81802BFA6F4C0067B910 /* Player.swift */,
+				9B9E81862BFA79460067B910 /* PlayerService.swift */,
+				9B1B0F902BE59C3800E26B26 /* PlayerState.swift */,
+				9B9E81822BFA780F0067B910 /* SpotifyPlayer.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
 		9BAEAEA22BDAE8AD00C85936 /* ScriptingBridge */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,20 +212,15 @@
 			children = (
 				9B2755882BE95E9A0007E18B /* API */,
 				9BAEAEA32BDAE8D000C85936 /* Extensions */,
+				9BA4870D2BFC0209001A53C1 /* Player */,
 				9BAEAEA22BDAE8AD00C85936 /* ScriptingBridge */,
 				9BF013CA2BEAAEF90082457D /* Views */,
 				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
 				9B258F2D2BDF193100DC5EE2 /* Info.plist */,
-				9B9E81842BFA78490067B910 /* AppleMusicPlayer.swift */,
 				9B5D25BF2BF9588E0001D648 /* NotificationService.swift */,
-				9B1B0F952BE5A57800E26B26 /* PlaybackState.swift */,
-				9B9E81802BFA6F4C0067B910 /* Player.swift */,
-				9B9E81862BFA79460067B910 /* PlayerService.swift */,
-				9B1B0F902BE59C3800E26B26 /* PlayerState.swift */,
 				9B2755892BE960D60007E18B /* Secrets.swift */,
 				9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */,
 				9BD4DCE32BC9EC8B001572F7 /* SoundSeerViewModel.swift */,
-				9B9E81822BFA780F0067B910 /* SpotifyPlayer.swift */,
 			);
 			path = SoundSeer;
 			sourceTree = "<group>";
