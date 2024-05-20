@@ -8,16 +8,24 @@ class NotificationService {
     deinit { removeObservers() }
 
     private func addObservers() {
-        DistributedNotificationCenter.default().addObserver(forName: .appleMusicPlaybackStateChanged, object: nil, queue: nil) { [weak self] in
-            self?.broadcastPlayerState(PlayerState(.music, $0))
+        DistributedNotificationCenter.default().addObserver(
+            forName: .appleMusicPlaybackStateChanged, object: nil, queue: nil) { notification in
+                guard let playerState = PlayerState(.appleMusic, notification) else { return }
+                NotificationCenter.default.post(name: .ssCurrentPlayerChanged, object: AppleMusicPlayer.shared)
+                NotificationCenter.default.post(name: .ssAppleMusicStateChanged, object: nil, userInfo: ["playerState": playerState])
         }
 
-        DistributedNotificationCenter.default().addObserver(forName: .spotifyPlaybackStateChanged, object: nil, queue: nil) { [weak self] in
-            self?.broadcastPlayerState(PlayerState(.spotify, $0))
+        DistributedNotificationCenter.default().addObserver(
+            forName: .spotifyPlaybackStateChanged, object: nil, queue: nil) { notification in
+                guard let playerState = PlayerState(.spotify, notification) else { return }
+                NotificationCenter.default.post(name: .ssCurrentPlayerChanged, object: SpotifyPlayer.shared)
+                NotificationCenter.default.post(name: .ssSpotifyStateChanged, object: nil, userInfo: ["playerState": playerState])
         }
 
-        NotificationCenter.default.addObserver(forName: NSWindow.didChangeOcclusionStateNotification, object: nil, queue: nil) { [weak self] in
-            self?.broadcastOcclusionState($0.object as? NSWindow)
+        NotificationCenter.default.addObserver(
+            forName: NSWindow.didChangeOcclusionStateNotification, object: nil, queue: nil) { notification in
+            guard let window = notification.object as? NSWindow, window.className == "NSStatusBarWindow" else { return }
+            NotificationCenter.default.post(name: .ssOcclusionStateChanged, object: nil, userInfo: ["occlusionState": window.occlusionState])
         }
     }
 
@@ -25,21 +33,14 @@ class NotificationService {
         DistributedNotificationCenter.default().removeObserver(self)
         NotificationCenter.default.removeObserver(self)
     }
-
-    private func broadcastPlayerState(_ playerState: PlayerState?) {
-        guard let playerState = playerState else { return }
-        NotificationCenter.default.post(name: .ssPlayerStateChanged, object: nil, userInfo: ["playerState": playerState])
-    }
-
-    private func broadcastOcclusionState(_ window: NSWindow?) {
-        guard let window = window, window.className == "NSStatusBarWindow" else { return }
-        NotificationCenter.default.post(name: .ssOcclusionStateChanged, object: nil, userInfo: ["occlusionState": window.occlusionState])
-    }
 }
 
 extension Notification.Name {
     static let appleMusicPlaybackStateChanged = Notification.Name("com.apple.Music.playerInfo")
     static let spotifyPlaybackStateChanged = Notification.Name("com.spotify.client.PlaybackStateChanged")
+
+    static let ssAppleMusicStateChanged = Notification.Name("net.garelick.SoundSeer.AppleMusicStateChanged")
+    static let ssSpotifyStateChanged = Notification.Name("net.garelick.SoundSeer.SpotifyStateChanged")
     static let ssOcclusionStateChanged = Notification.Name("net.garelick.SoundSeer.OcclusionStateChanged")
-    static let ssPlayerStateChanged = Notification.Name("net.garelick.SoundSeer.PlayerStateChanged")
+    static let ssCurrentPlayerChanged = Notification.Name("net.garelick.SoundSeer.CurrentPlayerChanged")
 }

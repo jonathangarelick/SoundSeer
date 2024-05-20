@@ -6,197 +6,99 @@ import SwiftUI
 
 
 @Observable class SoundSeerViewModel {
-    // This object is never initialized if static is used
+    // This is necessary to fix compiler optimization
     let notificationService = NotificationService.shared
 
-    var playerState: PlayerState?
+    var currentPlayer: Player?
+    var cancellable: AnyCancellable?
 
-    var player: Player? {
-        playerState?.player
+    var hasNoMusicPlayer: Bool {
+        PlayerService.shared == nil
     }
 
-    var playbackState: PlaybackState? {
-        playerState?.playbackState
-    }
-
-    var currentSong: String {
-        playerState?.songName ?? ""
-    }
-
-    var currentSongId: String {
-        playerState?.songId ?? ""
-    }
-
-    var currentArtist: String {
-        playerState?.artistName ?? ""
-    }
-
-    var currentAlbum: String {
-        playerState?.albumName ?? ""
-    }
-
-    var currentAlbumId: String {
-        playerState?.albumId ?? ""
-    }
-
-    var isPlayerStopped: Bool {
-        guard let playbackState = playbackState else { return true }
-        return playbackState == .stopped
+    var isOutOfSpace: Bool {
+        currentPlayer?.playbackState == .playing && prefixLength <= 0
     }
 
     var isPlaying: Bool {
-        playbackState == .playing
-    }
-
-    private var cancellables = Set<AnyCancellable>()
-
-    let hasNoMusicPlayer: Bool
-
-    var isOutOfSpace: Bool {
-        isPlaying && prefixLength <= 0
+        guard let currentPlayer = currentPlayer else { return false }
+        return currentPlayer.playbackState == .playing
     }
 
     init() {
-        // START MODEL CODE
-        if !Utils.isAppInstalled(MusicApplication.bundleID),
-           !Utils.isAppInstalled(SpotifyApplication.bundleID) {
-            Logger.model.error("Could not find Apple Music or Spotify application")
-            hasNoMusicPlayer = true
-            return
-        }
-
-        hasNoMusicPlayer = false
-        playerState = getPlayerState()
+        cancellable = PlayerService.shared?.currentPlayerSubject
+            .assign(to: \.currentPlayer, on: self)
     }
 
     deinit {
         timer?.invalidate()
     }
 
-    func getPlayerState() -> PlayerState? {
-        let musicState = MusicApplication.getPlayerState()
-        let spotifyState = SpotifyApplication.getPlayerState()
-
-        if (spotifyState?.playbackState == .playing && (musicState == nil || musicState?.playbackState != .playing))
-            || (spotifyState?.playbackState != .playing && musicState == nil)
-            || ((spotifyState?.playbackState == .paused || spotifyState?.playbackState == .playing) && musicState?.playbackState == .stopped) {
-            return spotifyState
-        }
-
-        return musicState
+    var canNextTrack: Bool {
+        guard let currentPlayer = currentPlayer else { return false }
+        return currentPlayer.playbackState != .stopped
     }
 
     func nextTrack() {
-        guard let player = player else { return }
-        switch player {
-        case .music:
-            MusicApplication.app?.nextTrack()
-        case .spotify:
-            SpotifyApplication.app?.nextTrack()
-        }
-    }
-
-    var songShort: String {
-        guard !currentSong.isEmpty else { return "Song unknown" }
-
-        return prefixLength > 0
-           ? currentSong.truncate(length: Int(Double(prefixLength) * 1.5))
-           : currentSong.truncate(length: 60)
+        currentPlayer?.nextTrack()
     }
 
     var canRevealSong: Bool {
-        if player != nil, let playbackState = playbackState {
-            return playbackState == .paused || playbackState == .playing
-        }
-        return false
+        guard let currentPlayer = currentPlayer else { return false }
+        return currentPlayer.canRevealSong()
     }
 
     func revealSong() {
-        guard let player = player else { return }
-        switch player {
-        case .music:
-            MusicApplication.app?.currentTrack?.reveal()
-            MusicApplication.app?.activate() // Reveal does not bring the app to the foreground
-        case .spotify:
-            if let uriString = SpotifyApplication.app?.currentTrack?.spotifyUrl, let uri = URL(string: uriString) {
-                NSWorkspace.shared.open(uri)
-            }
-        }
-    }
-
-    var artistShort: String {
-        guard !currentArtist.isEmpty else { return "Artist unknown" }
-
-        return prefixLength > 0
-           ? currentArtist.truncate(length: Int(Double(prefixLength) * 1.5))
-           : currentArtist.truncate(length: 60)
+        currentPlayer?.revealSong()
     }
 
     var canRevealArtist: Bool {
-        !currentSongId.isEmpty
+        guard let currentPlayer = currentPlayer else { return false }
+        return currentPlayer.canRevealArtist()
     }
 
     func revealArtist() {
-        guard let player = player, !currentSongId.isEmpty else { return }
-        switch player {
-        case .music:
-            MusicAPI.getURI(songId: currentSongId, for: .artist) { uri in
-                if let uri = uri {
-                    NSWorkspace.shared.open(uri)
-                }
-            }
-        case .spotify:
-            SpotifyAPI.getURI(songId: currentSongId, for: .artist) { uri in
-                if let uri = uri {
-                    NSWorkspace.shared.open(uri)
-                }
-            }
-        }
-    }
-
-    var albumShort: String {
-        guard !currentAlbum.isEmpty else { return "Album unknown" }
-        
-        return prefixLength > 0
-           ? currentAlbum.truncate(length: Int(Double(prefixLength) * 1.5))
-           : currentAlbum.truncate(length: 60)
+        currentPlayer?.revealArtist()
     }
 
     var canRevealAlbum: Bool {
-        !currentSongId.isEmpty
+        guard let currentPlayer = currentPlayer else { return false }
+        return currentPlayer.canRevealAlbum()
     }
 
     func revealAlbum() {
-        guard let player = player, !currentSongId.isEmpty else { return }
-        switch player {
-        case .music:
-            MusicAPI.getURI(songId: currentSongId, for: .album) { uri in
-                if let uri = uri {
-                    NSWorkspace.shared.open(uri)
-                }
-            }
-        case .spotify:
-            SpotifyAPI.getURI(songId: currentSongId, for: .album) { uri in
-                if let uri = uri {
-                    NSWorkspace.shared.open(uri)
-                }
-            }
-        }
+        currentPlayer?.revealAlbum()
+    }
+
+    var canCopySongExternalURL: Bool {
+        guard let currentPlayer = currentPlayer else { return false }
+        return currentPlayer.canCopySongExternalURL()
     }
 
     func copySongExternalURL() {
-        guard let player = player, !currentSongId.isEmpty else { return }
-        switch player {
-        case .music:
-            guard !currentAlbumId.isEmpty else { return }
-            let pasteboard = NSPasteboard.general
-            pasteboard.declareTypes([.string], owner: nil)
-            pasteboard.setString("https://music.apple.com/album/\(currentAlbumId)?i=\(currentSongId)", forType: .string)
-        case .spotify:
-            let pasteboard = NSPasteboard.general
-            pasteboard.declareTypes([.string], owner: nil)
-            pasteboard.setString("https://open.spotify.com/track/\(currentSongId)", forType: .string)
-        }
+        currentPlayer?.copySongExternalURL()
+    }
+
+    var songShort: String {
+        guard let song = currentPlayer?.song, !song.isEmpty else { return "Song unknown" }
+        return prefixLength > 0
+           ? song.truncate(length: Int(Double(prefixLength) * 1.5))
+           : song.truncate(length: 60)
+    }
+
+    var artistShort: String {
+        guard let artist = currentPlayer?.artist, !artist.isEmpty else { return "Artist unknown" }
+        return prefixLength > 0
+           ? artist.truncate(length: Int(Double(prefixLength) * 1.5))
+           : artist.truncate(length: 60)
+    }
+
+    var albumShort: String {
+        guard let album = currentPlayer?.album, !album.isEmpty else { return "Album unknown" }
+
+        return prefixLength > 0
+           ? album.truncate(length: Int(Double(prefixLength) * 1.5))
+           : album.truncate(length: 60)
     }
 
     // MARK: - Dynamic resizing
@@ -206,13 +108,14 @@ import SwiftUI
 
     private var timer: Timer?
 
-    // TODO: remember to remove prefix comment
     var nowPlaying: String {
         get {
-            if currentSong.isEmpty || currentArtist.isEmpty {
+            guard let song = currentPlayer?.song, let artist = currentPlayer?.artist else { return "" }
+
+            if song.isEmpty || artist.isEmpty {
                 return ""
             } else {
-                return "\(currentSong/*.prefixBefore("(")*/) · \(currentArtist)".truncate(length: prefixLength)
+                return "\(song.prefixBefore("(")) · \(artist)".truncate(length: prefixLength)
             }
         }
     }
@@ -235,7 +138,7 @@ import SwiftUI
     private func handleVisibilityChange(_ isVisible: Bool) {
         timer?.invalidate()
 
-        if playerState?.playbackState == .playing, !isVisible, !Self.isAppInMenuBar("SoundSeer") {
+        if currentPlayer?.playbackState == .playing, !isVisible, !Self.isAppInMenuBar("SoundSeer") {
             doDynamicResizing()
         }
     }

@@ -20,6 +20,6 @@ struct SongDetailsView: View {
 
         Button("Copy Song URL", systemImage: "doc.on.doc", action: viewModel.copySongExternalURL)
             .labelStyle(.titleAndIcon)
-            .disabled(viewModel.currentSongId.isEmpty)
+            .disabled(viewModel.canCopySongExternalURL)
     }
 }
