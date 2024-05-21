@@ -3,35 +3,33 @@ import Foundation
 
 class PlayerService {
     static let shared: PlayerService? = PlayerService()
+    let currentPlayerSubject: CurrentValueSubject<Player?, Never>
 
     private let appleMusicPlayer: AppleMusicPlayer? = AppleMusicPlayer.shared
     private let spotifyPlayer: SpotifyPlayer? = SpotifyPlayer.shared
-    
-    let currentPlayerSubject = PassthroughSubject<Player?, Never>()
-    private(set) var currentPlayer: Player? {
-        didSet {
-            currentPlayerSubject.send(currentPlayer)
-        }
-    }
 
     private init?() {
         if appleMusicPlayer == nil && spotifyPlayer == nil {
             return nil
         }
 
+        var currentPlayer: Player?
+
         if appleMusicPlayer == nil {
             currentPlayer = spotifyPlayer
         } else if spotifyPlayer == nil {
             currentPlayer = appleMusicPlayer
-        } else if spotifyPlayer?.playbackState == .playing, appleMusicPlayer?.playbackState == .playing {
-            currentPlayer = appleMusicPlayer
+        } else if spotifyPlayer?.playbackState == .playing, appleMusicPlayer?.playbackState != .playing {
+            currentPlayer = spotifyPlayer
         } else {
-            currentPlayer = spotifyPlayer?.playbackState == .playing ? spotifyPlayer : appleMusicPlayer
+            currentPlayer = appleMusicPlayer
         }
+
+        currentPlayerSubject = CurrentValueSubject(currentPlayer)
 
         NotificationCenter.default.addObserver(forName: .ssCurrentPlayerChanged, object: nil, queue: nil) { [weak self] in
             guard let currentPlayer = $0.object as? Player else { return }
-            self?.currentPlayer = currentPlayer
+            self?.currentPlayerSubject.send(currentPlayer)
         }
     }
 

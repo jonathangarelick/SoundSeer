@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B11EA212BFC202E00A7EE2D /* ResizeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B11EA202BFC202E00A7EE2D /* ResizeService.swift */; };
 		9B1461312BD08573009C931B /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B1461302BD08573009C931B /* ScriptingBridge.framework */; };
 		9B1B0F912BE59C3800E26B26 /* PlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1B0F902BE59C3800E26B26 /* PlayerState.swift */; };
 		9B1B0F962BE5A57800E26B26 /* PlaybackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1B0F952BE5A57800E26B26 /* PlaybackState.swift */; };
@@ -50,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B11EA202BFC202E00A7EE2D /* ResizeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeService.swift; sourceTree = "<group>"; };
 		9B1461302BD08573009C931B /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		9B1B0F902BE59C3800E26B26 /* PlayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerState.swift; sourceTree = "<group>"; };
 		9B1B0F952BE5A57800E26B26 /* PlaybackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackState.swift; sourceTree = "<group>"; };
@@ -109,6 +111,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B11EA222BFC231100A7EE2D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				9B5D25BF2BF9588E0001D648 /* NotificationService.swift */,
+				9B9E81862BFA79460067B910 /* PlayerService.swift */,
+				9B11EA202BFC202E00A7EE2D /* ResizeService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		9B14612F2BD08573009C931B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,7 +171,6 @@
 				9B9E81842BFA78490067B910 /* AppleMusicPlayer.swift */,
 				9B1B0F952BE5A57800E26B26 /* PlaybackState.swift */,
 				9B9E81802BFA6F4C0067B910 /* Player.swift */,
-				9B9E81862BFA79460067B910 /* PlayerService.swift */,
 				9B1B0F902BE59C3800E26B26 /* PlayerState.swift */,
 				9B9E81822BFA780F0067B910 /* SpotifyPlayer.swift */,
 			);
@@ -214,10 +225,10 @@
 				9BAEAEA32BDAE8D000C85936 /* Extensions */,
 				9BA4870D2BFC0209001A53C1 /* Player */,
 				9BAEAEA22BDAE8AD00C85936 /* ScriptingBridge */,
+				9B11EA222BFC231100A7EE2D /* Services */,
 				9BF013CA2BEAAEF90082457D /* Views */,
 				9BE2FA1F2BC97CCD00A7124B /* Assets.xcassets */,
 				9B258F2D2BDF193100DC5EE2 /* Info.plist */,
-				9B5D25BF2BF9588E0001D648 /* NotificationService.swift */,
 				9B2755892BE960D60007E18B /* Secrets.swift */,
 				9BE2FA1B2BC97CCC00A7124B /* SoundSeerApp.swift */,
 				9BD4DCE32BC9EC8B001572F7 /* SoundSeerViewModel.swift */,
@@ -371,6 +382,7 @@
 				9B2B1A562BF8203C00DE1F5F /* WarningView.swift in Sources */,
 				9BD4DCE42BC9EC8B001572F7 /* SoundSeerViewModel.swift in Sources */,
 				9B2B1A5B2BF822AC00DE1F5F /* StandardMenuView.swift in Sources */,
+				9B11EA212BFC202E00A7EE2D /* ResizeService.swift in Sources */,
 				9B1B0F962BE5A57800E26B26 /* PlaybackState.swift in Sources */,
 				9BAEAE9F2BDAE2C400C85936 /* LoggerExtension.swift in Sources */,
 				9BC6A97D2BE7F1FC0069726E /* MusicAPI.swift in Sources */,

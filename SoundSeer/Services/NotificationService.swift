@@ -3,9 +3,13 @@ import Foundation
 class NotificationService {
     static let shared = NotificationService()
 
-    private init() { addObservers() }
+    private init() {
+        addObservers()
+    }
 
-    deinit { removeObservers() }
+    deinit {
+        removeObservers()
+    }
 
     private func addObservers() {
         DistributedNotificationCenter.default().addObserver(
@@ -13,6 +17,7 @@ class NotificationService {
                 guard let playerState = PlayerState(.appleMusic, notification) else { return }
                 NotificationCenter.default.post(name: .ssCurrentPlayerChanged, object: AppleMusicPlayer.shared)
                 NotificationCenter.default.post(name: .ssAppleMusicStateChanged, object: nil, userInfo: ["playerState": playerState])
+                NotificationCenter.default.post(name: .ssPlaybackStateChanged, object: AppleMusicPlayer.shared, userInfo: ["playbackState": playerState.playbackState])
         }
 
         DistributedNotificationCenter.default().addObserver(
@@ -20,6 +25,7 @@ class NotificationService {
                 guard let playerState = PlayerState(.spotify, notification) else { return }
                 NotificationCenter.default.post(name: .ssCurrentPlayerChanged, object: SpotifyPlayer.shared)
                 NotificationCenter.default.post(name: .ssSpotifyStateChanged, object: nil, userInfo: ["playerState": playerState])
+                NotificationCenter.default.post(name: .ssPlaybackStateChanged, object: SpotifyPlayer.shared, userInfo: ["playbackState": playerState.playbackState])
         }
 
         NotificationCenter.default.addObserver(
@@ -43,4 +49,6 @@ extension Notification.Name {
     static let ssSpotifyStateChanged = Notification.Name("net.garelick.SoundSeer.SpotifyStateChanged")
     static let ssOcclusionStateChanged = Notification.Name("net.garelick.SoundSeer.OcclusionStateChanged")
     static let ssCurrentPlayerChanged = Notification.Name("net.garelick.SoundSeer.CurrentPlayerChanged")
+
+    static let ssPlaybackStateChanged = Notification.Name("net.garelick.SoundSeer.PlaybackStateChanged")
 }

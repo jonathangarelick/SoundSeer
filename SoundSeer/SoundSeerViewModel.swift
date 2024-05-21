@@ -8,9 +8,11 @@ import SwiftUI
 @Observable class SoundSeerViewModel {
     // This is necessary to fix compiler optimization
     let notificationService = NotificationService.shared
+    let playerService = PlayerService.shared
 
     var currentPlayer: Player?
-    var cancellable: AnyCancellable?
+    var cancellable1: AnyCancellable?
+    var cancellable2: AnyCancellable?
 
     var hasNoMusicPlayer: Bool {
         PlayerService.shared == nil
@@ -25,13 +27,18 @@ import SwiftUI
         return currentPlayer.playbackState == .playing
     }
 
+    var prefixLength = 100
+
     init() {
-        cancellable = PlayerService.shared?.currentPlayerSubject
+        cancellable1 = PlayerService.shared?.currentPlayerSubject
             .assign(to: \.currentPlayer, on: self)
+
+        cancellable2 = ResizeService.shared.currentLengthSubject
+            .assign(to: \.prefixLength, on: self)
     }
 
     deinit {
-        timer?.invalidate()
+//        timer?.invalidate()
     }
 
     var canNextTrack: Bool {
@@ -102,11 +109,11 @@ import SwiftUI
     }
 
     // MARK: - Dynamic resizing
-    static let maxPrefixLength = 100
-    var isAppVisibleInMenuBar: Bool = false // This will trigger dynamic resizing on startup, just to be safe
-    var prefixLength = maxPrefixLength
-
-    private var timer: Timer?
+//    static let maxPrefixLength = 100
+//    var isAppVisibleInMenuBar: Bool = false // This will trigger dynamic resizing on startup, just to be safe
+//    var prefixLength = maxPrefixLength
+//
+//    private var timer: Timer?
 
     var nowPlaying: String {
         get {
@@ -115,15 +122,17 @@ import SwiftUI
             if song.isEmpty || artist.isEmpty {
                 return ""
             } else {
-                return "\(song.prefixBefore("(")) · \(artist)".truncate(length: prefixLength)
+                return "\(song/*.prefixBefore("(")*/) · \(artist)".truncate(length: prefixLength)
             }
         }
     }
 
+
     func resetWidth() {
-        prefixLength = Self.maxPrefixLength
+//        prefixLength = Self.maxPrefixLength
     }
 
+    /*
     // https://stackoverflow.com/a/77304045
     private static func isAppInMenuBar(_ appName: String) -> Bool {
         let processNamesWithStatusItems = Set(
@@ -155,4 +164,5 @@ import SwiftUI
             self.prefixLength -= 5
         }
     }
+     */
 }
