@@ -8,6 +8,8 @@ class PlayerService {
     private let appleMusicPlayer: AppleMusicPlayer? = AppleMusicPlayer.shared
     private let spotifyPlayer: SpotifyPlayer? = SpotifyPlayer.shared
 
+    var cancellables = Set<AnyCancellable>()
+
     private init?() {
         if appleMusicPlayer == nil && spotifyPlayer == nil {
             return nil
@@ -15,9 +17,9 @@ class PlayerService {
 
         var currentPlayer: Player?
 
-        if appleMusicPlayer == nil {
+        if appleMusicPlayer == nil || appleMusicPlayer?.playerState == nil {
             currentPlayer = spotifyPlayer
-        } else if spotifyPlayer == nil {
+        } else if spotifyPlayer == nil || spotifyPlayer?.playerState == nil {
             currentPlayer = appleMusicPlayer
         } else if spotifyPlayer?.playbackState == .playing, appleMusicPlayer?.playbackState != .playing {
             currentPlayer = spotifyPlayer
@@ -27,13 +29,12 @@ class PlayerService {
 
         currentPlayerSubject = CurrentValueSubject(currentPlayer)
 
-        NotificationCenter.default.addObserver(forName: .ssCurrentPlayerChanged, object: nil, queue: nil) { [weak self] in
-            guard let currentPlayer = $0.object as? Player else { return }
-            self?.currentPlayerSubject.send(currentPlayer)
-        }
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+        NotificationService.shared.playerStateSubject
+            .compactMap { $0 }
+            .sink { [weak self] in
+                guard let self = self else { return }
+                currentPlayerSubject.send($0.player == .appleMusic ? appleMusicPlayer : spotifyPlayer)
+            }
+            .store(in: &cancellables)
     }
 }

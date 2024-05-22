@@ -7,7 +7,7 @@ class ResizeService {
 
     private static let maxLength = 100
 
-    var currentLengthSubject = PassthroughSubject<Int, Never>()
+    var currentLengthSubject: CurrentValueSubject<Int, Never>
     private var currentLength = maxLength {
         didSet {
             currentLengthSubject.send(currentLength)
@@ -16,11 +16,17 @@ class ResizeService {
     private var playbackState: PlaybackState?
     private var timer: Timer?
 
+    let cancellables = Set<AnyCancellable>()
+
     private init() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            self?.handleOcclusionStateChanged(false)
-            self?.addObservers()
-        }
+        currentLengthSubject = CurrentValueSubject(currentLength)
+
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+//            if let window = NSApplication.shared.windows.first(where: { $0.className == "NSStatusBarWindow" }) {
+//                self?.handleOcclusionStateChanged(false, true)
+//            }
+//            self?.addObservers()
+//        }
     }
 
     deinit {
@@ -29,27 +35,27 @@ class ResizeService {
     }
 
     private func addObservers() {
-        NotificationCenter.default.addObserver(forName: .ssOcclusionStateChanged, object: nil, queue: nil) { [weak self] in
-            print("occlusion state changed")
-            guard let isVisible = ($0.userInfo?["occlusionState"] as? NSWindow.OcclusionState)?.contains(.visible) else { return }
-            print(isVisible)
-            self?.handleOcclusionStateChanged(isVisible)
-        }
-
-        NotificationCenter.default.addObserver(forName: .ssPlaybackStateChanged, object: nil, queue: nil) { [weak self] in
-            guard let playbackState = $0.userInfo?["playbackState"] as? PlaybackState else { return }
-            self?.playbackState = playbackState
-        }
+//        NotificationCenter.default.addObserver(forName: .ssOcclusionStateChanged, object: nil, queue: nil) { [weak self] in
+//            print("occlusion state changed")
+//            guard let isVisible = ($0.userInfo?["occlusionState"] as? NSWindow.OcclusionState)?.contains(.visible) else { return }
+//            print(isVisible)
+//            self?.handleOcclusionStateChanged(isVisible)
+//        }
+//
+//        NotificationCenter.default.addObserver(forName: .ssPlaybackStateChanged, object: nil, queue: nil) { [weak self] in
+//            guard let playbackState = $0.userInfo?["playbackState"] as? PlaybackState else { return }
+//            self?.playbackState = playbackState
+//        }
     }
 
     private func removeObservers() {
         NotificationCenter.default.removeObserver(self)
     }
 
-    private func handleOcclusionStateChanged(_ isVisible: Bool) {
+    private func handleOcclusionStateChanged(_ isVisible: Bool, _ initialUpdate: Bool = false) {
         timer?.invalidate()
 
-        guard !isVisible, !isAppInMenuBar("SoundSeer"), playbackState == .playing else { return }
+        guard !isVisible, !isAppInMenuBar("SoundSeer"), (initialUpdate || playbackState == .playing) else { return }
 
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] timer in
             guard let self = self else { return }

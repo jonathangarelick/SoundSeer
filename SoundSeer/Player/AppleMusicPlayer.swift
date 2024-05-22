@@ -1,4 +1,5 @@
 import AppKit
+import Combine
 import ScriptingBridge
 
 class AppleMusicPlayer: Player {
@@ -28,6 +29,8 @@ class AppleMusicPlayer: Player {
         playerState?.albumName
     }
 
+    var cancellables = Set<AnyCancellable>()
+
     init?() {
         guard let applicationReference = SBApplicationManager.musicApp() else { return nil }
         self.applicationReference = applicationReference
@@ -36,13 +39,14 @@ class AppleMusicPlayer: Player {
             playerState = PlayerState(.appleMusic, applicationReference)
         }
 
-        NotificationCenter.default.addObserver(forName: .ssAppleMusicStateChanged, object: nil, queue: nil) { [weak self] in
-            guard let playerState = $0.userInfo?["playerState"] as? PlayerState else { return }
-            self?.playerState = playerState
-        }
+        NotificationService.shared.playerStateSubject
+            .compactMap { $0 }
+            .filter { $0.player == .appleMusic }
+            .sink { [weak self] in
+                self?.playerState = $0
+            }
+            .store(in: &cancellables)
     }
-
-    deinit { NotificationCenter.default.removeObserver(self) }
 
     func canNextTrack() -> Bool {
         return playbackState != .stopped
