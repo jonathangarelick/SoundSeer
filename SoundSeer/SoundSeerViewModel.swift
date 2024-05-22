@@ -111,8 +111,12 @@ import SwiftUI
             if song.isEmpty || artist.isEmpty {
                 return ""
             } else {
-                return "\(song/*.prefixBefore("(")*/) · \(artist)".truncate(length: prefixLength)
+                return "\(song.prefixBefore("(")) · \(artist)".truncate(length: prefixLength)
             }
         }
+    }
+
+    func resetWidth() {
+        ResizeService.shared.resetSubject()
     }
 }
