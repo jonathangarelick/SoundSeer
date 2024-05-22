@@ -12,7 +12,15 @@ class SpotifyPlayer: Player {
         Date(timeIntervalSince1970: 0)
     }
 
-    var playerState: PlayerState?
+    let playerStateSubject = CurrentValueSubject<PlayerState?, Never>(nil)
+    var playerState: PlayerState? {
+        get {
+            playerStateSubject.value
+        }
+        set {
+            playerStateSubject.send(newValue)
+        }
+    }
     var playbackState: PlaybackState {
         playerState?.playbackState ?? .stopped
     }
@@ -39,13 +47,14 @@ class SpotifyPlayer: Player {
             playerState = PlayerState(.spotify, applicationReference)
         }
 
-        NotificationService.shared.playerStateSubject
-            .compactMap { $0 }
-            .filter { $0.player == .spotify }
-            .sink { [weak self] in
-                self?.playerState = $0
+        DistributedNotificationCenter.default().addObserver(
+            forName: Notification.Name("com.spotify.client.PlaybackStateChanged"), object: nil, queue: nil) { [weak self] in
+                self?.playerStateSubject.send(PlayerState(.spotify, $0))
             }
-            .store(in: &cancellables)
+    }
+
+    deinit {
+        DistributedNotificationCenter.default().removeObserver(self)
     }
 
     func canNextTrack() -> Bool {

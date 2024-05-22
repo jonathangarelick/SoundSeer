@@ -1,5 +1,6 @@
 import AppKit
 import Combine
+import Foundation
 import ScriptingBridge
 
 class AppleMusicPlayer: Player {
@@ -12,7 +13,15 @@ class AppleMusicPlayer: Player {
         Date(timeIntervalSince1970: 0)
     }
 
-    var playerState: PlayerState?
+    let playerStateSubject = CurrentValueSubject<PlayerState?, Never>(nil)
+    var playerState: PlayerState? {
+        get {
+            playerStateSubject.value
+        }
+        set {
+            playerStateSubject.send(newValue)
+        }
+    }
     var playbackState: PlaybackState {
         playerState?.playbackState ?? .stopped
     }
@@ -39,13 +48,14 @@ class AppleMusicPlayer: Player {
             playerState = PlayerState(.appleMusic, applicationReference)
         }
 
-        NotificationService.shared.playerStateSubject
-            .compactMap { $0 }
-            .filter { $0.player == .appleMusic }
-            .sink { [weak self] in
-                self?.playerState = $0
+        DistributedNotificationCenter.default().addObserver(
+            forName: Notification.Name("com.apple.Music.playerInfo"), object: nil, queue: nil) { [weak self] in
+                self?.playerStateSubject.send(PlayerState(.appleMusic, $0))
             }
-            .store(in: &cancellables)
+    }
+
+    deinit {
+        DistributedNotificationCenter.default().removeObserver(self)
     }
 
     func canNextTrack() -> Bool {

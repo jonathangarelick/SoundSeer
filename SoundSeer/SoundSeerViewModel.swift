@@ -6,16 +6,16 @@ import SwiftUI
 
 
 @Observable class SoundSeerViewModel {
-    // This is necessary to fix compiler optimization
-    let notificationService = NotificationService.shared
-    let playerService = PlayerService.shared
+    // Prevent these from being optimized away
+    let playerService = CurrentPlayerService.shared
+    let resizeService = ResizeService.shared
 
     var currentPlayer: Player?
     var cancellable1: AnyCancellable?
     var cancellable2: AnyCancellable?
 
     var hasNoMusicPlayer: Bool {
-        PlayerService.shared == nil
+        CurrentPlayerService.shared.subject.value == nil
     }
 
     var isOutOfSpace: Bool {
@@ -30,15 +30,11 @@ import SwiftUI
     var prefixLength = 100
 
     init() {
-        cancellable1 = PlayerService.shared?.currentPlayerSubject
+        cancellable1 = playerService.subject
             .assign(to: \.currentPlayer, on: self)
 
-        cancellable2 = ResizeService.shared.currentLengthSubject
+        cancellable2 = resizeService.subject
             .assign(to: \.prefixLength, on: self)
-    }
-
-    deinit {
-//        timer?.invalidate()
     }
 
     var canNextTrack: Bool {
@@ -108,13 +104,6 @@ import SwiftUI
            : album.truncate(length: 60)
     }
 
-    // MARK: - Dynamic resizing
-//    static let maxPrefixLength = 100
-//    var isAppVisibleInMenuBar: Bool = false // This will trigger dynamic resizing on startup, just to be safe
-//    var prefixLength = maxPrefixLength
-//
-//    private var timer: Timer?
-
     var nowPlaying: String {
         get {
             guard let song = currentPlayer?.song, let artist = currentPlayer?.artist else { return "" }
@@ -126,43 +115,4 @@ import SwiftUI
             }
         }
     }
-
-
-    func resetWidth() {
-//        prefixLength = Self.maxPrefixLength
-    }
-
-    /*
-    // https://stackoverflow.com/a/77304045
-    private static func isAppInMenuBar(_ appName: String) -> Bool {
-        let processNamesWithStatusItems = Set(
-            (CGWindowListCopyWindowInfo(.optionOnScreenOnly, kCGNullWindowID) as! [NSDictionary])
-                .filter { $0[kCGWindowLayer] as! Int == 25 }
-                .map { $0[kCGWindowOwnerName] as! String }
-        )
-
-        return processNamesWithStatusItems.contains(appName)
-    }
-
-    private func handleVisibilityChange(_ isVisible: Bool) {
-        timer?.invalidate()
-
-        if currentPlayer?.playbackState == .playing, !isVisible, !Self.isAppInMenuBar("SoundSeer") {
-            doDynamicResizing()
-        }
-    }
-
-    private func doDynamicResizing() {
-        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
-            guard self.prefixLength > 0 else {
-                Logger.view.debug("Prefix length is not positive, dynamic resizing stopped")
-                timer.invalidate()
-                return
-            }
-
-            Logger.view.debug("Current prefix length is \(self.prefixLength), decreasing by 5")
-            self.prefixLength -= 5
-        }
-    }
-     */
 }

@@ -5,78 +5,50 @@ import Foundation
 class ResizeService {
     static let shared = ResizeService()
 
-    private static let maxLength = 100
-
-    var currentLengthSubject: CurrentValueSubject<Int, Never>
-    private var currentLength = maxLength {
-        didSet {
-            currentLengthSubject.send(currentLength)
-        }
-    }
-    private var playbackState: PlaybackState?
-    private var timer: Timer?
-
-    let cancellables = Set<AnyCancellable>()
+    let subject: CurrentValueSubject<Int, Never>
+    private var cancellables = Set<AnyCancellable>()
+    private var firstUpdate = true
+    private let maxLength = 100
+    private var playbackState: PlaybackState = .stopped
+    private var timerCancellable: AnyCancellable?
 
     private init() {
-        currentLengthSubject = CurrentValueSubject(currentLength)
+        subject = CurrentValueSubject(maxLength)
 
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-//            if let window = NSApplication.shared.windows.first(where: { $0.className == "NSStatusBarWindow" }) {
-//                self?.handleOcclusionStateChanged(false, true)
-//            }
-//            self?.addObservers()
-//        }
-    }
+        CurrentPlayerService.shared.subject
+            .compactMap { $0?.playbackState }
+            .assign(to: \.playbackState, on: self)
+            .store(in: &cancellables)
 
-    deinit {
-        removeObservers()
-        timer?.invalidate()
-    }
+        handleIsVisibleChanged(false)
+        firstUpdate = false
 
-    private func addObservers() {
-//        NotificationCenter.default.addObserver(forName: .ssOcclusionStateChanged, object: nil, queue: nil) { [weak self] in
-//            print("occlusion state changed")
-//            guard let isVisible = ($0.userInfo?["occlusionState"] as? NSWindow.OcclusionState)?.contains(.visible) else { return }
-//            print(isVisible)
-//            self?.handleOcclusionStateChanged(isVisible)
-//        }
-//
-//        NotificationCenter.default.addObserver(forName: .ssPlaybackStateChanged, object: nil, queue: nil) { [weak self] in
-//            guard let playbackState = $0.userInfo?["playbackState"] as? PlaybackState else { return }
-//            self?.playbackState = playbackState
-//        }
-    }
-
-    private func removeObservers() {
-        NotificationCenter.default.removeObserver(self)
-    }
-
-    private func handleOcclusionStateChanged(_ isVisible: Bool, _ initialUpdate: Bool = false) {
-        timer?.invalidate()
-
-        guard !isVisible, !isAppInMenuBar("SoundSeer"), (initialUpdate || playbackState == .playing) else { return }
-
-        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] timer in
-            guard let self = self else { return }
-
-            if currentLength >= 5 {
-                currentLength -= 5
-            } else {
-                timer.invalidate()
+        NotificationCenter.default
+            .publisher(for: NSWindow.didChangeOcclusionStateNotification)
+            .compactMap { $0.object as? NSWindow }
+            .filter { $0.className == "NSStatusBarWindow" }
+            .map { $0.occlusionState.contains(.visible) }
+            .sink { [weak self] in
+                self?.handleIsVisibleChanged($0)
             }
-        }
+            .store(in: &cancellables)
     }
 
+    private func handleIsVisibleChanged(_ isVisible: Bool) {
+        timerCancellable?.cancel()
 
-    // https://stackoverflow.com/a/77304045
-    private func isAppInMenuBar(_ appName: String) -> Bool {
-        let processNamesWithStatusItems = Set(
-            (CGWindowListCopyWindowInfo(.optionOnScreenOnly, kCGNullWindowID) as! [NSDictionary])
-                .filter { $0[kCGWindowLayer] as! Int == 25 }
-                .map { $0[kCGWindowOwnerName] as! String }
-        )
+        guard !isVisible, !Utils.isAppInMenuBar(.soundSeer), (firstUpdate || playbackState == .playing) else { return }
 
-        return processNamesWithStatusItems.contains(appName)
+        timerCancellable = Timer.publish(every: 0.1, on: .main, in: .default)
+            .autoconnect()
+            .sink { [weak self] test in
+                guard let self = self else { return }
+
+                if subject.value >= 5 {
+                    subject.send(subject.value - 5)
+                } else {
+                    timerCancellable?.cancel()
+                }
+            }
     }
 }

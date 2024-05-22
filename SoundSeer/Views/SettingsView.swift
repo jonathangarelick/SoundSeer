@@ -7,7 +7,7 @@ struct SettingsView: View {
     var body: some View {
         Menu("Settings") {
             LaunchAtLogin.Toggle("Open at Login")
-            Button("Reset Width", action: viewModel.resetWidth)
+//            Button("Reset Width", action: viewModel.resetWidth)
         }
 
         Button("Quit") {
