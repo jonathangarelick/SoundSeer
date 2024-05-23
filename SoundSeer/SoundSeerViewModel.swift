@@ -48,7 +48,7 @@ import SwiftUI
 
     var canRevealSong: Bool {
         guard let currentPlayer = currentPlayer else { return false }
-        return currentPlayer.canRevealSong()
+        return currentPlayer.canRevealSong
     }
 
     func revealSong() {
@@ -57,7 +57,7 @@ import SwiftUI
 
     var canRevealArtist: Bool {
         guard let currentPlayer = currentPlayer else { return false }
-        return currentPlayer.canRevealArtist()
+        return currentPlayer.canRevealArtist
     }
 
     func revealArtist() {
@@ -66,7 +66,7 @@ import SwiftUI
 
     var canRevealAlbum: Bool {
         guard let currentPlayer = currentPlayer else { return false }
-        return currentPlayer.canRevealAlbum()
+        return currentPlayer.canRevealAlbum
     }
 
     func revealAlbum() {
@@ -75,7 +75,7 @@ import SwiftUI
 
     var canCopySongExternalURL: Bool {
         guard let currentPlayer = currentPlayer else { return false }
-        return currentPlayer.canCopySongExternalURL()
+        return currentPlayer.canCopySongExternalURL
     }
 
     func copySongExternalURL() {

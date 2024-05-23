@@ -1,35 +1,45 @@
 import AppKit
-import ScriptingBridge
-
-enum PlayerType {
-    case appleMusic, spotify
-}
 
 protocol Player {
     var bundleIdentifier: String { get }
-    var lastUpdate: Date { get }
+    var canCopySongExternalURL: Bool { get }
+    var canRevealSong: Bool { get }
+    var playerState: PlayerState? { get }
 
-    var playbackState: PlaybackState { get }
-
-    var song: String? { get }
-    var artist: String? { get }
-    var album: String? { get }
-
-    func canNextTrack() -> Bool
-    func nextTrack()
-    func canRevealSong() -> Bool
-    func revealSong()
-    func canRevealArtist() -> Bool
-    func revealArtist()
-    func canRevealAlbum() -> Bool
-    func revealAlbum()
-    func canCopySongExternalURL() -> Bool
     func copySongExternalURL()
+    func nextTrack()
+    func revealAlbum()
+    func revealArtist()
+    func revealSong()
 }
 
 extension Player {
-    func isInstalled() -> Bool {
-        return NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleIdentifier) != nil
+    var album: String? {
+        playerState?.album
+    }
+
+    var artist: String? {
+        playerState?.artist
+    }
+
+    var canNextTrack: Bool {
+        playbackState != .stopped
+    }
+
+    var canRevealAlbum: Bool {
+        playerState?.songID != nil
+    }
+
+    var canRevealArtist: Bool {
+        playerState?.songID != nil
+    }
+
+    var playbackState: PlaybackState {
+        playerState?.playbackState ?? .stopped
+    }
+
+    var song: String? {
+        playerState?.song
     }
 
     func isRunning() -> Bool {

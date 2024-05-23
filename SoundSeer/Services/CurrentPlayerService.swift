@@ -9,13 +9,13 @@ class CurrentPlayerService {
     init() {
         subject.send(getCurrentPlayer())
 
-        AppleMusicPlayer.shared?.playerStateSubject
+        AppleMusicPlayer.shared?.subject
             .sink { [weak self] _ in
                 self?.subject.send(AppleMusicPlayer.shared)
             }
             .store(in: &cancellables)
 
-        SpotifyPlayer.shared?.playerStateSubject
+        SpotifyPlayer.shared?.subject
             .sink { [weak self] _ in
                 self?.subject.send(SpotifyPlayer.shared)
             }

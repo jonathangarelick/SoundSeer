@@ -5,51 +5,34 @@ import ScriptingBridge
 class SpotifyPlayer: Player {
     static let shared: SpotifyPlayer? = SpotifyPlayer()
 
+    let sbReference: SBSpotifyApplication
+    let subject = CurrentValueSubject<PlayerState?, Never>(nil)
+
+
     let bundleIdentifier: String = "com.spotify.client"
-    let applicationReference: SBSpotifyApplication
-
-    var lastUpdate: Date {
-        Date(timeIntervalSince1970: 0)
+    var canCopySongExternalURL: Bool {
+        guard playbackState != .stopped, let songId = playerState?.songID else { return false }
+        return !songId.isEmpty
     }
-
-    let playerStateSubject = CurrentValueSubject<PlayerState?, Never>(nil)
+    var canRevealSong: Bool {
+        guard playbackState != .stopped, let uriString = sbReference.currentTrack.spotifyUrl else { return false }
+        return !uriString.isEmpty
+    }
     var playerState: PlayerState? {
-        get {
-            playerStateSubject.value
-        }
-        set {
-            playerStateSubject.send(newValue)
-        }
+        subject.value
     }
-    var playbackState: PlaybackState {
-        playerState?.playbackState ?? .stopped
-    }
-
-    var song: String? {
-        playerState?.songName
-    }
-
-    var artist: String? {
-        playerState?.artistName
-    }
-
-    var album: String? {
-        playerState?.albumName
-    }
-
-    var cancellables = Set<AnyCancellable>()
 
     init?() {
         guard let applicationReference = SBApplicationManager.spotifyApp() else { return nil }
-        self.applicationReference = applicationReference
+        self.sbReference = applicationReference
 
         if isRunning() {
-            playerState = PlayerState(.spotify, applicationReference)
+            subject.send(PlayerState(applicationReference))
         }
 
         DistributedNotificationCenter.default().addObserver(
             forName: Notification.Name("com.spotify.client.PlaybackStateChanged"), object: nil, queue: nil) { [weak self] in
-                self?.playerStateSubject.send(PlayerState(.spotify, $0))
+                self?.subject.send(PlayerState($0))
             }
     }
 
@@ -57,46 +40,19 @@ class SpotifyPlayer: Player {
         DistributedNotificationCenter.default().removeObserver(self)
     }
 
-    func canNextTrack() -> Bool {
-        return playbackState != .stopped
+    func copySongExternalURL() {
+        guard let songId = playerState?.songID else { return }
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString("https://open.spotify.com/track/\(songId)", forType: .string)
     }
 
     func nextTrack() {
-        applicationReference.nextTrack()
-    }
-
-    func canRevealSong() -> Bool {
-        guard playbackState != .stopped, let uriString = applicationReference.currentTrack.spotifyUrl else { return false }
-        return !uriString.isEmpty
-    }
-
-    func revealSong() {
-        if let uriString = applicationReference.currentTrack?.spotifyUrl, let uri = URL(string: uriString) {
-            NSWorkspace.shared.open(uri)
-        }
-    }
-
-    func canRevealArtist() -> Bool {
-        guard playbackState != .stopped, let songId = playerState?.songId else { return false }
-        return !songId.isEmpty
-    }
-
-    func revealArtist() {
-        guard let songId = playerState?.songId else { return }
-        SpotifyAPI.getURI(songId: songId, for: .artist) { uri in
-            if let uri = uri {
-                NSWorkspace.shared.open(uri)
-            }
-        }
-    }
-
-    func canRevealAlbum() -> Bool {
-        guard playbackState != .stopped, let songId = playerState?.songId else { return false }
-        return !songId.isEmpty
+        sbReference.nextTrack()
     }
 
     func revealAlbum() {
-        guard let songId = playerState?.songId else { return }
+        guard let songId = playerState?.songID else { return }
         SpotifyAPI.getURI(songId: songId, for: .album) { uri in
             if let uri = uri {
                 NSWorkspace.shared.open(uri)
@@ -104,15 +60,18 @@ class SpotifyPlayer: Player {
         }
     }
 
-    func canCopySongExternalURL() -> Bool {
-        guard playbackState != .stopped, let songId = playerState?.songId else { return false }
-        return !songId.isEmpty
+    func revealArtist() {
+        guard let songId = playerState?.songID else { return }
+        SpotifyAPI.getURI(songId: songId, for: .artist) { uri in
+            if let uri = uri {
+                NSWorkspace.shared.open(uri)
+            }
+        }
     }
 
-    func copySongExternalURL() {
-        guard let songId = playerState?.songId else { return }
-        let pasteboard = NSPasteboard.general
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString("https://open.spotify.com/track/\(songId)", forType: .string)
+    func revealSong() {
+        if let uriString = sbReference.currentTrack?.spotifyUrl, let uri = URL(string: uriString) {
+            NSWorkspace.shared.open(uri)
+        }
     }
 }

@@ -6,51 +6,34 @@ import ScriptingBridge
 class AppleMusicPlayer: Player {
     static let shared: AppleMusicPlayer? = AppleMusicPlayer()
 
+    let sbReference: SBMusicApplication
+    let subject = CurrentValueSubject<PlayerState?, Never>(nil)
+
+
     let bundleIdentifier: String = "com.apple.Music"
-    let applicationReference: SBMusicApplication
-
-    var lastUpdate: Date {
-        Date(timeIntervalSince1970: 0)
+    var canCopySongExternalURL: Bool {
+        guard playbackState != .stopped, let songId = playerState?.songID, let albumId = playerState?.albumID else { return false }
+        return !songId.isEmpty && !albumId.isEmpty
     }
-
-    let playerStateSubject = CurrentValueSubject<PlayerState?, Never>(nil)
+    var canRevealSong: Bool {
+        playbackState != .stopped
+    }
     var playerState: PlayerState? {
-        get {
-            playerStateSubject.value
-        }
-        set {
-            playerStateSubject.send(newValue)
-        }
-    }
-    var playbackState: PlaybackState {
-        playerState?.playbackState ?? .stopped
+        subject.value
     }
 
-    var song: String? {
-        playerState?.songName
-    }
-
-    var artist: String? {
-        playerState?.artistName
-    }
-
-    var album: String? {
-        playerState?.albumName
-    }
-
-    var cancellables = Set<AnyCancellable>()
 
     init?() {
         guard let applicationReference = SBApplicationManager.musicApp() else { return nil }
-        self.applicationReference = applicationReference
+        self.sbReference = applicationReference
 
         if isRunning() {
-            playerState = PlayerState(.appleMusic, applicationReference)
+            subject.send(PlayerState(applicationReference))
         }
 
         DistributedNotificationCenter.default().addObserver(
             forName: Notification.Name("com.apple.Music.playerInfo"), object: nil, queue: nil) { [weak self] in
-                self?.playerStateSubject.send(PlayerState(.appleMusic, $0))
+                self?.subject.send(PlayerState($0))
             }
     }
 
@@ -58,44 +41,19 @@ class AppleMusicPlayer: Player {
         DistributedNotificationCenter.default().removeObserver(self)
     }
 
-    func canNextTrack() -> Bool {
-        return playbackState != .stopped
+    func copySongExternalURL() {
+        guard let songId = playerState?.songID, let albumId = playerState?.albumID else { return }
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString("https://music.apple.com/album/\(albumId)?i=\(songId)", forType: .string)
     }
 
     func nextTrack() {
-        applicationReference.nextTrack()
-    }
-
-    func canRevealSong() -> Bool {
-        return playbackState != .stopped
-    }
-
-    func revealSong() {
-        applicationReference.currentTrack?.reveal()
-        applicationReference.activate() // Reveal does not bring the app to the foreground
-    }
-
-    func canRevealArtist() -> Bool {
-        guard playbackState != .stopped, let songId = playerState?.songId else { return false }
-        return !songId.isEmpty
-    }
-
-    func revealArtist() {
-        guard let songId = playerState?.songId else { return }
-        MusicAPI.getURI(songId: songId, for: .artist) { uri in
-            if let uri = uri {
-                NSWorkspace.shared.open(uri)
-            }
-        }
-    }
-
-    func canRevealAlbum() -> Bool {
-        guard playbackState != .stopped, let songId = playerState?.songId else { return false }
-        return !songId.isEmpty
+        sbReference.nextTrack()
     }
 
     func revealAlbum() {
-        guard let songId = playerState?.songId else { return }
+        guard let songId = playerState?.songID else { return }
         MusicAPI.getURI(songId: songId, for: .album) { uri in
             if let uri = uri {
                 NSWorkspace.shared.open(uri)
@@ -103,15 +61,17 @@ class AppleMusicPlayer: Player {
         }
     }
 
-    func canCopySongExternalURL() -> Bool {
-        guard playbackState != .stopped, let songId = playerState?.songId, let albumId = playerState?.albumId else { return false }
-        return !songId.isEmpty && !albumId.isEmpty
+    func revealArtist() {
+        guard let songId = playerState?.songID else { return }
+        MusicAPI.getURI(songId: songId, for: .artist) { uri in
+            if let uri = uri {
+                NSWorkspace.shared.open(uri)
+            }
+        }
     }
 
-    func copySongExternalURL() {
-        guard let songId = playerState?.songId, let albumId = playerState?.albumId else { return }
-        let pasteboard = NSPasteboard.general
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString("https://music.apple.com/album/\(albumId)?i=\(songId)", forType: .string)
+    func revealSong() {
+        sbReference.currentTrack?.reveal()
+        sbReference.activate() // Reveal does not bring the app to the foreground
     }
 }
