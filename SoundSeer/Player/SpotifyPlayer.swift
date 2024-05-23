@@ -5,22 +5,24 @@ import ScriptingBridge
 class SpotifyPlayer: Player {
     static let shared: SpotifyPlayer? = SpotifyPlayer()
 
-    let sbReference: SBSpotifyApplication
-    let subject = CurrentValueSubject<PlayerState?, Never>(nil)
-
-
     let bundleIdentifier: String = "com.spotify.client"
+
     var canCopySongExternalURL: Bool {
         guard playbackState != .stopped, let songId = playerState?.songID else { return false }
         return !songId.isEmpty
     }
+
     var canRevealSong: Bool {
         guard playbackState != .stopped, let uriString = sbReference.currentTrack.spotifyUrl else { return false }
         return !uriString.isEmpty
     }
+
     var playerState: PlayerState? {
         subject.value
     }
+
+    let sbReference: SBSpotifyApplication
+    let subject = CurrentValueSubject<PlayerState?, Never>(nil)
 
     init?() {
         guard let applicationReference = SBApplicationManager.spotifyApp() else { return nil }
