@@ -1,132 +1,132 @@
 /*
- * SBMusic.h
+ * SBAppleMusic.h
  */
 
 #import <AppKit/AppKit.h>
 #import <ScriptingBridge/ScriptingBridge.h>
 
 
-@class SBMusicApplication, SBMusicItem, SBMusicAirPlayDevice, SBMusicArtwork, SBMusicEncoder, SBMusicEQPreset, SBMusicPlaylist, SBMusicAudioCDPlaylist, SBMusicLibraryPlaylist, SBMusicRadioTunerPlaylist, SBMusicSource, SBMusicSubscriptionPlaylist, SBMusicTrack, SBMusicAudioCDTrack, SBMusicFileTrack, SBMusicSharedTrack, SBMusicURLTrack, SBMusicUserPlaylist, SBMusicFolderPlaylist, SBMusicVisual, SBMusicWindow, SBMusicBrowserWindow, SBMusicEQWindow, SBMusicMiniplayerWindow, SBMusicPlaylistWindow, SBMusicVideoWindow;
+@class SBAppleMusicApplication, SBAppleMusicItem, SBAppleMusicAirPlayDevice, SBAppleMusicArtwork, SBAppleMusicEncoder, SBAppleMusicEQPreset, SBAppleMusicPlaylist, SBAppleMusicAudioCDPlaylist, SBAppleMusicLibraryPlaylist, SBAppleMusicRadioTunerPlaylist, SBAppleMusicSource, SBAppleMusicSubscriptionPlaylist, SBAppleMusicTrack, SBAppleMusicAudioCDTrack, SBAppleMusicFileTrack, SBAppleMusicSharedTrack, SBAppleMusicURLTrack, SBAppleMusicUserPlaylist, SBAppleMusicFolderPlaylist, SBAppleMusicVisual, SBAppleMusicWindow, SBAppleMusicBrowserWindow, SBAppleMusicEQWindow, SBAppleMusicMiniplayerWindow, SBAppleMusicPlaylistWindow, SBAppleMusicVideoWindow;
 
-enum SBMusicEKnd {
-    SBMusicEKndTrackListing = 'kTrk' /* a basic listing of tracks within a playlist */,
-    SBMusicEKndAlbumListing = 'kAlb' /* a listing of a playlist grouped by album */,
-    SBMusicEKndCdInsert = 'kCDi' /* a printout of the playlist for jewel case inserts */
+enum SBAppleMusicEKnd {
+    SBAppleMusicEKndTrackListing = 'kTrk' /* a basic listing of tracks within a playlist */,
+    SBAppleMusicEKndAlbumListing = 'kAlb' /* a listing of a playlist grouped by album */,
+    SBAppleMusicEKndCdInsert = 'kCDi' /* a printout of the playlist for jewel case inserts */
 };
-typedef enum SBMusicEKnd SBMusicEKnd;
+typedef enum SBAppleMusicEKnd SBAppleMusicEKnd;
 
-enum SBMusicEnum {
-    SBMusicEnumStandard = 'lwst' /* Standard PostScript error handling */,
-    SBMusicEnumDetailed = 'lwdt' /* print a detailed report of PostScript errors */
+enum SBAppleMusicEnum {
+    SBAppleMusicEnumStandard = 'lwst' /* Standard PostScript error handling */,
+    SBAppleMusicEnumDetailed = 'lwdt' /* print a detailed report of PostScript errors */
 };
-typedef enum SBMusicEnum SBMusicEnum;
+typedef enum SBAppleMusicEnum SBAppleMusicEnum;
 
-enum SBMusicEPlS {
-    SBMusicEPlSStopped = 'kPSS',
-    SBMusicEPlSPlaying = 'kPSP',
-    SBMusicEPlSPaused = 'kPSp',
-    SBMusicEPlSFastForwarding = 'kPSF',
-    SBMusicEPlSRewinding = 'kPSR'
+enum SBAppleMusicEPlS {
+    SBAppleMusicEPlSStopped = 'kPSS',
+    SBAppleMusicEPlSPlaying = 'kPSP',
+    SBAppleMusicEPlSPaused = 'kPSp',
+    SBAppleMusicEPlSFastForwarding = 'kPSF',
+    SBAppleMusicEPlSRewinding = 'kPSR'
 };
-typedef enum SBMusicEPlS SBMusicEPlS;
+typedef enum SBAppleMusicEPlS SBAppleMusicEPlS;
 
-enum SBMusicERpt {
-    SBMusicERptOff = 'kRpO',
-    SBMusicERptOne = 'kRp1',
-    SBMusicERptAll = 'kAll'
+enum SBAppleMusicERpt {
+    SBAppleMusicERptOff = 'kRpO',
+    SBAppleMusicERptOne = 'kRp1',
+    SBAppleMusicERptAll = 'kAll'
 };
-typedef enum SBMusicERpt SBMusicERpt;
+typedef enum SBAppleMusicERpt SBAppleMusicERpt;
 
-enum SBMusicEShM {
-    SBMusicEShMSongs = 'kShS',
-    SBMusicEShMAlbums = 'kShA',
-    SBMusicEShMGroupings = 'kShG'
+enum SBAppleMusicEShM {
+    SBAppleMusicEShMSongs = 'kShS',
+    SBAppleMusicEShMAlbums = 'kShA',
+    SBAppleMusicEShMGroupings = 'kShG'
 };
-typedef enum SBMusicEShM SBMusicEShM;
+typedef enum SBAppleMusicEShM SBAppleMusicEShM;
 
-enum SBMusicESrc {
-    SBMusicESrcLibrary = 'kLib',
-    SBMusicESrcAudioCD = 'kACD',
-    SBMusicESrcMP3CD = 'kMCD',
-    SBMusicESrcRadioTuner = 'kTun',
-    SBMusicESrcSharedLibrary = 'kShd',
-    SBMusicESrcITunesStore = 'kITS',
-    SBMusicESrcUnknown = 'kUnk'
+enum SBAppleMusicESrc {
+    SBAppleMusicESrcLibrary = 'kLib',
+    SBAppleMusicESrcAudioCD = 'kACD',
+    SBAppleMusicESrcMP3CD = 'kMCD',
+    SBAppleMusicESrcRadioTuner = 'kTun',
+    SBAppleMusicESrcSharedLibrary = 'kShd',
+    SBAppleMusicESrcITunesStore = 'kITS',
+    SBAppleMusicESrcUnknown = 'kUnk'
 };
-typedef enum SBMusicESrc SBMusicESrc;
+typedef enum SBAppleMusicESrc SBAppleMusicESrc;
 
-enum SBMusicESrA {
-    SBMusicESrAAlbums = 'kSrL' /* albums only */,
-    SBMusicESrAAll = 'kAll' /* all text fields */,
-    SBMusicESrAArtists = 'kSrR' /* artists only */,
-    SBMusicESrAComposers = 'kSrC' /* composers only */,
-    SBMusicESrADisplayed = 'kSrV' /* visible text fields */,
-    SBMusicESrANames = 'kSrS' /* track names only */
+enum SBAppleMusicESrA {
+    SBAppleMusicESrAAlbums = 'kSrL' /* albums only */,
+    SBAppleMusicESrAAll = 'kAll' /* all text fields */,
+    SBAppleMusicESrAArtists = 'kSrR' /* artists only */,
+    SBAppleMusicESrAComposers = 'kSrC' /* composers only */,
+    SBAppleMusicESrADisplayed = 'kSrV' /* visible text fields */,
+    SBAppleMusicESrANames = 'kSrS' /* track names only */
 };
-typedef enum SBMusicESrA SBMusicESrA;
+typedef enum SBAppleMusicESrA SBAppleMusicESrA;
 
-enum SBMusicESpK {
-    SBMusicESpKNone = 'kNon',
-    SBMusicESpKFolder = 'kSpF',
-    SBMusicESpKGenius = 'kSpG',
-    SBMusicESpKLibrary = 'kSpL',
-    SBMusicESpKMusic = 'kSpZ',
-    SBMusicESpKPurchasedMusic = 'kSpM'
+enum SBAppleMusicESpK {
+    SBAppleMusicESpKNone = 'kNon',
+    SBAppleMusicESpKFolder = 'kSpF',
+    SBAppleMusicESpKGenius = 'kSpG',
+    SBAppleMusicESpKLibrary = 'kSpL',
+    SBAppleMusicESpKMusic = 'kSpZ',
+    SBAppleMusicESpKPurchasedMusic = 'kSpM'
 };
-typedef enum SBMusicESpK SBMusicESpK;
+typedef enum SBAppleMusicESpK SBAppleMusicESpK;
 
-enum SBMusicEMdK {
-    SBMusicEMdKSong = 'kMdS' /* music track */,
-    SBMusicEMdKMusicVideo = 'kVdV' /* music video track */,
-    SBMusicEMdKUnknown = 'kUnk'
+enum SBAppleMusicEMdK {
+    SBAppleMusicEMdKSong = 'kMdS' /* music track */,
+    SBAppleMusicEMdKMusicVideo = 'kVdV' /* music video track */,
+    SBAppleMusicEMdKUnknown = 'kUnk'
 };
-typedef enum SBMusicEMdK SBMusicEMdK;
+typedef enum SBAppleMusicEMdK SBAppleMusicEMdK;
 
-enum SBMusicERtK {
-    SBMusicERtKUser = 'kRtU' /* user-specified rating */,
-    SBMusicERtKComputed = 'kRtC' /* computed rating */
+enum SBAppleMusicERtK {
+    SBAppleMusicERtKUser = 'kRtU' /* user-specified rating */,
+    SBAppleMusicERtKComputed = 'kRtC' /* computed rating */
 };
-typedef enum SBMusicERtK SBMusicERtK;
+typedef enum SBAppleMusicERtK SBAppleMusicERtK;
 
-enum SBMusicEAPD {
-    SBMusicEAPDComputer = 'kAPC',
-    SBMusicEAPDAirPortExpress = 'kAPX',
-    SBMusicEAPDAppleTV = 'kAPT',
-    SBMusicEAPDAirPlayDevice = 'kAPO',
-    SBMusicEAPDBluetoothDevice = 'kAPB',
-    SBMusicEAPDHomePod = 'kAPH',
-    SBMusicEAPDUnknown = 'kAPU'
+enum SBAppleMusicEAPD {
+    SBAppleMusicEAPDComputer = 'kAPC',
+    SBAppleMusicEAPDAirPortExpress = 'kAPX',
+    SBAppleMusicEAPDAppleTV = 'kAPT',
+    SBAppleMusicEAPDAirPlayDevice = 'kAPO',
+    SBAppleMusicEAPDBluetoothDevice = 'kAPB',
+    SBAppleMusicEAPDHomePod = 'kAPH',
+    SBAppleMusicEAPDUnknown = 'kAPU'
 };
-typedef enum SBMusicEAPD SBMusicEAPD;
+typedef enum SBAppleMusicEAPD SBAppleMusicEAPD;
 
-enum SBMusicEClS {
-    SBMusicEClSUnknown = 'kUnk',
-    SBMusicEClSPurchased = 'kPur',
-    SBMusicEClSMatched = 'kMat',
-    SBMusicEClSUploaded = 'kUpl',
-    SBMusicEClSIneligible = 'kRej',
-    SBMusicEClSRemoved = 'kRem',
-    SBMusicEClSError = 'kErr',
-    SBMusicEClSDuplicate = 'kDup',
-    SBMusicEClSSubscription = 'kSub',
-    SBMusicEClSPrerelease = 'kPrR',
-    SBMusicEClSNoLongerAvailable = 'kRev',
-    SBMusicEClSNotUploaded = 'kUpP'
+enum SBAppleMusicEClS {
+    SBAppleMusicEClSUnknown = 'kUnk',
+    SBAppleMusicEClSPurchased = 'kPur',
+    SBAppleMusicEClSMatched = 'kMat',
+    SBAppleMusicEClSUploaded = 'kUpl',
+    SBAppleMusicEClSIneligible = 'kRej',
+    SBAppleMusicEClSRemoved = 'kRem',
+    SBAppleMusicEClSError = 'kErr',
+    SBAppleMusicEClSDuplicate = 'kDup',
+    SBAppleMusicEClSSubscription = 'kSub',
+    SBAppleMusicEClSPrerelease = 'kPrR',
+    SBAppleMusicEClSNoLongerAvailable = 'kRev',
+    SBAppleMusicEClSNotUploaded = 'kUpP'
 };
-typedef enum SBMusicEClS SBMusicEClS;
+typedef enum SBAppleMusicEClS SBAppleMusicEClS;
 
-enum SBMusicEExF {
-    SBMusicEExFPlainText = 'kTXT',
-    SBMusicEExFUnicodeText = 'kUCT',
-    SBMusicEExFXML = 'kXML',
-    SBMusicEExFM3U = 'kM3U',
-    SBMusicEExFM3U8 = 'kM38'
+enum SBAppleMusicEExF {
+    SBAppleMusicEExFPlainText = 'kTXT',
+    SBAppleMusicEExFUnicodeText = 'kUCT',
+    SBAppleMusicEExFXML = 'kXML',
+    SBAppleMusicEExFM3U = 'kM3U',
+    SBAppleMusicEExFM3U8 = 'kM38'
 };
-typedef enum SBMusicEExF SBMusicEExF;
+typedef enum SBAppleMusicEExF SBAppleMusicEExF;
 
-@protocol SBMusicGenericMethods
+@protocol SBAppleMusicGenericMethods
 
-- (void) printPrintDialog:(BOOL)printDialog withProperties:(NSDictionary *)withProperties kind:(SBMusicEKnd)kind theme:(NSString *)theme;  // Print the specified object(s)
+- (void) printPrintDialog:(BOOL)printDialog withProperties:(NSDictionary *)withProperties kind:(SBAppleMusicEKnd)kind theme:(NSString *)theme;  // Print the specified object(s)
 - (void) close;  // Close an object
 - (void) delete;  // Delete an element from an object
 - (SBObject *) duplicateTo:(SBObject *)to;  // Duplicate one or more object(s)
@@ -145,32 +145,32 @@ typedef enum SBMusicEExF SBMusicEExF;
  */
 
 // The application program
-@interface SBMusicApplication : SBApplication
+@interface SBAppleMusicApplication : SBApplication
 
-- (SBElementArray<SBMusicAirPlayDevice *> *) AirPlayDevices;
-- (SBElementArray<SBMusicBrowserWindow *> *) browserWindows;
-- (SBElementArray<SBMusicEncoder *> *) encoders;
-- (SBElementArray<SBMusicEQPreset *> *) EQPresets;
-- (SBElementArray<SBMusicEQWindow *> *) EQWindows;
-- (SBElementArray<SBMusicMiniplayerWindow *> *) miniplayerWindows;
-- (SBElementArray<SBMusicPlaylist *> *) playlists;
-- (SBElementArray<SBMusicPlaylistWindow *> *) playlistWindows;
-- (SBElementArray<SBMusicSource *> *) sources;
-- (SBElementArray<SBMusicTrack *> *) tracks;
-- (SBElementArray<SBMusicVideoWindow *> *) videoWindows;
-- (SBElementArray<SBMusicVisual *> *) visuals;
-- (SBElementArray<SBMusicWindow *> *) windows;
+- (SBElementArray<SBAppleMusicAirPlayDevice *> *) AirPlayDevices;
+- (SBElementArray<SBAppleMusicBrowserWindow *> *) browserWindows;
+- (SBElementArray<SBAppleMusicEncoder *> *) encoders;
+- (SBElementArray<SBAppleMusicEQPreset *> *) EQPresets;
+- (SBElementArray<SBAppleMusicEQWindow *> *) EQWindows;
+- (SBElementArray<SBAppleMusicMiniplayerWindow *> *) miniplayerWindows;
+- (SBElementArray<SBAppleMusicPlaylist *> *) playlists;
+- (SBElementArray<SBAppleMusicPlaylistWindow *> *) playlistWindows;
+- (SBElementArray<SBAppleMusicSource *> *) sources;
+- (SBElementArray<SBAppleMusicTrack *> *) tracks;
+- (SBElementArray<SBAppleMusicVideoWindow *> *) videoWindows;
+- (SBElementArray<SBAppleMusicVisual *> *) visuals;
+- (SBElementArray<SBAppleMusicWindow *> *) windows;
 
 @property (readonly) BOOL AirPlayEnabled;  // is AirPlay currently enabled?
 @property (readonly) BOOL converting;  // is a track currently being converted?
-@property (copy) NSArray<SBMusicAirPlayDevice *> *currentAirPlayDevices;  // the currently selected AirPlay device(s)
-@property (copy) SBMusicEncoder *currentEncoder;  // the currently selected encoder (MP3, AIFF, WAV, etc.)
-@property (copy) SBMusicEQPreset *currentEQPreset;  // the currently selected equalizer preset
-@property (copy, readonly) SBMusicPlaylist *currentPlaylist;  // the playlist containing the currently targeted track
+@property (copy) NSArray<SBAppleMusicAirPlayDevice *> *currentAirPlayDevices;  // the currently selected AirPlay device(s)
+@property (copy) SBAppleMusicEncoder *currentEncoder;  // the currently selected encoder (MP3, AIFF, WAV, etc.)
+@property (copy) SBAppleMusicEQPreset *currentEQPreset;  // the currently selected equalizer preset
+@property (copy, readonly) SBAppleMusicPlaylist *currentPlaylist;  // the playlist containing the currently targeted track
 @property (copy, readonly) NSString *currentStreamTitle;  // the name of the current track in the playing stream (provided by streaming server)
 @property (copy, readonly) NSString *currentStreamURL;  // the URL of the playing stream or streaming web site (provided by streaming server)
-@property (copy, readonly) SBMusicTrack *currentTrack;  // the current targeted track
-@property (copy) SBMusicVisual *currentVisual;  // the currently selected visual plug-in
+@property (copy, readonly) SBAppleMusicTrack *currentTrack;  // the current targeted track
+@property (copy) SBAppleMusicVisual *currentVisual;  // the currently selected visual plug-in
 @property BOOL EQEnabled;  // is the equalizer enabled?
 @property BOOL fixedIndexing;  // true if all AppleScript track indices should be independent of the play order of the owning playlist.
 @property BOOL frontmost;  // is this the active application?
@@ -178,21 +178,21 @@ typedef enum SBMusicEExF SBMusicEExF;
 @property (copy, readonly) NSString *name;  // the name of the application
 @property BOOL mute;  // has the sound output been muted?
 @property double playerPosition;  // the player’s position within the currently playing track in seconds.
-@property (readonly) SBMusicEPlS playerState;  // is the player stopped, paused, or playing?
+@property (readonly) SBAppleMusicEPlS playerState;  // is the player stopped, paused, or playing?
 @property (copy, readonly) SBObject *selection;  // the selection visible to the user
 @property BOOL shuffleEnabled;  // are songs played in random order?
-@property SBMusicEShM shuffleMode;  // the playback shuffle mode
-@property SBMusicERpt songRepeat;  // the playback repeat mode
+@property SBAppleMusicEShM shuffleMode;  // the playback shuffle mode
+@property SBAppleMusicERpt songRepeat;  // the playback repeat mode
 @property NSInteger soundVolume;  // the sound output volume (0 = minimum, 100 = maximum)
 @property (copy, readonly) NSString *version;  // the version of the application
 @property BOOL visualsEnabled;  // are visuals currently being displayed?
 
-- (void) printPrintDialog:(BOOL)printDialog withProperties:(NSDictionary *)withProperties kind:(SBMusicEKnd)kind theme:(NSString *)theme;  // Print the specified object(s)
+- (void) printPrintDialog:(BOOL)printDialog withProperties:(NSDictionary *)withProperties kind:(SBAppleMusicEKnd)kind theme:(NSString *)theme;  // Print the specified object(s)
 - (void) run;  // Run the application
 - (void) quit;  // Quit the application
-- (SBMusicTrack *) add:(NSArray<NSURL *> *)x to:(SBObject *)to;  // add one or more files to a playlist
+- (SBAppleMusicTrack *) add:(NSArray<NSURL *> *)x to:(SBObject *)to;  // add one or more files to a playlist
 - (void) backTrack;  // reposition to beginning of current track or go to previous track if already at start of current track
-- (SBMusicTrack *) convert:(NSArray<SBObject *> *)x;  // convert one or more files or tracks
+- (SBAppleMusicTrack *) convert:(NSArray<SBObject *> *)x;  // convert one or more files or tracks
 - (void) fastForward;  // skip forward in a playing track
 - (void) nextTrack;  // advance to the next track in the current playlist
 - (void) pause;  // pause playback
@@ -207,7 +207,7 @@ typedef enum SBMusicEExF SBMusicEExF;
 @end
 
 // an item
-@interface SBMusicItem : SBObject <SBMusicGenericMethods>
+@interface SBAppleMusicItem : SBObject <SBAppleMusicGenericMethods>
 
 @property (copy, readonly) SBObject *container;  // the container of the item
 - (NSInteger) id;  // the id of the item
@@ -217,17 +217,17 @@ typedef enum SBMusicEExF SBMusicEExF;
 @property (copy) NSDictionary *properties;  // every property of the item
 
 - (void) download;  // download a cloud track or playlist
-- (NSString *) exportAs:(SBMusicEExF)as to:(NSURL *)to;  // export a source or playlist
+- (NSString *) exportAs:(SBAppleMusicEExF)as to:(NSURL *)to;  // export a source or playlist
 - (void) reveal;  // reveal and select a track or playlist
 
 @end
 
 // an AirPlay device
-@interface SBMusicAirPlayDevice : SBMusicItem
+@interface SBAppleMusicAirPlayDevice : SBAppleMusicItem
 
 @property (readonly) BOOL active;  // is the device currently being played to?
 @property (readonly) BOOL available;  // is the device currently available?
-@property (readonly) SBMusicEAPD kind;  // the kind of the device
+@property (readonly) SBAppleMusicEAPD kind;  // the kind of the device
 @property (copy, readonly) NSString *networkAddress;  // the network (MAC) address of the device
 - (BOOL) protected;  // is the device password- or passcode-protected?
 @property BOOL selected;  // is the device currently selected?
@@ -239,7 +239,7 @@ typedef enum SBMusicEExF SBMusicEExF;
 @end
 
 // a piece of art within a track or playlist
-@interface SBMusicArtwork : SBMusicItem
+@interface SBAppleMusicArtwork : SBAppleMusicItem
 
 @property (copy) NSImage *data;  // data for this artwork, in the form of a picture
 @property (copy) NSString *objectDescription;  // description of artwork as a string
@@ -252,7 +252,7 @@ typedef enum SBMusicEExF SBMusicEExF;
 @end
 
 // converts a track to a specific file format
-@interface SBMusicEncoder : SBMusicItem
+@interface SBAppleMusicEncoder : SBAppleMusicItem
 
 @property (copy, readonly) NSString *format;  // the data format created by the encoder
 
@@ -260,7 +260,7 @@ typedef enum SBMusicEExF SBMusicEExF;
 @end
 
 // equalizer preset configuration
-@interface SBMusicEQPreset : SBMusicItem
+@interface SBAppleMusicEQPreset : SBAppleMusicItem
 
 @property double band1;  // the equalizer 32 Hz band level (-12.0 dB to +12.0 dB)
 @property double band2;  // the equalizer 64 Hz band level (-12.0 dB to +12.0 dB)
@@ -280,31 +280,31 @@ typedef enum SBMusicEExF SBMusicEExF;
 @end
 
 // a list of tracks/streams
-@interface SBMusicPlaylist : SBMusicItem
+@interface SBAppleMusicPlaylist : SBAppleMusicItem
 
-- (SBElementArray<SBMusicTrack *> *) tracks;
-- (SBElementArray<SBMusicArtwork *> *) artworks;
+- (SBElementArray<SBAppleMusicTrack *> *) tracks;
+- (SBElementArray<SBAppleMusicArtwork *> *) artworks;
 
 @property (copy) NSString *objectDescription;  // the description of the playlist
 @property BOOL disliked;  // is this playlist disliked?
 @property (readonly) NSInteger duration;  // the total length of all tracks (in seconds)
 @property (copy) NSString *name;  // the name of the playlist
 @property BOOL favorited;  // is this playlist favorited?
-@property (copy, readonly) SBMusicPlaylist *parent;  // folder which contains this playlist (if any)
+@property (copy, readonly) SBAppleMusicPlaylist *parent;  // folder which contains this playlist (if any)
 @property (readonly) NSInteger size;  // the total size of all tracks (in bytes)
-@property (readonly) SBMusicESpK specialKind;  // special playlist kind
+@property (readonly) SBAppleMusicESpK specialKind;  // special playlist kind
 @property (copy, readonly) NSString *time;  // the length of all tracks in MM:SS format
 @property (readonly) BOOL visible;  // is this playlist visible in the Source list?
 
 - (void) moveTo:(SBObject *)to;  // Move playlist(s) to a new location
-- (SBMusicTrack *) searchFor:(NSString *)for_ only:(SBMusicESrA)only;  // search a playlist for tracks matching the search string. Identical to entering search text in the Search field.
+- (SBAppleMusicTrack *) searchFor:(NSString *)for_ only:(SBAppleMusicESrA)only;  // search a playlist for tracks matching the search string. Identical to entering search text in the Search field.
 
 @end
 
 // a playlist representing an audio CD
-@interface SBMusicAudioCDPlaylist : SBMusicPlaylist
+@interface SBAppleMusicAudioCDPlaylist : SBAppleMusicPlaylist
 
-- (SBElementArray<SBMusicAudioCDTrack *> *) audioCDTracks;
+- (SBElementArray<SBAppleMusicAudioCDTrack *> *) audioCDTracks;
 
 @property (copy) NSString *artist;  // the artist of the CD
 @property BOOL compilation;  // is this CD a compilation album?
@@ -318,67 +318,67 @@ typedef enum SBMusicEExF SBMusicEExF;
 @end
 
 // the main library playlist
-@interface SBMusicLibraryPlaylist : SBMusicPlaylist
+@interface SBAppleMusicLibraryPlaylist : SBAppleMusicPlaylist
 
-- (SBElementArray<SBMusicFileTrack *> *) fileTracks;
-- (SBElementArray<SBMusicURLTrack *> *) URLTracks;
-- (SBElementArray<SBMusicSharedTrack *> *) sharedTracks;
+- (SBElementArray<SBAppleMusicFileTrack *> *) fileTracks;
+- (SBElementArray<SBAppleMusicURLTrack *> *) URLTracks;
+- (SBElementArray<SBAppleMusicSharedTrack *> *) sharedTracks;
 
 
 @end
 
 // the radio tuner playlist
-@interface SBMusicRadioTunerPlaylist : SBMusicPlaylist
+@interface SBAppleMusicRadioTunerPlaylist : SBAppleMusicPlaylist
 
-- (SBElementArray<SBMusicURLTrack *> *) URLTracks;
+- (SBElementArray<SBAppleMusicURLTrack *> *) URLTracks;
 
 
 @end
 
 // a media source (library, CD, device, etc.)
-@interface SBMusicSource : SBMusicItem
+@interface SBAppleMusicSource : SBAppleMusicItem
 
-- (SBElementArray<SBMusicAudioCDPlaylist *> *) audioCDPlaylists;
-- (SBElementArray<SBMusicLibraryPlaylist *> *) libraryPlaylists;
-- (SBElementArray<SBMusicPlaylist *> *) playlists;
-- (SBElementArray<SBMusicRadioTunerPlaylist *> *) radioTunerPlaylists;
-- (SBElementArray<SBMusicSubscriptionPlaylist *> *) subscriptionPlaylists;
-- (SBElementArray<SBMusicUserPlaylist *> *) userPlaylists;
+- (SBElementArray<SBAppleMusicAudioCDPlaylist *> *) audioCDPlaylists;
+- (SBElementArray<SBAppleMusicLibraryPlaylist *> *) libraryPlaylists;
+- (SBElementArray<SBAppleMusicPlaylist *> *) playlists;
+- (SBElementArray<SBAppleMusicRadioTunerPlaylist *> *) radioTunerPlaylists;
+- (SBElementArray<SBAppleMusicSubscriptionPlaylist *> *) subscriptionPlaylists;
+- (SBElementArray<SBAppleMusicUserPlaylist *> *) userPlaylists;
 
 @property (readonly) long long capacity;  // the total size of the source if it has a fixed size
 @property (readonly) long long freeSpace;  // the free space on the source if it has a fixed size
-@property (readonly) SBMusicESrc kind;
+@property (readonly) SBAppleMusicESrc kind;
 
 
 @end
 
 // a subscription playlist from Apple Music
-@interface SBMusicSubscriptionPlaylist : SBMusicPlaylist
+@interface SBAppleMusicSubscriptionPlaylist : SBAppleMusicPlaylist
 
-- (SBElementArray<SBMusicFileTrack *> *) fileTracks;
-- (SBElementArray<SBMusicURLTrack *> *) URLTracks;
+- (SBElementArray<SBAppleMusicFileTrack *> *) fileTracks;
+- (SBElementArray<SBAppleMusicURLTrack *> *) URLTracks;
 
 
 @end
 
 // playable audio source
-@interface SBMusicTrack : SBMusicItem
+@interface SBAppleMusicTrack : SBAppleMusicItem
 
-- (SBElementArray<SBMusicArtwork *> *) artworks;
+- (SBElementArray<SBAppleMusicArtwork *> *) artworks;
 
 @property (copy) NSString *album;  // the album name of the track
 @property (copy) NSString *albumArtist;  // the album artist of the track
 @property BOOL albumDisliked;  // is the album for this track disliked?
 @property BOOL albumFavorited;  // is the album for this track favorited?
 @property NSInteger albumRating;  // the rating of the album for this track (0 to 100)
-@property (readonly) SBMusicERtK albumRatingKind;  // the rating kind of the album rating for this track
+@property (readonly) SBAppleMusicERtK albumRatingKind;  // the rating kind of the album rating for this track
 @property (copy) NSString *artist;  // the artist/source of the track
 @property (readonly) NSInteger bitRate;  // the bit rate of the track (in kbps)
 @property double bookmark;  // the bookmark time of the track in seconds
 @property BOOL bookmarkable;  // is the playback position for this track remembered?
 @property NSInteger bpm;  // the tempo of this track in beats per minute
 @property (copy) NSString *category;  // the category of the track
-@property (readonly) SBMusicEClS cloudStatus;  // the iCloud status of the track
+@property (readonly) SBAppleMusicEClS cloudStatus;  // the iCloud status of the track
 @property (copy) NSString *comment;  // freeform notes about the track
 @property BOOL compilation;  // is this track from a compilation album?
 @property (copy) NSString *composer;  // the composer of the track
@@ -403,7 +403,7 @@ typedef enum SBMusicEExF SBMusicEExF;
 @property (copy) NSString *longDescription;  // the long description of the track
 @property BOOL favorited;  // is this track favorited?
 @property (copy) NSString *lyrics;  // the lyrics of the track
-@property SBMusicEMdK mediaKind;  // the media kind of the track
+@property SBAppleMusicEMdK mediaKind;  // the media kind of the track
 @property (copy, readonly) NSDate *modificationDate;  // the modification date of the content of this track
 @property (copy) NSString *movement;  // the movement name of the track
 @property NSInteger movementCount;  // the total number of movements in the work
@@ -413,7 +413,7 @@ typedef enum SBMusicEExF SBMusicEExF;
 @property (copy, readonly) NSString *purchaserAppleID;  // the Apple ID of the person who purchased this track
 @property (copy, readonly) NSString *purchaserName;  // the name of the person who purchased this track
 @property NSInteger rating;  // the rating of this track (0 to 100)
-@property (readonly) SBMusicERtK ratingKind;  // the rating kind of this track
+@property (readonly) SBAppleMusicERtK ratingKind;  // the rating kind of this track
 @property (copy, readonly) NSDate *releaseDate;  // the release date of this track
 @property (readonly) NSInteger sampleRate;  // the sample rate of the track (in Hz)
 @property NSInteger seasonNumber;  // the season number of the track
@@ -441,7 +441,7 @@ typedef enum SBMusicEExF SBMusicEExF;
 @end
 
 // a track on an audio CD
-@interface SBMusicAudioCDTrack : SBMusicTrack
+@interface SBAppleMusicAudioCDTrack : SBAppleMusicTrack
 
 @property (copy, readonly) NSURL *location;  // the location of the file represented by this track
 
@@ -449,7 +449,7 @@ typedef enum SBMusicEExF SBMusicEExF;
 @end
 
 // a track representing an audio file (MP3, AIFF, etc.)
-@interface SBMusicFileTrack : SBMusicTrack
+@interface SBAppleMusicFileTrack : SBAppleMusicTrack
 
 @property (copy) NSURL *location;  // the location of the file represented by this track
 
@@ -458,13 +458,13 @@ typedef enum SBMusicEExF SBMusicEExF;
 @end
 
 // a track residing in a shared library
-@interface SBMusicSharedTrack : SBMusicTrack
+@interface SBAppleMusicSharedTrack : SBAppleMusicTrack
 
 
 @end
 
 // a track representing a network stream
-@interface SBMusicURLTrack : SBMusicTrack
+@interface SBAppleMusicURLTrack : SBAppleMusicTrack
 
 @property (copy) NSString *address;  // the URL for this track
 
@@ -472,11 +472,11 @@ typedef enum SBMusicEExF SBMusicEExF;
 @end
 
 // custom playlists created by the user
-@interface SBMusicUserPlaylist : SBMusicPlaylist
+@interface SBAppleMusicUserPlaylist : SBAppleMusicPlaylist
 
-- (SBElementArray<SBMusicFileTrack *> *) fileTracks;
-- (SBElementArray<SBMusicURLTrack *> *) URLTracks;
-- (SBElementArray<SBMusicSharedTrack *> *) sharedTracks;
+- (SBElementArray<SBAppleMusicFileTrack *> *) fileTracks;
+- (SBElementArray<SBAppleMusicURLTrack *> *) URLTracks;
+- (SBElementArray<SBAppleMusicSharedTrack *> *) sharedTracks;
 
 @property BOOL shared;  // is this playlist shared?
 @property (readonly) BOOL smart;  // is this a Smart Playlist?
@@ -486,19 +486,19 @@ typedef enum SBMusicEExF SBMusicEExF;
 @end
 
 // a folder that contains other playlists
-@interface SBMusicFolderPlaylist : SBMusicUserPlaylist
+@interface SBAppleMusicFolderPlaylist : SBAppleMusicUserPlaylist
 
 
 @end
 
 // a visual plug-in
-@interface SBMusicVisual : SBMusicItem
+@interface SBAppleMusicVisual : SBAppleMusicItem
 
 
 @end
 
 // any window
-@interface SBMusicWindow : SBMusicItem
+@interface SBAppleMusicWindow : SBAppleMusicItem
 
 @property NSRect bounds;  // the boundary rectangle for the window
 @property (readonly) BOOL closeable;  // does the window have a close button?
@@ -515,37 +515,37 @@ typedef enum SBMusicEExF SBMusicEExF;
 @end
 
 // the main window
-@interface SBMusicBrowserWindow : SBMusicWindow
+@interface SBAppleMusicBrowserWindow : SBAppleMusicWindow
 
 @property (copy, readonly) SBObject *selection;  // the selected tracks
-@property (copy) SBMusicPlaylist *view;  // the playlist currently displayed in the window
+@property (copy) SBAppleMusicPlaylist *view;  // the playlist currently displayed in the window
 
 
 @end
 
 // the equalizer window
-@interface SBMusicEQWindow : SBMusicWindow
+@interface SBAppleMusicEQWindow : SBAppleMusicWindow
 
 
 @end
 
 // the miniplayer window
-@interface SBMusicMiniplayerWindow : SBMusicWindow
+@interface SBAppleMusicMiniplayerWindow : SBAppleMusicWindow
 
 
 @end
 
 // a sub-window showing a single playlist
-@interface SBMusicPlaylistWindow : SBMusicWindow
+@interface SBAppleMusicPlaylistWindow : SBAppleMusicWindow
 
 @property (copy, readonly) SBObject *selection;  // the selected tracks
-@property (copy, readonly) SBMusicPlaylist *view;  // the playlist displayed in the window
+@property (copy, readonly) SBAppleMusicPlaylist *view;  // the playlist displayed in the window
 
 
 @end
 
 // the video window
-@interface SBMusicVideoWindow : SBMusicWindow
+@interface SBAppleMusicVideoWindow : SBAppleMusicWindow
 
 
 @end

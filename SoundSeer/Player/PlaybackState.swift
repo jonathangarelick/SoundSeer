@@ -14,11 +14,11 @@ enum PlaybackState {
         }
     }
 
-    init(_ state: SBMusicEPlS) {
+    init(_ state: SBAppleMusicEPlS) {
         switch state {
-        case SBMusicEPlSPaused:
+        case SBAppleMusicEPlSPaused:
             self = .paused
-        case SBMusicEPlSRewinding, SBMusicEPlSPlaying, SBMusicEPlSFastForwarding:
+        case SBAppleMusicEPlSRewinding, SBAppleMusicEPlSPlaying, SBAppleMusicEPlSFastForwarding:
             self = .playing
         default:
             self = .stopped

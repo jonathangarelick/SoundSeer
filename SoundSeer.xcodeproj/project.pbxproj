@@ -71,7 +71,7 @@
 		9B9E81862BFA79460067B910 /* CurrentPlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPlayerService.swift; sourceTree = "<group>"; };
 		9BA047132BE9ADC000AF3F34 /* SBSpotify.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBSpotify.h; sourceTree = "<group>"; };
 		9BA047142BE9ADE400AF3F34 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
-		9BA0471D2BE9B83600AF3F34 /* SBMusic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBMusic.h; sourceTree = "<group>"; };
+		9BA0471D2BE9B83600AF3F34 /* SBAppleMusic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBAppleMusic.h; sourceTree = "<group>"; };
 		9BAEAE9E2BDAE2C400C85936 /* LoggerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerExtension.swift; sourceTree = "<group>"; };
 		9BC6A97C2BE7F1FC0069726E /* MusicAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicAPI.swift; sourceTree = "<group>"; };
 		9BC6B6882BCA2D49005421AE /* SpotifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPI.swift; sourceTree = "<group>"; };
@@ -182,7 +182,7 @@
 				9BA047142BE9ADE400AF3F34 /* Bridging-Header.h */,
 				9BF013C32BEA76560082457D /* SBApplicationManager.h */,
 				9BF013C12BEA75010082457D /* SBApplicationManager.m */,
-				9BA0471D2BE9B83600AF3F34 /* SBMusic.h */,
+				9BA0471D2BE9B83600AF3F34 /* SBAppleMusic.h */,
 				9BA047132BE9ADC000AF3F34 /* SBSpotify.h */,
 			);
 			path = ScriptingBridge;

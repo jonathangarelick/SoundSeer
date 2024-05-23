@@ -8,7 +8,7 @@ struct PlayerState {
     let song: String?
     let songID: String?
 
-    init(_ app: SBMusicApplication) {
+    init(_ app: SBAppleMusicApplication) {
         album = app.currentTrack?.album
         albumID = nil
         artist = app.currentTrack?.artist

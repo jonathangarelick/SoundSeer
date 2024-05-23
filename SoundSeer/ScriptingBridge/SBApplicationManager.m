@@ -4,7 +4,7 @@
 
 @implementation SBApplicationManager
 
-+ (SBMusicApplication *)musicApp {
++ (SBAppleMusicApplication *)appleMusicApp {
     return [SBApplication applicationWithBundleIdentifier:@"com.apple.Music"];
 }
 

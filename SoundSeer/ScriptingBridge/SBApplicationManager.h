@@ -1,9 +1,9 @@
-#import "SBMusic.h"
+#import "SBAppleMusic.h"
 #import "SBSpotify.h"
 
 @interface SBApplicationManager : NSObject
 
-+ (SBMusicApplication *)musicApp;
++ (SBAppleMusicApplication *)appleMusicApp;
 + (SBSpotifyApplication *)spotifyApp;
 
 @end
